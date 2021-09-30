@@ -12,37 +12,37 @@ de entender e manter.
 
 ### Exemplos por Assunto
 
-- [Arquivos PDF](#)
-- [Arquivos Texto](#)
-- [Arquivos XML](#)
-- [Cálculo de Impostos](#)
-- [Controle de Log](#)
-- [Envio de E-mail](#)
-- [Grid (GetDados)](#)
-- [Manipulação do Ambiente Protheus](#)
-- [REST](#)
-- [SQL](#)
-- [Tela de Parâmetros](#)
-- [Token JWT](#)
-- [Utilidades Genéricas](#)
+- [Arquivos PDF](samples/pdf.md)
+- Arquivos Texto
+- Arquivos XML
+- Cálculo de Impostos
+- Controle de Log
+- Envio de E-mail
+- Grid (GetDados)
+- Manipulação do Ambiente Protheus
+- REST
+- SQL
+- Tela de Parâmetros
+- Token JWT
+- Utilidades Genéricas
 <br/><br/>
 
 ### Classes
 
 - [LibAdvplObj](#)
-- [LibColumnObj](#)
-- [LibEnvironmentObj](#)
-- [LibFileObj](#)
-- [LibGridObj](#)
-- [LibJwtObj](#)
-- [LibLogObj](#)
-- [LibMailObj](#)
-- [LibParamBoxObj](#)
-- [LibParamObj](#)
+- LibColumnObj
+- LibEnvironmentObj
+- [LibFileObj
+- [LibGridObj
+- [LibJwtObj
+- [LibLogObj
+- [LibMailObj
+- [LibParamBoxObj
+- [LibParamObj
 - [LibPdfObj](#)
-- [LibSqlObj](#)
-- [LibTaxObj](#)
-- [LibUtilsObj](#)
-- [LibWsRestRequestObj](#)
-- [LibWsRestResponseObj](#)
-- [LibXmlObj](#)
+- LibSqlObj
+- LibTaxObj
+- LibUtilsObj
+- LibWsRestRequestObj
+- LibWsRestResponseObj
+- LibXmlObj
