@@ -1,6 +1,6 @@
 ## Exemplo de Geração de Arquivo PDF
 
-Podemos utilizar a classe [LibPdfObj](#) para manipular arquivos PDF. Essa classe simplifica a criação de PDF 
+Podemos utilizar a classe [LibPdfObj](../classes/pdf) para manipular arquivos PDF. Essa classe simplifica a criação de PDF 
 através da abstração de métodos da classe padrão [FwMsPrinter](https://tdn.totvs.com/display/public/PROT/FWMsPrinter).
 
 Um simples PDF pode ser criado dessa forma:
