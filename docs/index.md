@@ -12,8 +12,8 @@ de entender e manter.
 
 ### Exemplos por Assunto
 
-- [Arquivos PDF](samples/pdf.md)
-- Arquivos Texto
+- [Arquivos PDF](samples/pdf)
+- [Arquivos Texto](samples/file)
 - Arquivos XML
 - Cálculo de Impostos
 - Controle de Log
@@ -29,7 +29,7 @@ de entender e manter.
 
 ### Classes
 
-- [LibAdvplObj](classes/main.md)
+- [LibAdvplObj](classes/main)
 - LibColumnObj
 - LibEnvironmentObj
 - LibFileObj
@@ -39,7 +39,7 @@ de entender e manter.
 - LibMailObj
 - LibParamBoxObj
 - LibParamObj
-- [LibPdfObj](classes/pdf.md)
+- [LibPdfObj](classes/pdf)
 - LibSqlObj
 - LibTaxObj
 - LibUtilsObj

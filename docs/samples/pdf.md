@@ -28,7 +28,7 @@ user function PdfSample()
 return
 ```
 
-Através de uma API mais simples, a ***LibSqlObj*** assume as configurações padrões da ***FwMsPrinter*** e não exige 
+Através de uma API mais simples, a ***LibPdfObj*** assume as configurações padrões da ***FwMsPrinter*** e não exige 
 que sejam passados vários parâmetros no construtor. Outra grande vantagem é que a classe trata automaticamente 
 a execução via job (sem interface de usuário).
 
@@ -40,4 +40,4 @@ oPdf:getFwMsPrinter():ellipse(nColumn, nLine, nRight, nBottom, CLR_WHITE, CLR_BL
 
 <br/>
 
-[Voltar](../index.md)
+[Voltar](../index)
