@@ -7,10 +7,10 @@ Durante todos esses anos a biblioteca foi amadurecendo e diversos recursos foram
 Já usada em centenas de projetos, essas classes ajudam devs Advpl a criar códigos mais enxutos e fáceis 
 de entender e manter.
 
-Quer conhecer um pouco mais sobre conceitos de código limpo (clean code) ? Dá uma olhada [nessa página](samples/clean-code).
-<br/><br/>
-***(documentação em desenvolvimento...)***
-<br/><br/>
+Quer conhecer um pouco mais sobre conceitos de código limpo (clean code) e entender melhor a nossa motivação ? 
+Dá uma olhada [nessa página](samples/clean-code).
+
+<br/>
 
 ### Exemplos por Assunto
 
@@ -48,3 +48,6 @@ Quer conhecer um pouco mais sobre conceitos de código limpo (clean code) ? Dá 
 - LibWsRestRequestObj
 - LibWsRestResponseObj
 - LibXmlObj
+
+<br/>
+***(documentação em desenvolvimento...)***
