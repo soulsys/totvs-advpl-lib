@@ -9,8 +9,7 @@ de entender e manter.
 
 Quer conhecer um pouco mais sobre conceitos de código limpo (clean code) e entender melhor a nossa motivação ? 
 Dá uma olhada [nessa página](samples/clean-code).
-
-<br/>
+<br/><br/>
 
 ### Exemplos por Assunto
 
