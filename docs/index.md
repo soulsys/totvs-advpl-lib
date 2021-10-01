@@ -14,7 +14,7 @@ de entender e manter.
 
 - [Arquivos PDF](samples/pdf)
 - [Arquivos Texto](samples/file)
-- Arquivos XML
+- [Arquivos XML](samples/xml)
 - Cálculo de Impostos
 - Controle de Log
 - Envio de E-mail
