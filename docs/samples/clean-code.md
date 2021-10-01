@@ -35,7 +35,6 @@ Essa função funcionaria sem problemas. Mas quer ver como podemos deixar esse c
 É difícil definir o que exatamente torna um código limpo. Aqui vamos focar em três aspectos que consideramos os 
 principais: ***Expressividade***, ***Flexibilidade*** e ***Coesão***.
 
-<br/>
 
 ### Expressividade
 
@@ -64,7 +63,6 @@ return nValue
 Repare que agora não temos mais a necessidade de escrever comentários visto que o próprio código 
 passou a expressar suas intenções de forma clara.
 
-<br/>
 
 ### Flexibilidade
 
@@ -152,7 +150,6 @@ return
 Dessa forma nosso código ficou bem mais flexível, visto que as regras de negócios relacionadas 
 às bandeiras podem ser reutilizadas em qualquer parte do sistema.
 
-<br/>
 
 ### Coesão
 
