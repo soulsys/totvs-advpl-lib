@@ -24,6 +24,7 @@ class LibUtilsObj from LibAdvplObj
   method formatCurrency()
   method formatDate()
   method formatInteger()
+  method formatZipCode()
   method fromJsDate()
   method getAge()
   method getCompanyName()
@@ -320,6 +321,26 @@ Formata Valores Inteiros
 /*/
 method formatInteger(nValue) class LibUtilsObj	
 return AllTrim(Transform(nValue, "@E 999,999,999,999"))
+
+
+/*/{Protheus.doc} formatZipCode
+
+Formata CEP
+  
+@author soulsys:waldiresmerio
+@since 08/10/2021
+/*/
+method formatZipCode(cZipCode) class LibUtilsObj
+  
+  local cPicture := "@R 99999-999"
+
+  cZipCode := AllTrim(StrTran(cZipCode, "-", ""))
+  
+  if Empty(cZipCode)
+    return ""
+  endIf
+
+return AllTrim(Transform(cZipCode, cPicture))
 
 
 /*/{Protheus.doc} fromJsDate
