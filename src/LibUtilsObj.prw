@@ -681,7 +681,7 @@ Verifica se uma variavel eh nula (igual a nil)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isNull(xVar, xDefValue) class LibUtilsObj
+method isNull(xVar) class LibUtilsObj
 return (ValType(xVar) == "U")
 
 
