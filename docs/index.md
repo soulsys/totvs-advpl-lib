@@ -21,7 +21,7 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - [Arquivos PDF](samples/pdf)
 - [Arquivos Texto](samples/file)
 - [Arquivos XML](samples/xml)
-- Cálculo de Impostos
+- [Cálculo de Impostos](samples/tax)
 - Controle de Log
 - Envio de E-mail
 - Grid (GetDados)
