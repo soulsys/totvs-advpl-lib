@@ -538,13 +538,13 @@ method getWhenMessage(dDate, cTime, lEnglish) class LibUtilsObj
   default lEnglish := .F.
   
   if (dDate == dDataBase)
-    cWhen := if(lEnglish, "Today at "+cTime, "Hoje ï¿½s "+cTime)
+    cWhen := if(lEnglish, "Today at "+cTime, "Hoje às " + cTime)
   else
     nDays := (dDataBase - dDate)
     if (nDays == 1)
-      cWhen := if(lEnglish, "Yesterday at "+cTime, "Ontem ï¿½s "+cTime)
+      cWhen := if(lEnglish, "Yesterday at "+cTime, "Ontem às " + cTime)
     else
-      cWhen := if(lEnglish, AllTrim(Str(nDays))+" days ago", "Hï¿½ "+AllTrim(Str(nDays))+" dias") 
+      cWhen := if(lEnglish, AllTrim(Str(nDays))+" days ago", "Há " + AllTrim(Str(nDays)) + " dias") 
     endIf
   endIf
 
