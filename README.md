@@ -90,9 +90,17 @@ return
 O objetivo é sempre fazer mais com menos código! 😃
 <br/><br/>
 
-## Instalação
+## Uso
 
-Como o Protheus não possui um gerenciador de dependências, você deve baixar os fontes e compilar no seu projeto. 
+Recomendamos que a compilação dos fontes seja realizada da seguinte forma:
+
+1. Clone o repositório: git clone https://github.com/soulsys/totvs-advpl-lib.git
+
+2. Abra o diretório criado através do VS Code. Certifique-se de ter a última versão do plugin oficial da TOTVS.
+
+3. Compile a pasta ***src***
+
+<br/>
 Caso encontre algum bug ou sinta necessidade de alguma melhoria, nos envie um pull request.
 <br/><br/>
 
