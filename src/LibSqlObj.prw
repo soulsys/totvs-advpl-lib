@@ -22,6 +22,7 @@ class LibSqlObj from LibAdvplObj
   method newLibSqlObj() constructor
   
   method newAlias()
+  method setDateFields()
   method setField()
   method getAlias()
   method getLastQuery()
@@ -110,6 +111,24 @@ method newAlias(cQuery) class LibSqlObj
   
   TCQUERY cQuery NEW ALIAS &::cAlias
       
+return
+
+
+/*/{Protheus.doc} setDateFields
+
+Define campos do alias como data
+  
+@author soulsys:victorhugo
+@since 18/11/2021
+/*/
+method setDateFields(aFields) class LibSqlObj
+  
+  local nI := 0
+
+  for nI := 1 to Len(aFields)
+    ::setField(aFields[nI], "D")
+  next nI
+  
 return
 
 
