@@ -42,6 +42,7 @@ class LibSqlObj from LibAdvplObj
   method execute()
   method update()	
   method insert()
+  method insertInto()
   method save()
   method delete()
   method exists()
@@ -471,6 +472,62 @@ method insert(cTable, aData, nRecno) class LibSqlObj
   RestArea(aArea)	
     
 return lOk	
+
+
+/*/{Protheus.doc} insertInto
+
+Inclusao de um registro em uma tabela em formato SQL
+
+@author soulsys:victorhugo
+@since 19/11/2021
+/*/	
+method insertInto(cTable, aData) class LibSqlObj
+
+  local nI         := 0
+  local cQuery     := ""
+  local cField     := ""
+  local cFields    := ""
+  local cValues    := ""
+  local cValType   := ""
+  local cFuncToken := "%FUNC%"
+  local xValue     := nil
+  local oUtils     := LibUtilsObj():newLibUtilsObj()
+
+  for nI := 1 to Len(aData)
+
+    cField   := aData[nI, 1]
+    xValue   := aData[nI, 2]
+    cValType := ValType(xValue)
+
+    if (cValType == "C")
+      if (At(cFuncToken, xValue) > 0)
+        xValue := StrTran(xValue, cFuncToken, "")
+      else
+        xValue := "'" + AllTrim(xValue) + "'"
+      endIf
+    else
+      xValue := oUtils:strAnyType(xValue)
+    endIf
+
+    if !Empty(cFields)
+      cFields += ","
+    endIf
+
+    if !Empty(cValues)
+      cValues += ","
+    endIf
+
+    cFields += AllTrim(cField)
+    cValues += xValue
+
+  next nI
+
+  cQuery := " INSERT INTO " + cTable + " (" + cFields + ") "
+  cQuery += " VALUES (" + cValues + ") "
+
+  MsgInfo(cQuery)
+
+return ::execute(cQuery)
 
 
 /*/{Protheus.doc} save
