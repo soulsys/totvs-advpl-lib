@@ -525,8 +525,6 @@ method insertInto(cTable, aData) class LibSqlObj
   cQuery := " INSERT INTO " + cTable + " (" + cFields + ") "
   cQuery += " VALUES (" + cValues + ") "
 
-  MsgInfo(cQuery)
-
 return ::execute(cQuery)
 
 
