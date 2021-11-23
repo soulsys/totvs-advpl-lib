@@ -22,7 +22,7 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - [Arquivos Texto](samples/file)
 - [Arquivos XML](samples/xml)
 - [Cálculo de Impostos](samples/tax)
-- Controle de Log
+- [Controle de Log](samples/log) 
 - Envio de E-mail
 - Grid (GetDados)
 - Manipulação do Ambiente Protheus
