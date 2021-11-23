@@ -98,7 +98,7 @@ return
 
 /*/{Protheus.doc} info
 
-Grava uma mensagem de informa��o no arquivo de log
+Grava uma mensagem de informacao no arquivo de log
   
 @author soulsys:victorhugo
 @since 18/09/2021

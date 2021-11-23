@@ -206,19 +206,27 @@ Exibe uma mensagem de debug
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method debugMsg(cVar, xValue) class LibUtilsObj
+method debugMsg(cVar, xValue, lConsole, nSleep) class LibUtilsObj
 
-  local oLog := nil
-  local cMsg := AllTrim(cVar) + " => " + ::strAnyType(xValue)
+  local oLog       := nil
+  local cMsg       := AllTrim(cVar) + " => " + ::strAnyType(xValue)
+  default lConsole := ::isInJob()
+  default nSleep   := 0
 
-  if ::isInJob()
-    oLog := LibLogObj():newLibLogObj()
-    oLog:setConsole(.T.)
-    oLog:setWriteFile(.F.)
-    oLog:debug(cMsg)
-  else
-    Alert("[DEBUG] - " + cMsg)
+  if !lConsole
+    return Alert("[DEBUG] - " + cMsg)
   endIf  
+
+  oLog := LibLogObj():newLibLogObj()
+  oLog:setConsole(.T.)  
+  oLog:setShowCompany(.T.)
+  oLog:setShowThreadId(.T.)
+  oLog:setWriteFile(.F.)
+  oLog:debug(cMsg)
+  
+  if (nSleep > 0)
+    Sleep(nSleep)
+  endIf
 
 return
 
