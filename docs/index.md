@@ -25,7 +25,7 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - [Controle de Log](samples/log) 
 - [Envio de E-mail](samples/mail)
 - [Grid (GetDados)](samples/grid)
-- REST
+- [REST](samples/rest)
 - SQL
 - Tela de Parâmetros
 - Token JWT
