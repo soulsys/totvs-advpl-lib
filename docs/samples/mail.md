@@ -10,9 +10,9 @@ user function MailSample()
   local cSubject := "Assunto Importante"
   local cBody    := ""
 
-  cBody := '<p>Olá! Esse é o corpo da mensagem em HTML.</p>'
-  cBody += '<p>Quando não informadas, as configurações de e-mail são '
-  cBody += 'obtidas automaticamente através dos parâmetros padrões (MV_RELXXX).</p>'
+  cBody := "<p>Olá! Esse é o corpo da mensagem em HTML.</p>"
+  cBody += "<p>Quando não informadas, as configurações de e-mail são "
+  cBody += "obtidas automaticamente através dos parâmetros padrões (MV_RELXXX).</p>"
   
   if oMail:send(cTo, cSubject, cBody)
     MsgInfo("E-mail enviado com sucesso")
@@ -41,7 +41,7 @@ Outro recurso legal é a possibilidade de criação de um layout HTML para o cor
 </html>
 ```
 
-A partir do HTML basta substituir as variáveis definidas no template.
+A partir da definição do HTML basta substituir as variáveis contidas no template.
 
 ```cpp
 user function HtmlMailSample()
