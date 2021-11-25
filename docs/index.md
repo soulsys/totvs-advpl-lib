@@ -24,7 +24,7 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - [Cálculo de Impostos](samples/tax)
 - [Controle de Log](samples/log) 
 - [Envio de E-mail](samples/mail)
-- Grid (GetDados)
+- [Grid (GetDados)](samples/grid)
 - REST
 - SQL
 - Tela de Parâmetros
