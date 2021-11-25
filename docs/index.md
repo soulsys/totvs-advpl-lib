@@ -25,7 +25,6 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - [Controle de Log](samples/log) 
 - [Envio de E-mail](samples/mail)
 - Grid (GetDados)
-- Manipulação do Ambiente Protheus
 - REST
 - SQL
 - Tela de Parâmetros
@@ -37,7 +36,6 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 
 - [LibAdvplObj](classes/main)
 - LibColumnObj
-- LibEnvironmentObj
 - LibFileObj
 - LibGridObj
 - LibJwtObj
