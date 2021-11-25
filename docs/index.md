@@ -26,7 +26,7 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - [Envio de E-mail](samples/mail)
 - [Grid (GetDados)](samples/grid)
 - [REST](samples/rest)
-- SQL
+- [SQL](samples/sql)
 - Tela de Parâmetros
 - Token JWT
 - Utilidades Genéricas
