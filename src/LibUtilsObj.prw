@@ -100,7 +100,7 @@ method canDelete(cId, aRelation, lShowMsg) class LibUtilsObj
   next nI
 
   if !lOk .and. lShowMsg
-    MsgAlert("Esse registro nao pode ser exclu�do pois esta relacionado com as seguintes tabelas: " + CRLF + cMsg)
+    MsgAlert("Esse registro nao pode ser excluido pois esta relacionado com as seguintes tabelas: " + CRLF + cMsg)
   endIf
 
 return lOk
