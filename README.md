@@ -9,7 +9,7 @@ limpos, expressivos e coesos através do encapsulamento de funcionalidades usada
 
 Para realizar uma query simples normalmente você faria algo [assim](https://tdn.totvs.com/display/framework/Desenvolvendo+queries+no+Protheus):
 
-```cpp
+```xbase
 user function SqlSample()
 
   local cQuery       := ""
@@ -32,7 +32,7 @@ return
 
 Utilizando a classe ***LibSqlObj*** podemos escrever a mesma funcionalidade dessa forma:
 
-```cpp
+```xbase
 user function SqlSample()
 
   local oSql         := LibSqlObj():newLibSqlObj()
@@ -54,7 +54,7 @@ return
 
 Ou ainda desse jeito:
 
-```cpp
+```xbase
 user function SqlSample()
 
   local oSql         := LibSqlObj():newLibSqlObj()
@@ -66,7 +66,7 @@ return
 
 Um simples e-mail pode ser enviado assim:
 
-```cpp
+```xbase
 user function MailSample()
 
   local oMail    := LibMailObj():newLibMailObj()
