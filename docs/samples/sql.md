@@ -4,7 +4,7 @@ A classe [LibSqlObj](#) tem como principal objetivo permitir a escrita de códig
 manipular instruções SQL. Podemos considerar que manipular dados gravados no BD do ERP faz parte de 
 praticamente qualquer customização, portanto, essa classe pode agilizar bastante o desenvolvimento.
 
-```xbase
+```clipper
 user function SqlSample()
 
   local cMsg   := ""
