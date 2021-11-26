@@ -27,7 +27,7 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - [Grid (GetDados)](samples/grid)
 - [REST](samples/rest)
 - [SQL](samples/sql)
-- Tela de Parâmetros
+- [Tela de Parâmetros](samples/params)
 - Token JWT
 - Utilidades Genéricas
 <br/><br/>
