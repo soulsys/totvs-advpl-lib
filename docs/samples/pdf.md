@@ -5,7 +5,7 @@ através da abstração de métodos da classe padrão [FwMsPrinter](https://tdn.
 
 Um simples PDF pode ser criado dessa forma:
 
-```xbase
+```go
 user function PdfSample()
 
   local cFileName := "MyPdf"
@@ -34,7 +34,7 @@ a execução via job (sem interface de usuário).
 
 Se necessário invocar algum método da classe padrão da TOTVS, basta utilizar o método ***getFwMsPrinter()***:
 
-```xbase
+```go
 oPdf:getFwMsPrinter():ellipse(nColumn, nLine, nRight, nBottom, CLR_WHITE, CLR_BLACK)
 ```
 

@@ -3,7 +3,7 @@
 A classe [LibFileObj](#) facilita a manipulação de arquivos texto. Através dela fica fácil 
 criar, copiar e apagar arquivos em disco.
 
-```xbase
+```go
 user function FileSample()
 
   local nAction := 0

@@ -4,7 +4,7 @@ A classe [LibSqlObj](#) tem como principal objetivo permitir a escrita de códig
 manipular instruções SQL. Podemos considerar que manipular dados gravados no BD do ERP faz parte de 
 praticamente qualquer customização, portanto, essa classe pode agilizar bastante o desenvolvimento.
 
-```clipper
+```go
 user function SqlSample()
 
   local cMsg   := ""
@@ -38,7 +38,7 @@ return
 
 Caso queira fazer uma query simples em apenas uma tabela:
 
-```xbase
+```go
 user function SqlSample2()
 
   local cMsg := ""
@@ -70,7 +70,7 @@ return
 
 Se precisar obter um campo de uma tabela:
 
-```xbase
+```go
 user function SqlSample3()
 
   local oSql  := LibSqlObj():newLibSqlObj()
@@ -83,7 +83,7 @@ return
 
 Também é possível incluir, alterar e remover registros através da *LibSqlObj*:
 
-```xbase
+```go
 user function SqlSample4()
 
   local oSql    := LibSqlObj():newLibSqlObj()

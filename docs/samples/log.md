@@ -2,7 +2,7 @@
 
 A classe [LibLogObj](#) tem por objetivo facilitar o controle de logs. 
 
-```xbase
+```go
 user function LogFileSample()
 
   local cFile := "my.log"
@@ -22,7 +22,7 @@ return
 
 Também permite a exibição de mensagens no console do appserver.
 
-```xbase
+```go
 user function LogConsoleSample()
 
   local oLog := LibLogObj():newLibLogObj()
