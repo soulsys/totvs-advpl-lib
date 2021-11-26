@@ -19,7 +19,7 @@ wsMethod POST wsService MyRestApi
     oResponse:badRequest(oService:getError())
   endIf
 
-return
+return lOk
 ```
 
 <br/>
