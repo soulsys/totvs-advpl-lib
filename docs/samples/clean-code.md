@@ -10,7 +10,7 @@ tarifas de táxi. A função deve ser bem simples. Recebe apenas o horário e a 
 
 Poderíamos implementar dessa forma:
 
-```xbase
+```cpp
 user function TaxiValue(nPar1, nPar2)
 
   local nRet := 0
