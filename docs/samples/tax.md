@@ -4,7 +4,7 @@ A classe [LibTaxObj](#) simplifica o cálculo de impostos em customizações do 
 Esse objeto é uma abstração das funções padrões como a [MaFisIni](https://tdn.totvs.com/pages/releaseview.action?pageId=605868324) e 
 [MaFisRet](https://tdn.totvs.com/pages/releaseview.action?pageId=605867908).
 
-```go
+```cpp
 user function TaxSample()
   
   local cMsg      := ""

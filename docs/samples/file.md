@@ -3,7 +3,7 @@
 A classe [LibFileObj](#) facilita a manipulação de arquivos texto. Através dela fica fácil 
 criar, copiar e apagar arquivos em disco.
 
-```go
+```cpp
 user function FileSample()
 
   local nAction := 0

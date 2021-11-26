@@ -3,7 +3,7 @@
 O principal objetivo da classe [LibXmlObj](#) é facilitar a leitura de arquivos XML, permitindo a 
 criação de códigos menos suscetíveis a erros.
 
-```go
+```cpp
 user function XmlSample()
 
   local nI      := 0

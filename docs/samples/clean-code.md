@@ -44,7 +44,7 @@ os nomes das variáveis *nPar1* e *nPar2* não ***expressam*** com clareza as su
 
 Pensando nisso, podemos refatorar nosso exemplo da seguinte forma:
 
-```go
+```cpp
 user function TaxiValue(nStartTime, nDistance)
 
   local nValue      := 0
@@ -75,7 +75,7 @@ de código mais ***flexível***.
 
 Vamos criar uma classe que representa um taxímetro:
 
-```go
+```cpp
 class Taximeter
 
   data nStartTime
@@ -92,7 +92,7 @@ endClass
 
 Podemos definir o horário inicial e a distância no construtor:
 
-```go
+```cpp
 method newTaximeter(nStartTime, nDistance) class Taximeter
   ::nStartTime := nStartTime
   ::nDistance  := nDistance
@@ -101,7 +101,7 @@ return
 
 Os métodos *isFlag1()* e *isFlag2()* permitem verificar qual a bandeira do horário informado:
 
-```go
+```cpp
 method isFlag1() class Taximeter
 return (::nStartTime >= 6 .and. ::nStartTime <= 22)
 
@@ -111,7 +111,7 @@ return !::isFlag1()
 
 Por fim, o método *calculate()* calcula o valor da viagem com base nos dados fornecidos:
 
-```go
+```cpp
 method calculate() class Taximeter 
 
   local nValue      := 0
@@ -129,7 +129,7 @@ return nValue
 
 Agora além de calcular o valor de uma corrida também temos condições de verificar qual bandeira foi utilizada:
 
-```go
+```cpp
 user function TaxiMsg(nStartTime, nDistance)
 
   local oTaximeter := Taximeter():newTaximeter(nStartTime, nDistance)
@@ -161,7 +161,7 @@ forem reajustados será necessário alterar e recompilar a classe *Taximeter*.
 Para remover essa fragilidade podemos definir os valores das bandeiras em parâmetros, além de implementar um novo método 
 que verifica qual valor deve ser considerado:
 
-```go
+```cpp
 method getFlagValue() class Taximeter 
 
   local nValue := 0
@@ -177,7 +177,7 @@ return nValue
 
 E alterar o método *calculate()* para obter o valor da bandeira através do novo método:
 
-```go
+```cpp
 method calculate() class Taximeter   
 return (::nDistance * ::getFlagValue())
 ```

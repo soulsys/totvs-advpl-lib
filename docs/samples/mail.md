@@ -2,7 +2,7 @@
 
 Através da classe [LibMailObj](#) fica muito fácil enviar e-mails pelo Protheus. 
 
-```go
+```cpp
 user function MailSample()
 
   local oMail    := LibMailObj():newLibMailObj()
@@ -43,7 +43,7 @@ Outro recurso legal é a possibilidade de criação de um layout HTML para o cor
 
 A partir da definição do HTML basta substituir as variáveis contidas no template.
 
-```go
+```cpp
 user function HtmlMailSample()
 
   local oMail    := LibMailObj():newLibMailObj()

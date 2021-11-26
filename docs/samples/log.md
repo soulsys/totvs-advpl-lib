@@ -2,7 +2,7 @@
 
 A classe [LibLogObj](#) tem por objetivo facilitar o controle de logs. 
 
-```go
+```cpp
 user function LogFileSample()
 
   local cFile := "my.log"
@@ -22,7 +22,7 @@ return
 
 Também permite a exibição de mensagens no console do appserver.
 
-```go
+```cpp
 user function LogConsoleSample()
 
   local oLog := LibLogObj():newLibLogObj()
