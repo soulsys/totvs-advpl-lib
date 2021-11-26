@@ -28,7 +28,7 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - [REST](samples/rest)
 - [SQL](samples/sql)
 - [Tela de Parâmetros](samples/params)
-- Token JWT
+- [Token JWT](samples/jwt)
 - Utilidades Genéricas
 <br/><br/>
 
