@@ -29,7 +29,7 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - [SQL](samples/sql)
 - [Tela de Parâmetros](samples/params)
 - [Token JWT](samples/jwt)
-- Utilidades Genéricas
+- [Utilidades Genéricas](samples/utils)
 <br/><br/>
 
 ### Classes
