@@ -21,7 +21,7 @@ return
 static function createToken()
 
   local oPayload := JsonObject():new()
-  local oJwt	   := LibJwtObj():newLibJwtObj()
+  local oJwt     := LibJwtObj():newLibJwtObj()
 
   oPayload["userId"]    := RetCodUsr()
   oPayload["expiresAt"] := DtoS(dDatabase + DAYS_TO_EXPIRE_TOKEN)
