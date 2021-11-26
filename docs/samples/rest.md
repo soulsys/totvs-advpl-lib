@@ -13,6 +13,7 @@ wsMethod POST wsService MyRestApi
   local oService  := MyService():newMyService()
 
   if oService:save(oBody)
+    lOk := .T.
     oResponse:success()
   else
     oResponse:badRequest(oService:getError())
