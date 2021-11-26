@@ -2,7 +2,7 @@
 
 A classe [LibGridObj](#) tem como objetivo facilitar a manipulação de grids para visualização e edição de dados.
 
-```cpp
+```xbase
 user function GridSample()
 
   local oDlg       := nil

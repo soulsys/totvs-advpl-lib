@@ -3,7 +3,7 @@
 Criamos as classes [LibWsRestRequestObj](#) e [LibWsRestResponseObj](#) para facilitar a 
 manipulação de requisições em [web services REST](https://tdn.totvs.com/display/framework/02.+Criando+uma+classe+REST).
 
-```cpp
+```xbase
 wsMethod POST wsService MyRestApi
 
   local lOk       := .F.
