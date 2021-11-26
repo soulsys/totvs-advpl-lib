@@ -9,7 +9,7 @@ limpos, expressivos e coesos através do encapsulamento de funcionalidades usada
 
 Para realizar uma query simples normalmente você faria algo [assim](https://tdn.totvs.com/display/framework/Desenvolvendo+queries+no+Protheus):
 
-```xbase
+```clipper
 user function SqlSample()
 
   local cQuery       := ""
