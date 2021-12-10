@@ -113,3 +113,7 @@ Conheça todas as classes e recursos disponíveis acessando nossa [documentaçã
 
 Esse repositório não possui qualquer relação com a TOTVS S/A. O uso dessa biblioteca é de total responsabilidade do usuário. Ao utilizar 
 nossos componentes você concorda com os termos da licença MIT.
+
+## Dúvidas e sugestões ❓
+
+Caso encontre alguma dificuldade ou tenha sugestões de melhorias, não deixe de compartilhar conosco através da seção de [issues](https://github.com/soulsys/totvs-advpl-lib/issues).
