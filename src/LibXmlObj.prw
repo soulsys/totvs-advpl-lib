@@ -53,14 +53,8 @@ Define a String ou Arquivo XML
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setXml(cXml) class LibXmlObj
-  
-  if File(cXml)
-    cXml := MemoRead(cXml)
-  endIf	
-
-  ::cXml := cXml	
-  
+method setXml(cXml) class LibXmlObj  	
+  ::cXml := cXml  
 return
 
 
@@ -83,8 +77,13 @@ method parse() class LibXmlObj
     return .F.
   endIf
 
-  ::cError := ""
-  ::oXml 	 := XmlParser(cXml, "_", @cError, @cWarning)
+  if File(cXml)
+    ::oXml := XmlParserFile(cXml, "_", @cError, @cWarning)
+  else
+    ::oXml := XmlParser(cXml, "_", @cError, @cWarning)
+  endIf
+
+  ::cError := ""  
   lOk      := (ValType(::oXml) == "O")
 
   if !lOk
