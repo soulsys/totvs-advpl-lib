@@ -67,10 +67,11 @@ Realiza o parser do Xml
 /*/
 method parse() class LibXmlObj
 
-  local lOk      := .F.
-  local cError   := ""
-  local cWarning := ""
-  local cXml     := EncodeUTF8(NoAcento(::cXml))
+  local lOk           := .F.
+  local cError        := ""
+  local cWarning      := ""
+  local cFileOnServer := ""
+  local cXml          := EncodeUTF8(NoAcento(::cXml))
 
   if Empty(cXml)
     ::cError := "XML undefined"
@@ -78,7 +79,12 @@ method parse() class LibXmlObj
   endIf
 
   if File(cXml)
-    ::oXml := XmlParserFile(cXml, "_", @cError, @cWarning)
+    cFileOnServer := copyFileToServer(cXml)
+    if Empty(cFileOnServer)
+      ::cError := "Failed to copy file to server"
+      return .F.      
+    endIf
+    ::oXml := XmlParserFile(cFileOnServer, "_", @cError, @cWarning)
   else
     ::oXml := XmlParser(cXml, "_", @cError, @cWarning)
   endIf
@@ -93,7 +99,25 @@ method parse() class LibXmlObj
     endIf
   endIf
 
+  if !Empty(cFileOnServer)
+    FErase(cFileOnServer)
+  endIf
+
 return lOk
+
+/**
+ * Copia o arquivo para o servidor para poder realizar o parser
+ */
+static function copyFileToServer(cXml)
+
+  local oFile         := LibFileObj():newLibFileObj(cXml)
+  local cFileOnServer := "/system/" + oFile:getFileName()
+
+  if !oFile:copy(cFileOnServer)    
+    cFileOnServer := ""
+  endIf
+
+return cFileOnServer
 
 
 /*/{Protheus.doc} text

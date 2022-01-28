@@ -425,7 +425,7 @@ method getFileName(lExtens, cBar) class LibFileObj
   local cName 	  := ""
   local cFile 	  := AllTrim(Lower(::getFile()))
   default lExtens := .T.
-  default cBar  	:= if(IsSrvUnix(), "/", "\")
+  default cBar  	:= if ( "/" $ cFile , "/", "\" )
   
   for nI := Len(cFile) to 1 step -1
     cChr := SubStr(cFile, nI, 1)
