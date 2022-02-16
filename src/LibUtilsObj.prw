@@ -47,6 +47,7 @@ class LibUtilsObj from LibAdvplObj
   method noAccent()
   method padrSx3()
   method parseDate()
+  method parseInt()
   method restAreas()
   method saveAreas()
   method scrollMessage()
@@ -904,6 +905,28 @@ method parseDate(xDate) class LibUtilsObj
   endIf
 
 return CtoD(xDate)
+
+
+/*/{Protheus.doc} parseInt
+
+Retorna um valor inteiro de uma string
+    
+@author soulsys:victorhugo
+@since 16/02/2022
+/*/
+method parseInt(cStr) class LibUtilsObj
+
+  if (ValType(cStr) == "N")
+    return cStr
+  endIf
+
+  if Empty(cStr)
+    cStr := "0"
+  endIf
+
+  cStr := AllTrim(cStr)
+
+return Val(StrTran(cStr, ".", ""))
 
 
 /*/{Protheus.doc} saveAreas
