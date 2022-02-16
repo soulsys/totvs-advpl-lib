@@ -15,6 +15,7 @@ class LibUtilsObj from LibAdvplObj
   
   method canDelete()
   method checkAdvplCode()
+  method clearCgc()
   method concatDirectory()
   method consoleLog()
   method debugMsg()
@@ -124,6 +125,23 @@ method checkAdvplCode(cCode) class LibUtilsObj
   ErrorBlock(bError)
 
 return lOk
+
+
+/*/{Protheus.doc} clearCgc
+
+Retorna um CNPJ/CPF sem formatacao
+    
+@author soulsys:victorhugo
+@since 16/02/2022
+/*/
+method clearCgc(cCgc) class LibUtilsObj
+
+  cCgc := AllTrim(cCgc)
+	cCgc := StrTran(cCgc, ".", "")
+	cCgc := StrTran(cCgc, "-", "")
+	cCgc := StrTran(cCgc, "/", "")
+	
+return cCgc
 
 
 /*/{Protheus.doc} concatDirectory
