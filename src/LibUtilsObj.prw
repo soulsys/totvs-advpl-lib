@@ -46,6 +46,7 @@ class LibUtilsObj from LibAdvplObj
   method msgRun()
   method noAccent()
   method padrSx3()
+  method parseDate()
   method restAreas()
   method saveAreas()
   method scrollMessage()
@@ -876,6 +877,33 @@ method padRSx3(cString, cField) class LibUtilsObj
   endIf
 
 return cString
+
+
+/*/{Protheus.doc} parseDate
+
+Retorna uma data a partir de uma string nos formatos 
+DD/MM/YYYY ou YYYY-MM-DD
+    
+@author soulsys:victorhugo
+@since 16/02/2022
+/*/
+method parseDate(xDate) class LibUtilsObj
+
+  local oUtils := LibUtilsObj():newLibUtilsObj()
+
+  if Empty(xDate)
+    return CtoD("")
+  endIf
+
+  if (ValType(xDate) == "D")
+    return xDate
+  endIf
+
+  if "-" $ xDate
+    xDate := DtoC(oUtils:fromJsDate(xDate))
+  endIf
+
+return CtoD(xDate)
 
 
 /*/{Protheus.doc} saveAreas
