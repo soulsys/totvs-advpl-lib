@@ -1130,11 +1130,13 @@ static function strData(xValue, cPicture)
   aAdd(aPics, {"DDMMAAAA", cDay+cMonth+cYear4})
   aAdd(aPics, {"DD/MM/AA", cDay+"/"+cMonth+"/"+cYear2})
   aAdd(aPics, {"DD/MM/AAAA", cDay+"/"+cMonth+"/"+cYear4})
+  aAdd(aPics, {"DD-MM-AAAA", cDay+"-"+cMonth+"-"+cYear4})
 
   aAdd(aPics, {"MMDDAA", cMonth+cDay+cYear2})
   aAdd(aPics, {"MMDDAAAA", cMonth+cDay+cYear4})
   aAdd(aPics, {"MM/DD/AA", cMonth+"/"+cDay+"/"+cYear2})
   aAdd(aPics, {"MM/DD/AAAA", cMonth+"/"+cDay+"/"+cYear4})
+  aAdd(aPics, {"MM-DD-AAAA", cMonth+"-"+cDay+"-"+cYear4})
 
   aAdd(aPics, {"AAMMDD", cYear2+cMonth+cDay})
   aAdd(aPics, {"AAAAMMDD", cYear4+cMonth+cDay})
