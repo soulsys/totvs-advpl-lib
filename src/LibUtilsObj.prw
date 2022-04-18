@@ -7,7 +7,7 @@
 Objeto com funcionalidades genericas
 
 @author soulsys:victorhugo
-@since 18/09/2021
+@since 18/09/2021 
 /*/
 class LibUtilsObj from LibAdvplObj
 
