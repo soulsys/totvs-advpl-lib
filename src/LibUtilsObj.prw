@@ -57,7 +57,8 @@ class LibUtilsObj from LibAdvplObj
   method strAnyType()
   method strToArray()		
   method vetorToString()
-  method weekOfMonth()  
+  method weekOfMonth()
+  method whenIsNotNumber()
   method whenIsNull()
 
 endClass
@@ -1251,6 +1252,17 @@ method weekOfMonth(dDate) class LibUtilsObj
   endIf
 
 return nWeekOfMonth
+
+
+/*/{Protheus.doc} whenIsNotNumber
+
+Retorna um valor quando dada variavel nao for numerica
+  
+@author soulsys:victorhugo
+@since 18/09/2021
+/*/
+method whenIsNotNumber(xVar, xDefValue) class LibUtilsObj	
+return if ( ValType(xVar) != "N", xDefValue, xVar )
 
 
 /*/{Protheus.doc} whenIsNull
