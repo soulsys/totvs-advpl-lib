@@ -45,6 +45,7 @@ class LibUtilsObj from LibAdvplObj
   method isWorkDay()
   method msgRun()
   method noAccent()
+  method onlyNumbers()
   method padrSx3()
   method parseDate()
   method parseInt()
@@ -850,6 +851,32 @@ method noAccent(cString) class LibUtilsObj
   Next nX
 
 Return cString
+
+
+/*/{Protheus.doc} onlyNumbers
+
+Retorna apenas os numeros de uma string
+
+@author soulsys:victorhugo
+@since 13/06/2022
+/*/
+method onlyNumbers(cStr) class LibUtilsObj
+
+  local nI       := 0
+  local cChr     := ""
+  local cRet     := ""
+  local aNumbers := {"0","1","2","3","4","5","6","7","8","9"}
+  
+  cStr := AllTrim(cStr)
+  
+  for nI := 1 to Len(cStr)
+    cChr := SubStr(cStr, nI, 1)
+    if (aScan(aNumbers, cChr) > 0)
+      cRet += cChr
+    endIf
+  next nI
+
+return cRet
 
 
 /*/{Protheus.doc} padrSx3
