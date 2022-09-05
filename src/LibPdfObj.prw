@@ -60,6 +60,7 @@ class LibPdfObj from LibAdvplObj
   method sayAlign()
   method line()
   method box()
+  method coloredBox()
   method bitmap()
   method startPage()
   method endPage()
@@ -580,6 +581,24 @@ method box(nRow, nCol, nBottom, nRight, cPixel) class LibPdfObj
   loadPrinter(@self)
   
   ::oPrinter:box(nRow, nCol, nBottom, nRight, cPixel)
+  
+return
+
+/*/{Protheus.doc} coloredBox
+
+Imprime um quadrado colorido
+  
+@author soulsys:waldiresmerio
+@since 05/09/2022
+/*/	
+method coloredBox(nRow, nCol, nBottom, nRight, cColor, cPixel) class LibPdfObj
+  
+  local oBrush   := TBrush():new(nil, cColor)
+  default cColor := CLR_WHITE
+
+  loadPrinter(@self)
+  
+  ::oPrinter:fillRect({nRow, nCol, nRight, nBottom}, oBrush, cPixel)
   
 return
 
