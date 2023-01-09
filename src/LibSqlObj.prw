@@ -16,6 +16,7 @@ class LibSqlObj from LibAdvplObj
   data cLastError
   data cDataBase	
   data aReportCells
+  data aAreas
   data nErpConnection
   data nExternalConnection			
   
@@ -63,6 +64,9 @@ class LibSqlObj from LibAdvplObj
   method getInExp()
   method debugQuery()
   method getSx5Value()
+  method saveAreas()
+  method restoreAreas()
+  method dbSeek()
   
 endClass
 
@@ -81,6 +85,7 @@ method newLibSqlObj() class LibSqlObj
   ::cLastQuery			    := ""
   ::cLastError			    := ""
   ::aReportCells			  := {}
+  ::aAreas        		  := {}
   ::nErpConnection		  := AdvConnection()
   ::nExternalConnection	:= -1
   
@@ -1196,3 +1201,125 @@ method getSx5Value(cTable, cKey) class LibSqlObj
   local cWhere := " %SX5.XFILIAL% AND X5_TABELA = '" + cTable + "' AND X5_CHAVE = '" + cKey + "' "
 
 return ::getFieldValue("SX5", "X5_DESCRI", cWhere)
+
+
+/*/{Protheus.doc} saveAreas
+
+Salva a area de um ou mais Aliases
+
+@author soulsys:waldiresmerio
+@since 27/12/2022
+/*/
+method saveAreas(xAliases) class LibSqlObj
+
+  local nI       := 0
+  local cAlias   := ""
+  local aAliases := {}
+  local oUtils   := LibUtilsObj():newLibUtilsObj()
+
+  if oUtils:isString(xAliases)
+    aAdd(aAliases, xAliases)
+  else
+    aAliases := xAliases
+  endIf
+
+  for nI := 1 to Len(aAliases)
+
+    cAlias := aAliases[nI]
+
+    aAdd(::aAreas, (cAlias)->(GetArea()))
+
+  next
+
+return
+
+
+/*/{Protheus.doc} restoreAreas
+
+Restaura a area de um ou mais Aliases
+
+@author soulsys:waldiresmerio
+@since 27/12/2022
+/*/
+method restoreAreas(xAliases) class LibSqlObj
+
+  local nI         := 0
+  local cAlias     := ""
+  local cAliases   := ""
+  local oUtils     := LibUtilsObj():newLibUtilsObj()
+  default xAliases := ""
+  
+  if oUtils:isArray(xAliases)
+    cAliases := ArrTokStr(xAliases)
+  else
+    cAliases := xAliases
+  endIf
+
+  for nI := 1 to Len(::aAreas)
+
+    cAlias := ::aAreas[nI][1]
+
+    if Empty(cAliases)
+      RestArea(::aAreas[nI])
+      loop
+    endIf
+
+    if (cAlias $ cAliases)
+      RestArea(::aAreas[nI])
+    endIf
+    
+  next
+
+return
+
+
+/*/{Protheus.doc} dbSeek
+
+Posiciona em um registro de acordo com a chave informada
+
+@author soulsys:waldiresmerio
+@since 27/12/2022
+/*/
+method dbSeek(cAlias, xIndex, aKey) class LibSqlObj
+
+  local nI        := 0
+  local nOrder    := 0
+  local cKey      := ""
+  local cSearchBy := "ORDEM"
+  local cIndex    := xIndex
+  local oUtils    := LibUtilsObj():newLibUtilsObj()
+  local oSql      := LibSqlObj():newLibSqlObj()
+  
+  if oUtils:isNumber(xIndex)
+    cIndex := oUtils:strAnyType(xIndex - 1)
+    cIndex := Soma1(cIndex)
+  endIf
+
+  if (Len(cIndex) > 1)
+    cSearchBy := "NICKNAME"
+  endIf
+    
+  oSql:newAlias("SELECT CHAVE, ORDEM FROM SIX" + cEmpAnt + "0 WHERE INDICE = '" + cAlias + "' AND " + cSearchBy + " = '" + cIndex + "' AND D_E_L_E_T_ = ''")
+
+  aFields := StrTokArr2(oSql:getValue("CHAVE"), "+")
+  nOrder  := DecodSoma1(oSql:getValue("ORDEM"))
+
+  if ("FILIAL" $ aFields[1])
+    
+    aAdd(aKey, nil)
+    aIns(aKey, 1)
+    
+    aKey[1] := xFilial(cAlias)
+
+  endIf
+
+  oSql:close()
+
+  for nI := 1 to Len(aKey)
+    cKey += PadR(aKey[nI], TamSX3(aFields[nI])[1])
+  next
+
+  (cAlias)->(dbSetOrder(nOrder))
+  (cAlias)->(dbSeek(cKey))
+
+return

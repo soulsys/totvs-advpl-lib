@@ -41,6 +41,11 @@ class LibUtilsObj from LibAdvplObj
   method isInJob()
   method isNull()
   method isNotNull()
+  method isJson()
+  method isBoolean()
+  method isString()
+  method isNumber()
+  method isArray()
   method isOnServer()
   method isWorkDay()
   method msgRun()
@@ -726,6 +731,61 @@ method isNotNull(xVar) class LibUtilsObj
 return (ValType(xVar) != "U") 
 
 
+/*/{Protheus.doc} isJson
+
+Verifica se uma variavel eh um objeto Json
+  
+@author soulsys:waldiresmerio
+@since 23/12/2022
+/*/
+method isJson(xVar) class LibUtilsObj
+return (ValType(xVar) == "J")
+
+
+/*/{Protheus.doc} isBoolean
+
+Verifica se uma variavel eh do tipo booleano
+  
+@author soulsys:waldiresmerio
+@since 23/12/2022
+/*/
+method isBoolean(xVar) class LibUtilsObj
+return (ValType(xVar) == "L")
+
+
+/*/{Protheus.doc} isString
+
+Verifica se uma variavel eh do tipo string
+  
+@author soulsys:waldiresmerio
+@since 23/12/2022
+/*/
+method isString(xVar) class LibUtilsObj
+return (ValType(xVar) == "C")
+
+
+/*/{Protheus.doc} isNumber
+
+Verifica se uma variavel eh do tipo número
+  
+@author soulsys:waldiresmerio
+@since 23/12/2022
+/*/
+method isNumber(xVar) class LibUtilsObj
+return (ValType(xVar) == "N")
+
+
+/*/{Protheus.doc} isString
+
+Verifica se uma variavel eh do tipo array
+  
+@author soulsys:waldiresmerio
+@since 23/12/2022
+/*/
+method isArray(xVar) class LibUtilsObj
+return (ValType(xVar) == "A")
+
+
 /*/{Protheus.doc} isOnServer
 
 Indica se um recurso esta no Servidor do Protheus (rootpath)
@@ -966,17 +1026,13 @@ Salva varias areas de aliases
 /*/
 method saveAreas(aAreas) class LibUtilsObj
 
-  local nI		   := 0
   local aSave  	 := {}
-  local cAlias	 := ""
+  local oSql     := LibSqlObj():newLibSqlObj()
   default aAreas := {}
 
-  for nI := 1 to Len(aAreas)
-    cAlias := aAreas[nI]
-    aAdd(aSave, (cAlias)->(GetArea()))
-  next nI
+  oSql:saveAreas(aAreas)
 
-  aAdd(aSave, GetArea())
+  aSave := oSql:aAreas
 
 return aSave
 
@@ -991,10 +1047,11 @@ Restaura varias areas de aliases
 method restAreas(aAreas) class LibUtilsObj
 
   local nI 		   := 0
+  local oSql     := LibSqlObj():newLibSqlObj()
   default aAreas := {}
 
   for nI := 1 to Len(aAreas)
-    RestArea(aAreas[nI])
+    oSql:restoreAreas(aAreas[nI])
   next nI
 
 return
