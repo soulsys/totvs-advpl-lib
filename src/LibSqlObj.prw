@@ -7,7 +7,7 @@
 Objeto para manipulacao de instrucoes SQL
   
 @author soulsys:victorhugo
-@since 18/09/2021
+@since 18/09/2021 
 /*/
 class LibSqlObj from LibAdvplObj
   
