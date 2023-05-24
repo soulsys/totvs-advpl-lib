@@ -114,6 +114,7 @@ method start() class LibProgressBarObj
 
   if ::lHidden
     Eval(::bAction)
+    return
   endIf
 
   if ::lTwoBars
