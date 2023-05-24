@@ -113,7 +113,7 @@ method start() class LibProgressBarObj
   local lCanAbort := .F.
 
   if ::lHidden
-    Eval(bAction)
+    Eval(::bAction)
   endIf
 
   if ::lTwoBars
