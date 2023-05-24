@@ -83,6 +83,67 @@ method newLibUtilsObj() class LibUtilsObj
 return
 
 
+/*/{Protheus.doc} loginAsAdmin
+
+Apresenta tela para login como administrador
+
+@author soulsys:victorhugo
+@since 17/05/2023
+/*/
+method adminLoginScreen() class LibUtilsObj
+  
+  local lOk     := .F.
+  local oDlg    := nil
+  local oBmp    := nil 
+  local oPanel  := nil 
+  local oOk     := nil
+  local oCancel := nil
+  local cLogin  := Space(50)
+  local cPsw    := Space(50)
+
+  DEFINE MSDIALOG oDlg FROM 0, 0 TO 135, 305 TITLE "Login como Administrador" PIXEL OF oMainWnd
+
+    @ 000,000 BITMAP oBmp RESNAME "APLOGO" SIZE 65,37 NOBORDER PIXEL
+    oBmp:Align := CONTROL_ALIGN_RIGHT
+
+    @ 000,000 MSPANEL oPanel OF oDlg
+    oPanel:Align := CONTROL_ALIGN_ALLCLIENT
+
+    @ 005,005 SAY "Usuário" SIZE 060,007 OF oPanel PIXEL
+    @ 013,005 MSGET cLogin SIZE 080,008 OF oPanel PIXEL
+
+    @ 028,005 SAY "Senha" SIZE 053,007 OF oPanel PIXEL
+    @ 036,005 MSGET cPsw SIZE 80,08 PASSWORD OF oPanel PIXEL
+
+    DEFINE SBUTTON oOk FROM 053,027 TYPE 1 ENABLE OF oPanel PIXEL ;
+      ACTION ( lOk := isAdminUser(cLogin, cPsw), iif( lOk, oDlg:End(), ) )
+
+    DEFINE SBUTTON oCancel FROM 053,057 TYPE 2 ENABLE OF oPanel PIXEL ACTION oDlg:End()
+
+  ACTIVATE MSDIALOG oDlg CENTER
+
+return lOk
+
+/**
+ * Valida o login do usuario como administrador
+ */
+static function isAdminUser(cLogin, cPsw)
+
+  local lOk    := .F.
+  local oUtils := LibUtilsObj():newLibUtilsObj()
+
+  cLogin := AllTrim(cLogin)
+  cPsw   := AllTrim(cPsw)
+
+  oUtils:msgRun({ || lOk := (PswAdmin(cLogin, cPsw) == 0) }, "Verificando...")
+
+  if !lOk
+    MsgAlert("Login inválido")
+  endIf
+
+return lOk
+
+
 /*/{Protheus.doc} canDelete
 
 Verifica se um registro pode ser excluido a partir do ID do mesmo e a lista
@@ -1359,64 +1420,3 @@ Retorna um valor quando dada variavel for nula (igual a nil)
 /*/
 method whenIsNull(xVar, xDefValue) class LibUtilsObj	
 return if ( ::isNull(xVar), xDefValue, xVar )
-
-
-/*/{Protheus.doc} loginAsAdmin
-
-Apresenta tela para login como administrador
-
-@author soulsys:victorhugo
-@since 17/05/2023
-/*/
-method adminLoginScreen() class LibUtilsObj
-  
-  local lOk     := .F.
-  local oDlg    := nil
-  local oBmp    := nil 
-  local oPanel  := nil 
-  local oOk     := nil
-  local oCancel := nil
-  local cLogin  := Space(50)
-  local cPsw    := Space(50)
-
-  DEFINE MSDIALOG oDlg FROM 0, 0 TO 135, 305 TITLE "Login como Administrador" PIXEL OF oMainWnd
-
-    @ 000,000 BITMAP oBmp RESNAME "APLOGO" SIZE 65,37 NOBORDER PIXEL
-    oBmp:Align := CONTROL_ALIGN_RIGHT
-
-    @ 000,000 MSPANEL oPanel OF oDlg
-    oPanel:Align := CONTROL_ALIGN_ALLCLIENT
-
-    @ 005,005 SAY "Usuário" SIZE 060,007 OF oPanel PIXEL
-    @ 013,005 MSGET cLogin SIZE 080,008 OF oPanel PIXEL
-
-    @ 028,005 SAY "Senha" SIZE 053,007 OF oPanel PIXEL
-    @ 036,005 MSGET cPsw SIZE 80,08 PASSWORD OF oPanel PIXEL
-
-    DEFINE SBUTTON oOk FROM 053,027 TYPE 1 ENABLE OF oPanel PIXEL ;
-      ACTION ( lOk := isAdminUser(cLogin, cPsw), iif( lOk, oDlg:End(), ) )
-
-    DEFINE SBUTTON oCancel FROM 053,057 TYPE 2 ENABLE OF oPanel PIXEL ACTION oDlg:End()
-
-  ACTIVATE MSDIALOG oDlg CENTER
-
-return lOk
-
-/**
- * Valida o login do usuario como administrador
- */
-static function isAdminUser(cLogin, cPsw)
-
-  local lOk    := .F.
-  local oUtils := LibUtilsObj():newLibUtilsObj()
-
-  cLogin := AllTrim(cLogin)
-  cPsw   := AllTrim(cPsw)
-
-  oUtils:msgRun({ || lOk := (PswAdmin(cLogin, cPsw) == 0) }, "Verificando...")
-
-  if !lOk
-    MsgAlert("Login inválido")
-  endIf
-
-return lOk

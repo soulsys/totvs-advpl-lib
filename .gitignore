@@ -2,5 +2,4 @@
 .vscode/*
 *.code-workspace
 test
-src/LibEnvironmentObj.prw
 *.log
