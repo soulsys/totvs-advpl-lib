@@ -43,6 +43,7 @@ class LibFileObj from LibAdvplObj
   method getFileSize()
   method getFileMegabytes()
   method getDirectory()
+  method readContent()
   
 endClass
 
@@ -514,3 +515,28 @@ method getDirectory() class LibFileObj
   local cName := AllTrim(Lower(::getFileName()))
   
 return StrTran(cFile, cName, "")
+
+
+/*/{Protheus.doc} readContent
+
+Retorna todo o conteudo do arquivo em uma string
+  
+@author soulsys:victorhugo
+@since 05/06/2023
+/*/
+method readContent() class LibFileObj
+  
+  local cContent := ""
+  local oReader  := FwFileReader():new(::getFile())
+
+  if !oReader:open()
+    return ""
+  endIf
+  
+  while oReader:hasLine()
+    cContent += oReader:getLine()
+  endDo
+  
+  oReader:close()
+
+return cContent
