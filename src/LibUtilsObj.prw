@@ -20,6 +20,7 @@ class LibUtilsObj from LibAdvplObj
   method consoleLog()
   method debugMsg()
   method endsWith()
+  method ensureDir()
   method existVar()
   method formatCgc()
   method formatCurrency()
@@ -54,6 +55,7 @@ class LibUtilsObj from LibAdvplObj
   method padrSx3()
   method parseDate()
   method parseInt()
+  method removeDir()
   method restAreas()
   method saveAreas()
   method scrollMessage()
@@ -160,28 +162,27 @@ Concatena uma string com o diretorio de um arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method concatDirectory(cDirectory, cFile) class LibUtilsObj
+method concatDirectory(cDirectory, cFile, cSlash) class LibUtilsObj
 
-  local cRet := ""
-  local cBar := ""	
+  local cRet     := ""
+  default cFile  := ""
+  default cSlash := ""
   
   if ("/" $ cDirectory)
-    cBar := "/"
+    cSlash := "/"
   elseIf ("\" $ cDirectory)
-    cBar := "\"
+    cSlash := "\"
   endIf	
 
   cDirectory := AllTrim(cDirectory)
   
-  if Empty(cBar)
-    cDirectory := "\"+cDirectory+"\"
-  else
-    if (Right(cDirectory, 1) != cBar)
-      cDirectory += cBar
-    endIf
+  if Empty(cSlash)
+    cDirectory := "\" + cDirectory + "\"
+  elseIf (Right(cDirectory, 1) != cSlash)
+    cDirectory += cSlash
   endIf	
 
-  cRet := cDirectory+AllTrim(cFile)
+  cRet := cDirectory + AllTrim(cFile)
 
 return cRet
 
@@ -275,6 +276,33 @@ method endsWith(cStr, cChr, lStrTrim) class LibUtilsObj
   endIf
 
 return (Right(cStr, 1) == cChr)
+
+
+/*/{Protheus.doc} ensureDir
+
+Cria o diretório caso não exista
+
+@author soulsys:victorhugo
+@since 06/06/2023
+/*/
+method ensureDir(cFolder) class LibUtilsObj
+
+  local nI         := 0
+  local cSubFolder := ""
+  local cSlash     := ""
+  local aFolders   := {}
+
+  cFolder  := ::concatDirectory(cFolder, nil, @cSlash)
+  aFolders := StrTokArr(cFolder, cSlash)
+
+  for nI := 1 to Len(aFolders)
+    cSubFolder += cSlash + aFolders[nI]
+    if !ExistDir(cSubFolder)
+      MakeDir(cSubFolder)
+    endIf
+  next nI
+
+return
 
 
 /*/{Protheus.doc} existVar
@@ -1015,6 +1043,54 @@ method parseInt(cStr) class LibUtilsObj
   cStr := AllTrim(cStr)
 
 return Val(StrTran(cStr, ".", ""))
+
+
+/*/{Protheus.doc} removeDir
+
+Remove um diretorio completamente (arquivos e subpastas)
+    
+@author soulsys:victorhugo
+@since 06/06/2023
+/*/
+method removeDir(cFolder) class LibUtilsObj
+
+  local nI         := 0
+  local aContent   := {}
+  local cSlash     := ""
+  local cContent   := ""
+  local cFileOrDir := ""
+
+  cFolder := ::concatDirectory(cFolder, nil, @cSlash)
+
+  if !ExistDir(cFolder)
+    return .F.
+  endIf
+    
+  aContent := Directory(cFolder + "*.*", "D")
+
+  for nI := 1 to Len(aContent)
+
+    cContent := aContent[nI,1]
+
+    if (cContent== ".." .or. cContent == ".")
+      loop
+    endIf
+    
+    cFileOrDir := ::concatDirectory(cFolder, cContent)
+    
+    if ExistDir(cFileOrDir) 
+      if !::removeDir(cFileOrDir)
+        return .F.
+      endIf
+    elseIf File(cFileOrDir)
+      if FErase(cFileOrDir) != 0
+        return .F.
+      endIf
+    endIf
+
+  next nI
+
+return DirRemove(cFolder)
 
 
 /*/{Protheus.doc} saveAreas
