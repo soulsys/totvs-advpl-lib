@@ -31,6 +31,7 @@ class LibUtilsObj from LibAdvplObj
   method getAge()
   method getCompanyName()
   method getDefaultValue()
+  method getDirectoryContent()
   method getErroAuto()
   method getJsDate()
   method getWhenMessage()
@@ -511,6 +512,40 @@ method getDefaultValue(cValType) class LibUtilsObj
   endIf
   
 return xValue
+
+
+/*/{Protheus.doc} getErroAuto
+
+Retorna o conteudo de um diretorio
+
+@author soulsys:victorhugo
+@since 06/06/2023
+/*/
+method getDirectoryContent(cPath, cFilter, cProps) class LibUtilsObj
+
+  local nI        := 0
+  local cContent  := ""
+  local aDir      := {}
+  local aContent  := {}
+  default cFilter := "*.*"
+  default cProps  := "D"
+
+  cPath := ::concatDirectory(cPath)
+  aDir  := Directory(cPath + cFilter, cProps)
+
+  for nI := 1 to Len(aDir)
+
+    cContent := aDir[nI,1]
+
+    if (cContent == ".." .or. cContent == ".")
+      loop
+    endIf
+
+    aAdd(aContent, cContent)
+
+  next nI
+
+return aContent
 
 
 /*/{Protheus.doc} getErroAuto
@@ -1056,27 +1091,19 @@ method removeDir(cFolder) class LibUtilsObj
 
   local nI         := 0
   local aContent   := {}
-  local cSlash     := ""
-  local cContent   := ""
   local cFileOrDir := ""
 
-  cFolder := ::concatDirectory(cFolder, nil, @cSlash)
+  cFolder := ::concatDirectory(cFolder)
 
   if !ExistDir(cFolder)
     return .F.
   endIf
     
-  aContent := Directory(cFolder + "*.*", "D")
+  aContent := ::getDirectoryContent(cFolder)
 
   for nI := 1 to Len(aContent)
-
-    cContent := aContent[nI,1]
-
-    if (cContent== ".." .or. cContent == ".")
-      loop
-    endIf
     
-    cFileOrDir := ::concatDirectory(cFolder, cContent)
+    cFileOrDir := ::concatDirectory(cFolder, aContent[nI])
     
     if ExistDir(cFileOrDir) 
       if !::removeDir(cFileOrDir)
