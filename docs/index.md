@@ -26,6 +26,7 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - [Controle de Log](samples/log)
 - [Envio de E-mail](samples/mail)
 - [Grid (GetDados)](samples/grid)
+- [Relatórios TReports](samples/treports)
 - [REST](samples/rest)
 - [SQL](samples/sql)
 - [Tela de Parâmetros](samples/params)
