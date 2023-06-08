@@ -23,6 +23,7 @@ class LibTReportsObj from LibAdvplObj
   method generateReport()
   method downloadReport()
   method getReport()
+  method getErrorMessage()
   
 endClass
 
@@ -288,3 +289,14 @@ static function setApiErrorMessage(oSelf, oApi, cRequest, oResponse)
   MemoWrite(cFolder + cFileName, cLog)
 
 return
+
+
+/*/{Protheus.doc} getErrorMessage
+
+Retorna a ultima mensagem de erro
+
+@author soulsys:waldiresmerio
+@since 10/04/2023
+/*/
+method getErrorMessage() class LibTReportsObj
+return ::cErrorMessage

@@ -36,7 +36,7 @@ user function TstTRep1()
   lOk := oService:getReport(cReportId, oParams)
 
   if !lOk
-    FwAlertError(oService:cErrorMessage)
+    FwAlertError(oService:getErrorMessage())
   endIf
 
 return
@@ -62,7 +62,7 @@ user function TstTRep2()
   oParams["numeroDe"]  := "000001"
   oParams["numeroAte"] := "000003"
 
-  cGenerationId := ::generateReport(cReportId, oParams)
+  cGenerationId := oService:generateReport(cReportId, oParams)
 
   if Empty(cGenerationId)
     FwAlertError(oService:cErrorMessage)
@@ -76,8 +76,9 @@ user function TstTRep2()
   lOk := oService:downloadReport(cGenerationId, oSetup)
 
   if !lOk
-    FwAlertError(oService:cErrorMessage)
+    FwAlertError(oService:getErrorMessage())
   endIf
+
 return
 ```
 
