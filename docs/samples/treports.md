@@ -5,7 +5,7 @@ possibilitando assim, a geração de tais relatórios através de pontos de entr
 web services. Desta forma, contornamos a limitação padrão do Protheus, onde a impressão dos relatórios ocorre
 apenas por rotinas de menu.
 
-Para utilizar esta classe, é necessário antes, salvar o arquivo **config.json** no diretório **\\protheus_data\treports\\**. 
+Para utilizar esta classe, é necessário antes, salvar o arquivo **config.json** no diretório **\\protheus_data\treports\\**.
 O arquivo deverá conter a seguinte estrutura:
 
 ```cpp
@@ -42,7 +42,7 @@ user function TstTRep1()
 return
 ```
 
-O método *getReport* é uma abstração dos métodos de geração e download dos relatórios. É possível utilizá-los 
+O método _getReport_ é uma abstração dos métodos de geração e download dos relatórios. É possível utilizá-los
 individualmente:
 
 ```cpp
@@ -52,7 +52,7 @@ individualmente:
 user function TstTRep2()
 
   local lOk           := .F.
-  local cGenerationId := 
+  local cGenerationId :=
   local cReportId     := "ea987178-433d-4623-9085-bd919356529e"
   local oParams       := JsonObject():new()
   local oSetup        := JsonObject():new()
@@ -62,7 +62,7 @@ user function TstTRep2()
   oParams["numeroDe"]  := "000001"
   oParams["numeroAte"] := "000003"
 
-  cGenerationId := ::genereateReport(cReportId, oParams)
+  cGenerationId := ::generateReport(cReportId, oParams)
 
   if Empty(cGenerationId)
     FwAlertError(oService:cErrorMessage)
@@ -81,8 +81,8 @@ user function TstTRep2()
 return
 ```
 
-*O envio do objeto Setup é opcional. Caso não utilizado, o relatório será gerado no formato .pdf, será salvo no 
-diterório %temp% do usuário e será aberto automaticamente.*
+_O envio do objeto Setup é opcional. Caso não utilizado, o relatório será gerado no formato .pdf, será salvo no
+diterório %temp% do usuário e será aberto automaticamente._
 
 <br/>
 

@@ -20,7 +20,7 @@ class LibTReportsObj from LibAdvplObj
   method newLibTReportsObj() constructor
 	
   method getAuthToken()
-  method genereateReport()
+  method generateReport()
   method downloadReport()
   method getReport()
   
@@ -91,14 +91,14 @@ method getAuthToken() class LibTReportsObj
 return ::cAuthToken
 
 
-/*/{Protheus.doc} genereateReport
+/*/{Protheus.doc} generateReport
 
 Gera relatorio a partir do ID
 
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
-method genereateReport(cReportId, oParams) class LibTReportsObj
+method generateReport(cReportId, oParams) class LibTReportsObj
 
   local cBody         := ""
   local cGenerationId := ""
@@ -207,7 +207,7 @@ Gera e baixa um relatorio TReports
 /*/
 method getReport(cReportId, oParams, oSetup) class LibTReportsObj
 
-  local cGenerationId := ::genereateReport(cReportId, oParams)
+  local cGenerationId := ::generateReport(cReportId, oParams)
 
   if Empty(cGenerationId)
     return .F.
