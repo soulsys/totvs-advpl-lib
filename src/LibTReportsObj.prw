@@ -192,7 +192,7 @@ method downloadReport(cGenerationId, oSetup) class LibTReportsObj
     ::cErrorMessage := "O arquivo não foi criado (Erro: " + oUtils:strAnyType(oFile:error()) + ")"
   endIf
   
-  if lOpenFile
+  if lOpenFile .and. !IsBlind()
     QA_OpenArq(cFile)
   endIf
 
