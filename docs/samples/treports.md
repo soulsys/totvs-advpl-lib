@@ -65,7 +65,7 @@ user function TstTRep2()
   cGenerationId := oService:generateReport(cReportId, oParams)
 
   if Empty(cGenerationId)
-    FwAlertError(oService:cErrorMessage)
+    FwAlertError(oService:getErrorMessage())
     return .F.
   endIf
 
