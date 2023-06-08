@@ -14,7 +14,6 @@ class LibTReportsObj from LibAdvplObj
   data cAuthToken
   data cTReportsUrl
   data cProtheusWsUrl
-  data cRefreshToken
   data cUserName
   data cPassword
 
@@ -42,7 +41,6 @@ method newLibTReportsObj() class LibTReportsObj
   ::cErrorMessage  := ""
   ::cTReportsUrl   := oConfig["treports_url"]
   ::cProtheusWsUrl := oConfig["protheus_ws_url"]
-  ::cRefreshToken  := oConfig["refresh_token"]
   ::cUserName      := oConfig["user_name"]
   ::cPassword      := oConfig["password"]
 
@@ -67,9 +65,7 @@ method getAuthToken() class LibTReportsObj
     return ::cAuthToken
   endIf
 
-  if !Empty(::cRefreshToken)
-    cPath += "?grant_type=refresh_token&refresh_token=" + ::cRefreshToken
-  elseIf (!Empty(::cUserName) .and. !Empty(::cPassword))
+  If (!Empty(::cUserName) .and. !Empty(::cPassword))
     cPath += "?grant_type=password&username=" + ::cUserName + "&password=" + ::cPassword
   else 
     ::cErrorMessage := "Arquivo config.json configurado incorretamente"
@@ -81,15 +77,12 @@ method getAuthToken() class LibTReportsObj
 
   if !oApi:post(aHeaders)
     setApiErrorMessage(@self, oApi, cPath)
-    return
+    return ""
   endIf
 
   oResponse := getResponse(oApi)
 
-  ::cAuthToken    := oResponse["access_token"]
-  ::cRefreshToken := oResponse["refresh_token"]
-  
-  updateToken(self)
+  ::cAuthToken := oResponse["access_token"]
   
   if Empty(::cAuthToken)
     setApiErrorMessage(@self, oApi, cPath, oResponse)
@@ -144,7 +137,7 @@ Baixa relatorio a partir do Generation ID
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
-method downloadReport(cGenerationId, oSetup, cErrorMessage) class LibTReportsObj
+method downloadReport(cGenerationId, oSetup) class LibTReportsObj
 
   local cFormat   := ""
   local cFolder   := ""
@@ -241,29 +234,6 @@ static function getConfig()
   endIf
 
 return oConfig
-
-/**
-* Cria arquivo de configurações do TReports
-*/
-static function updateToken(oSelf)
-
-  local cConfig := ""
-  local cFile   := "\treports\config.json"
-  local oConfig := getConfig()
-  local oFile   := FwFileWriter():new(cFile)
-   
-  oConfig["refresh_token"] := oSelf:cRefreshToken
-
-  cConfig := oConfig:toJson()
-
-  if oFile:create()
-    oFile:write(cConfig)
-    oFile:close()
-  else
-    oSelf:cErrorMessage := "Falha ao abrir o arquivo '" + cFile + "'"
-  endIf
-    
-return
 
 /**
  * Retorna o resultado de uma requisição
