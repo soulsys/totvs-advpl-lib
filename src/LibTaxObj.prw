@@ -17,6 +17,8 @@ class LibTaxObj
   data lIsSupplier
   data cEntityType
   data cInvoiceType
+  data nDocType
+  data cOperation
   data cFreight
   data aItems
   
@@ -26,10 +28,13 @@ class LibTaxObj
   method setSupplier()
   method setEntityType()
   method setInvoiceType()
+  method setDocType()
+  method setOperation()
   method setFreight()
   method addItem()
   method clearItems()
   method calculate()
+  method restore()
   
 endClass
 
@@ -49,6 +54,7 @@ method newLibTaxObj() class LibTaxObj
   ::lIsSupplier	  := .F.
   ::cEntityType   := ""
   ::cInvoiceType	:= "N"
+  ::nDocType      := 2 
   ::cFreight		  := nil
   ::aItems		    := {}
 
@@ -111,6 +117,30 @@ method setInvoiceType(cInvoiceType) class LibTaxObj
 return
 
 
+/*/{Protheus.doc} setDocType
+
+Define o tipo de documento (1=Entrada, 2=Saida)
+  
+@author soulsys:victorhugo
+@since 13/12/2023
+/*/
+method setDocType(nDocType) class LibTaxObj
+  ::nDocType := nDocType
+return
+
+
+/*/{Protheus.doc} setOperation
+
+Define a Operacao (TES Inteligente)
+  
+@author soulsys:victorhugo
+@since 13/12/2023
+/*/
+method setOperation(cOperation) class LibTaxObj
+  ::cOperation := cOperation
+return
+
+
 /*/{Protheus.doc} setFreight
 
 Define o tipo do Frete
@@ -130,20 +160,35 @@ Adiciona itens ao calculo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method addItem(cProduct, cTES, nQuantity, nPrice, nFreight) class LibTaxObj
+method addItem(cProduct, cTES, nQuantity, nPrice, nFreight, nDiscount) class LibTaxObj
   
-  local oItem      := JsonObject():new()
-  default nFreight := 0
+  local oItem       := JsonObject():new()
+  default nFreight  := 0
+  default nDiscount := 0
+
+  if Empty(cTES)
+    cTES := getOperationTES(self, cProduct)
+  endIf
   
   oItem["product"]  := PadR(cProduct, Len(SB1->B1_COD))
   oItem["tes"]      := cTES
   oItem["quantity"] := nQuantity
   oItem["price"]    := nPrice
   oItem["freight"]  := nFreight
+  oItem["discount"] := nDiscount
   
   aAdd(::aItems, oItem)
   
 return
+
+/**
+ * Retorna o TES a partir da operacao (TES Inteligente)
+ */
+static function getOperationTES(oSelf, cProduct)
+
+  local cType := if ( oSelf:lIsCustomer, "C", "F" )
+
+return MaTesInt(oSelf:nDocType, oSelf:cOperation, oSelf:cCode, oSelf:cUnit, cType, cProduct)
 
 
 /*/{Protheus.doc} clearItems
@@ -165,11 +210,12 @@ Processa o calculo dos impostos
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method calculate() class LibTaxObj
+method calculate(lRestore) class LibTaxObj
   
-  local nI			:= 0	
-  local oItem   := nil	
-  local oResult	:= JsonObject():new()	
+  local nI			   := 0	
+  local oItem      := nil	
+  local oResult	   := JsonObject():new()	
+  default lRestore := .T.
   
   initMaFis(self)
   
@@ -198,41 +244,54 @@ method calculate() class LibTaxObj
 
   for nI := 1 to Len(::aItems)		
     oItem                      := ::aItems[nI]    
-    oItem["icmsBase"]  	       := MaFisRet(nI, "IT_BASEICM")
-    oItem["icmsAliquot"]       := MaFisRet(nI, "IT_ALIQICM")
-    oItem["icmsValue"]         := MaFisRet(nI, "IT_VALICM")
-    oItem["icmsstBase"]  	     := MaFisRet(nI, "IT_BASESOL")
-    oItem["icmsstAliquot"]     := MaFisRet(nI, "IT_ALIQSOL")
-    oItem["icmsstValue"]       := MaFisRet(nI, "IT_VALSOL")
-    oItem["supIcmsBase"]       := MaFisRet(nI, "IT_BASEICM")
-    oItem["supIcmsAliquot"]    := MaFisRet(nI, "IT_ALIQCMP")
-    oItem["supIcmsValue"]      := MaFisRet(nI, "IT_VALCMP")
-    oItem["supDifIcmsBase"]    := MaFisRet(nI, "IT_BASEICM")
-    oItem["supDifIcmsAliquot"] := MaFisRet(nI, "IT_ALIQCMP")
-    oItem["supDifIcmsValue"]   := MaFisRet(nI, "IT_DIFAL")
-    oItem["icmsDeducted"]      := MaFisRet(nI, "IT_DEDICM")
-    oItem["ipiBase"]  	       := MaFisRet(nI, "IT_BASEIPI")
-    oItem["ipiAliquot"]        := MaFisRet(nI, "IT_ALIQIPI")
-    oItem["ipiValue"]          := MaFisRet(nI, "IT_VALIPI")
-    oItem["pisBase"]  	       := MaFisRet(nI, "IT_BASEPS2")
-    oItem["pisAliquot"]        := MaFisRet(nI, "IT_ALIQPS2")
-    oItem["pisValue"]          := MaFisRet(nI, "IT_VALPS2")
-    oItem["cofinsBase"]  	     := MaFisRet(nI, "IT_BASECF2")
-    oItem["cofinsAliquot"]     := MaFisRet(nI, "IT_ALIQCF2")
-    oItem["cofinsValue"]       := MaFisRet(nI, "IT_VALCF2")
-    oItem["suframa"]           := MaFisRet(nI, "IT_DESCZF")
-    oItem["invoiceValue"]      := MaFisRet(nI, "IT_TOTAL")
-    oItem["cfop"]              := MaFisRet(nI, "IT_CF")
-    oItem["receivable"]        := MaFisRet(nI, "IT_BASEDUP")
-
+    oItem["icmsBase"]  	       := MaFisRet(nI, "IT_BASEICM") // Base ICMS
+    oItem["icmsAliquot"]       := MaFisRet(nI, "IT_ALIQICM") // % ICMS
+    oItem["icmsValue"]         := MaFisRet(nI, "IT_VALICM")  // Valor ICMS
+    oItem["icmsstBase"]  	     := MaFisRet(nI, "IT_BASESOL") // Base ICMS Solidario
+    oItem["icmsstAliquot"]     := MaFisRet(nI, "IT_ALIQSOL") // % ICMS Solidario
+    oItem["icmsstValue"]       := MaFisRet(nI, "IT_VALSOL")  // Valor ICMS Solidario
+    oItem["supIcmsBase"]       := MaFisRet(nI, "IT_BASEICM") // Base ICMS
+    oItem["supIcmsAliquot"]    := MaFisRet(nI, "IT_ALIQCMP") // % ICMS Complementar
+    oItem["supIcmsValue"]      := MaFisRet(nI, "IT_VALCMP")  // Valor ICMS Complementar
+    oItem["supDifIcmsBase"]    := MaFisRet(nI, "IT_BASEICM") // Base ICMS
+    oItem["supDifIcmsAliquot"] := MaFisRet(nI, "IT_ALIQCMP") // % ICMS Complementar 
+    oItem["supDifIcmsValue"]   := MaFisRet(nI, "IT_DIFAL")   // Valor ICMS DIFAL
+    oItem["icmsDeducted"]      := MaFisRet(nI, "IT_DEDICM")  // Valor ICMS Deduzido
+    oItem["ipiBase"]  	       := MaFisRet(nI, "IT_BASEIPI") // Base IPI
+    oItem["ipiAliquot"]        := MaFisRet(nI, "IT_ALIQIPI") // % IPI
+    oItem["ipiValue"]          := MaFisRet(nI, "IT_VALIPI")  // Valor IPI
+    oItem["pisBase"]  	       := MaFisRet(nI, "IT_BASEPS2") // Base PIS
+    oItem["pisAliquot"]        := MaFisRet(nI, "IT_ALIQPS2") // % PIS
+    oItem["pisValue"]          := MaFisRet(nI, "IT_VALPS2")  // Valor PIS
+    oItem["cofinsBase"]  	     := MaFisRet(nI, "IT_BASECF2") // Base COFINS
+    oItem["cofinsAliquot"]     := MaFisRet(nI, "IT_ALIQCF2") // % COFINS
+    oItem["cofinsValue"]       := MaFisRet(nI, "IT_VALCF2")  // Valor COFINS
+    oItem["suframa"]           := MaFisRet(nI, "IT_DESCZF")  // Valor SUFRAMA
+    oItem["invoiceValue"]      := MaFisRet(nI, "IT_TOTAL")   // Valor NF
+    oItem["cfop"]              := MaFisRet(nI, "IT_CF")      // CFOP
+    oItem["receivable"]        := MaFisRet(nI, "IT_BASEDUP") // Valor Titulo Receber
   next nI
 
   oResult["items"] := ::aItems
   
-  MaFisEnd()
-  MaFisRestore()
+  if lRestore
+    ::restore()
+  endIf
 
 return oResult
+
+
+/*/{Protheus.doc} restore
+
+Restaura as funcoes fiscais
+  
+@author soulsys:victorhugo
+@since 13/12/2023
+/*/
+method restore() class LibTaxObj
+  MaFisEnd()
+  MaFisRestore()
+return
 
 /**
  * Inicializa a funcao fiscal
@@ -327,7 +386,7 @@ static function addMaFisItem(oItem)
   local cTes			  := oItem["tes"] 
   local nQtd			  := oItem["quantity"]
   local nPrcUnit		:= oItem["price"]
-  local nDesconto		:= 0
+  local nDesconto		:= oItem["discount"]
   local cNFOri		  := ""
   local cSEROri		  := ""
   local nRecOri		  := 0
