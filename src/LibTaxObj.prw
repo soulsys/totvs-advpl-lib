@@ -35,6 +35,7 @@ class LibTaxObj
   method clearItems()
   method calculate()
   method restore()
+  method getItemTaxesAsArray()
   
 endClass
 
@@ -250,11 +251,11 @@ method calculate(lRestore) class LibTaxObj
     oItem["icmsstBase"]  	     := MaFisRet(nI, "IT_BASESOL") // Base ICMS Solidario
     oItem["icmsstAliquot"]     := MaFisRet(nI, "IT_ALIQSOL") // % ICMS Solidario
     oItem["icmsstValue"]       := MaFisRet(nI, "IT_VALSOL")  // Valor ICMS Solidario
-    oItem["supIcmsBase"]       := MaFisRet(nI, "IT_BASEICM") // Base ICMS
+    oItem["supIcmsBase"]       := MaFisRet(nI, "IT_BASEICM") // Base ICMS Complementar
     oItem["supIcmsAliquot"]    := MaFisRet(nI, "IT_ALIQCMP") // % ICMS Complementar
     oItem["supIcmsValue"]      := MaFisRet(nI, "IT_VALCMP")  // Valor ICMS Complementar
-    oItem["supDifIcmsBase"]    := MaFisRet(nI, "IT_BASEICM") // Base ICMS
-    oItem["supDifIcmsAliquot"] := MaFisRet(nI, "IT_ALIQCMP") // % ICMS Complementar 
+    oItem["supDifIcmsBase"]    := MaFisRet(nI, "IT_BASEICM") // Base ICMS DIFAL
+    oItem["supDifIcmsAliquot"] := MaFisRet(nI, "IT_ALIQCMP") // % ICMS DIFAL 
     oItem["supDifIcmsValue"]   := MaFisRet(nI, "IT_DIFAL")   // Valor ICMS DIFAL
     oItem["icmsDeducted"]      := MaFisRet(nI, "IT_DEDICM")  // Valor ICMS Deduzido
     oItem["ipiBase"]  	       := MaFisRet(nI, "IT_BASEIPI") // Base IPI
@@ -291,6 +292,70 @@ Restaura as funcoes fiscais
 method restore() class LibTaxObj
   MaFisEnd()
   MaFisRestore()
+return
+
+
+/*/{Protheus.doc} getItemTaxesAsArray
+
+Retorna os impostos de um item em forma de array de objetos
+  
+@author soulsys:victorhugo
+@since 28/12/2023
+/*/
+method getItemTaxesAsArray(oTaxItem) class LibTaxObj
+
+  local aTaxes := {}
+
+  if oTaxItem["icmsValue"] > 0
+    addTaxData("ICMS", "ICMS", oTaxItem["icmsBase"], oTaxItem["icmsAliquot"], oTaxItem["icmsValue"], @aTaxes)
+  endIf
+
+  if oTaxItem["icmsstValue"] > 0
+    addTaxData("ICMSST", "ICMS ST", oTaxItem["icmsstBase"], oTaxItem["icmsstAliquot"], oTaxItem["icmsstValue"], @aTaxes)
+  endIf
+
+  if oTaxItem["ipiValue"] > 0
+    addTaxData("IPI", "IPI", oTaxItem["ipiBase"], oTaxItem["ipiAliquot"], oTaxItem["ipiValue"], @aTaxes)
+  endIf
+
+  if oTaxItem["supIcmsValue"] > 0
+    addTaxData("ICMSCMP", "ICMS Complementar", oTaxItem["supIcmsBase"], oTaxItem["supIcmsAliquot"], oTaxItem["supIcmsValue"], @aTaxes)
+  endIf
+
+  if oTaxItem["supDifIcmsValue"] > 0
+    addTaxData("ICMSDIF", "ICMS DIFAL", oTaxItem["supDifIcmsBase"], oTaxItem["supDifIcmsAliquot"], oTaxItem["supDifIcmsValue"], @aTaxes)
+  endIf
+
+  if oTaxItem["pisValue"] > 0
+    addTaxData("PIS", "PIS", oTaxItem["pisBase"], oTaxItem["pisAliquot"], oTaxItem["pisValue"], @aTaxes)
+  endIf
+
+  if oTaxItem["cofinsValue"] > 0
+    addTaxData("PIS", "PIS", oTaxItem["cofinsBase"], oTaxItem["cofinsAliquot"], oTaxItem["cofinsValue"], @aTaxes)
+  endIf
+
+  if oTaxItem["icmsDeducted"] > 0
+    addTaxData("ICMSDED", "ICMS Desonerado", nil, nil, oTaxItem["icmsDeducted"], @aTaxes)
+  endIf
+
+  if oTaxItem["suframa"] > 0
+    addTaxData("SUFRAMA", "SUFRAMA", nil, nil, oTaxItem["suframa"], @aTaxes)
+  endIf
+  
+return aTaxes
+
+static function addTaxData(cId, cDescription, nBasis, nAliquot, nValue, aTaxes)
+
+  local oTax := JsonObject():new()
+
+  oTax["id"]          := cId
+  oTax["description"] := cDescription
+  oTax["basis"]       := nBasis
+  oTax["aliquot"]     := nAliquot
+  oTax["value"]       := nValue
+  
+  aAdd(aTaxes, oTax)
+
 return
 
 /**
