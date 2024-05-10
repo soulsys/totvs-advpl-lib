@@ -56,6 +56,7 @@ class LibUtilsObj from LibAdvplObj
   method padrSx3()
   method parseDate()
   method parseInt()
+  method parseFloat()
   method removeDir()
   method restAreas()
   method saveAreas()
@@ -1078,6 +1079,28 @@ method parseInt(cStr) class LibUtilsObj
   cStr := AllTrim(cStr)
 
 return Val(StrTran(cStr, ".", ""))
+
+
+/*/{Protheus.doc} parseFloat
+
+Retorna um valor decimal de uma string
+    
+@author soulsys:waldiresmerio
+@since 10/05/2024
+/*/
+method parseFloat(cStr) class LibUtilsObj
+
+  if (ValType(cStr) == "N")
+    return cStr
+  endIf
+
+  if Empty(cStr)
+    cStr := "0"
+  endIf
+
+  cStr := AllTrim(cStr)
+
+return Val(StrTran(StrTran(cStr, ".", ""), ",", "."))
 
 
 /*/{Protheus.doc} removeDir
