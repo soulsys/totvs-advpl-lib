@@ -67,6 +67,7 @@ class LibSqlObj from LibAdvplObj
   method saveAreas()
   method restoreAreas()
   method dbSeek()
+  method json()
   
 endClass
 
@@ -1323,3 +1324,53 @@ method dbSeek(cAlias, xIndex, aKey) class LibSqlObj
   (cAlias)->(dbSeek(cKey))
 
 return
+
+
+/*/{Protheus.doc} json
+
+Executa uma query e converte o resultado para um array de objetos JSON
+
+@author soulsys:victorhugo
+@since 27/11/2024
+/*/
+method json(cQuery) class LibSqlObj	
+
+  local nI := 0
+  local cAlias := ""
+  local cField := ""  
+  local aStruct := {}
+  local aData := {}
+  local lClose := .F.
+  local oRecord := nil
+
+  if !::aliasExists()    
+    ::newAlias(cQuery) 
+    lClose := .T.
+  endIf
+
+  cAlias := ::getAlias()
+  aStruct := ::getStruct()
+
+  ::goTop()
+  while ::notIsEof()
+
+    oRecord := JsonObject():new()
+
+    for nI := 1 to Len(aStruct)
+      cField := aStruct[nI,1]
+      oRecord[Lower(cField)] := (cAlias)->&cField
+    next nI
+
+    aAdd(aData, oRecord)
+
+    ::skip()
+
+  endDo
+
+  if lClose
+    ::close()
+  else
+    ::goTop()
+  endIf
+
+return aData
