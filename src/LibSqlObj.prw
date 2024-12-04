@@ -151,6 +151,8 @@ method setField(cField, cType, nSize, nDecimals) class LibSqlObj
   local cAlias		  := ::getAlias()
   default nSize 		:= 0
   default nDecimals	:= 0
+
+  cField := Upper(AllTrim(cField))
   
   if (cType == "D")
     nSize := 8
