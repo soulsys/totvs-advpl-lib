@@ -161,11 +161,12 @@ Adiciona itens ao calculo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method addItem(cProduct, cTES, nQuantity, nPrice, nFreight, nDiscount) class LibTaxObj
+method addItem(cProduct, cTES, nQuantity, nPrice, nFreight, nDiscount, nExpenses) class LibTaxObj
   
   local oItem       := JsonObject():new()
   default nFreight  := 0
   default nDiscount := 0
+  default nExpenses := 0
 
   if Empty(cTES)
     cTES := getOperationTES(self, cProduct)
@@ -177,6 +178,7 @@ method addItem(cProduct, cTES, nQuantity, nPrice, nFreight, nDiscount) class Lib
   oItem["price"]    := nPrice
   oItem["freight"]  := nFreight
   oItem["discount"] := nDiscount
+  oItem["expenses"] := nExpenses
   
   aAdd(::aItems, oItem)
   
@@ -456,7 +458,7 @@ static function addMaFisItem(oItem)
   local cSEROri		  := ""
   local nRecOri		  := 0
   local nFrete		  := oItem["freight"]
-  local nDespesa		:= 0
+  local nDespesa		:= oItem["expenses"]
   local nSeguro		  := 0
   local nFretAut		:= 0
   local nValMerc		:= (oItem["quantity"] * oItem["price"])
