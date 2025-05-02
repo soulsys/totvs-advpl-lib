@@ -10,7 +10,7 @@ Objeto para calculo de impostos
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class SysLibTax
+class SysLibTax from SysLibAdvpl
 
   public data cCode
   public data cUnit

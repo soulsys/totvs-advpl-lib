@@ -20,7 +20,7 @@ Objeto para manipulacao de tokens no padrao JWT
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class SysLibJwt
+class SysLibJwt from SysLibAdvpl
 
   public data cError
   
