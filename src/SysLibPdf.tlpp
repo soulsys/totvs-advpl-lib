@@ -1,4 +1,5 @@
 #include "tlpp-core.th"
+#include "totvs.ch"
 #include "fwprintsetup.ch"
 #include "parmtype.ch"
 #include "rptdef.ch"

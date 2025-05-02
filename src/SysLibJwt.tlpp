@@ -1,4 +1,5 @@
 #include "tlpp-core.th"
+#include "totvs.ch"
 #include "rwmake.ch"
 
 #define DEFAULT_JWT_SECRET 	"#SysLibJwt@!" 

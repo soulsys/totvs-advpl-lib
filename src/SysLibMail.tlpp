@@ -1,5 +1,5 @@
 #include "tlpp-core.th"
-
+#include "totvs.ch"
 
 /*/{Protheus.doc} SysLibMail
  
