@@ -1,11 +1,11 @@
 ## Exemplo de Envio de E-mail
 
-Através da classe [LibMailObj](#) fica muito fácil enviar e-mails pelo Protheus. 
+Através da classe [SysLibMail](#) fica muito fácil enviar e-mails pelo Protheus.
 
 ```cpp
 user function MailSample()
 
-  local oMail    := LibMailObj():newLibMailObj()
+  local oMail    := SysLibMail():new()
   local cTo      := "joao@fake-mail.com"
   local cSubject := "Assunto Importante"
   local cBody    := ""
@@ -13,7 +13,7 @@ user function MailSample()
   cBody := "<p>Olá! Esse é o corpo da mensagem em HTML.</p>"
   cBody += "<p>Quando não informadas, as configurações de e-mail são "
   cBody += "obtidas automaticamente através dos parâmetros padrões (MV_RELXXX).</p>"
-  
+
   if oMail:send(cTo, cSubject, cBody)
     MsgInfo("E-mail enviado com sucesso")
   else
@@ -32,8 +32,8 @@ Outro recurso legal é a possibilidade de criação de um layout HTML para o cor
     <p>E-mail enviado em <strong>%date%</strong> às <strong>%time%</strong></p>
     <table>
       <tbody>
-        <tr>            
-          <td>%tb.row%</td>          
+        <tr>
+          <td>%tb.row%</td>
         </tr>
       </tbody>
     </table>
@@ -46,11 +46,11 @@ A partir da definição do HTML basta substituir as variáveis contidas no templ
 ```cpp
 user function HtmlMailSample()
 
-  local oMail    := LibMailObj():newLibMailObj()
+  local oMail    := SysLibMail():new()
   local cTo      := "joao@fake-mail.com"
   local cSubject := "Assunto Importante"
   local nRow     := 0
-  
+
   oMail:setHtmlLayout("template.html")
   oMail:setHtmlValue("date", DtoC(dDataBase))
   oMail:setHtmlValue("time", Time())
@@ -58,7 +58,7 @@ user function HtmlMailSample()
   for nRow := 1 to 5
     oMail:addHtmlTableValue("tb.row", StrZero(nRow, 2))
   next nRow
-  
+
   if oMail:send(cTo, cSubject)
     MsgInfo("E-mail enviado com sucesso")
   else

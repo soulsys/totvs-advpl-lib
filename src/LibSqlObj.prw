@@ -9,7 +9,7 @@ Objeto para manipulacao de instrucoes SQL
 @author soulsys:victorhugo
 @since 18/09/2021 
 /*/
-class LibSqlObj from LibAdvplObj
+class LibSqlObj from SysLibAdvpl
   
   data cAlias 
   data cLastQuery
@@ -81,7 +81,7 @@ Construtor do objeto
 /*/
 method newLibSqlObj() class LibSqlObj		
   
-  ::newLibAdvplObj()
+  _Super:new()
   
   ::cLastQuery			    := ""
   ::cLastError			    := ""
@@ -700,7 +700,7 @@ method exportToCsv(cFile, lShowProgress, cDelimiter) class LibSqlObj
   local nRecs			      := 0
   local nRecAtu		      := 0
   local lOk 			      := .F.
-  local oFile			      := LibFileObj():newLibFileObj(cFile)
+  local oFile			      := SysLibFile():new(cFile)
   default lShowProgress := .F.
   default cDelimiter    := ";"
   
@@ -921,7 +921,7 @@ Salva uma query em arquivo texto
 method saveQuery(cFile, cQuery) class LibSqlObj
   
   local lOk		   := .F.
-  local oFile 	 := LibFileObj():newLibFileObj(cFile)
+  local oFile 	 := SysLibFile():new(cFile)
   default cQuery := ::getLastQuery()
   
   cQuery := ::parseQuery(cQuery)
@@ -1042,7 +1042,7 @@ return (::nExternalConnection > 0)
  */
 static function setLastError(oSelf, cMethod, cError)
 
-  local oLog := LibLogObj():newLibLogObj(nil, .T., .F.)
+  local oLog := SysLibLog():new(nil, .T., .F.)
   
   oSelf:cLastError := "[ LibSqlObj - ERRO - "+DtoC(Date())+" - "+Time()+" - "+AllTrim(cMethod)+"() ] "
   oSelf:cLastError += cError
@@ -1185,7 +1185,7 @@ Exibe uma query no console
 /*/
 method debugQuery(cQuery) class LibSqlObj
 
-  local oLog := LibLogObj():newLibLogObj(nil, .T., .F.)
+  local oLog := SysLibLog():new(nil, .T., .F.)
   
   oLog:info(CRLF + CRLF + ::parseQuery(cQuery) + CRLF + CRLF)
 

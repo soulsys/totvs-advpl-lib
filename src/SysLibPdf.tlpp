@@ -1,6 +1,5 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
 #include "fwprintsetup.ch"
-#include "totvs.ch"
 #include "parmtype.ch"
 #include "rptdef.ch"
 #include "rwmake.ch"
@@ -8,84 +7,84 @@
 #define SETUP_TEXT_SIZE 400
 
 
-/*/{Protheus.doc} LibPdfObj
+/*/{Protheus.doc} SysLibPdf
 
 Objeto para geracao de arquivos PDF
   
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibPdfObj from LibAdvplObj
+class SysLibPdf from SysLibAdvpl
   
-  data oPrinter
-  data cDirectory
-  data cPdfFile
-  data cFileName
-  data lServer
-  data lShowPdf
-  data cEmail
-  data oFontDefault
-  data nSleep
+  public data oPrinter
+  public data cDirectory
+  public data cPdfFile
+  public data cFileName
+  public data lServer
+  public data lShowPdf
+  public data cEmail
+  public data oFontDefault
+  public data nSleep
 
-  data H_LEFT
-  data H_RIGHT
-  data H_CENTER
+  public data H_LEFT
+  public data H_RIGHT
+  public data H_CENTER
 
-  data V_CENTER
-  data V_TOP
-  data V_BOTTOM
+  public data V_CENTER
+  public data V_TOP
+  public data V_BOTTOM
   
-  method newLibPdfObj() constructor
+  public method new() constructor
   
-  method getFwMsPrinter()
-  method getDirectory() 
-  method setDirectory()
-  method getPdfFile()
-  method getFileName()
-  method setFileName()
-  method isServer()
-  method isShowPdf()
-  method setShowPdf()
-  method getEmail()
-  method setEmail()
-  method getFontDefault()
-  method setFontDefault() 	
-  method getSleep()
-  method setSleep()
+  public method getFwMsPrinter()
+  public method getDirectory() 
+  public method setDirectory()
+  public method getPdfFile()
+  public method getFileName()
+  public method setFileName()
+  public method isServer()
+  public method isShowPdf()
+  public method setShowPdf()
+  public method getEmail()
+  public method setEmail()
+  public method getFontDefault()
+  public method setFontDefault() 	
+  public method getSleep()
+  public method setSleep()
   
-  method setup()
-  method setLandscape()
-  method setPortrait()
-  method say()
-  method sayAlign()
-  method line()
-  method box()
-  method coloredBox()
-  method bitmap()
-  method startPage()
-  method endPage()
-  method setMargin()
-  method create()
-  method sendEmail()
-  method clear()
+  public method setup()
+  public method setLandscape()
+  public method setPortrait()
+  public method say()
+  public method sayAlign()
+  public method line()
+  public method box()
+  public method coloredBox()
+  public method bitmap()
+  public method startPage()
+  public method endPage()
+  public method setMargin()
+  public method create()
+  public method sendEmail()
+  public method clear()
   
 endClass
 
 
-/*/{Protheus.doc} newLibPdfObj
+/*/{Protheus.doc} new
 
 Construtor
   
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibPdfObj(cFileName, cDirectory, lShowPdf) class LibPdfObj
+method new(cFileName, cDirectory, lShowPdf) class SysLibPdf
   
   default cFileName	 := "PdfFile"
   default cDirectory := "\spool\"
   default lShowPdf	 := .F.
           
-  ::newLibAdvplObj()	
+  _Super:new()	
   
   ::cFileName	   := cFileName
   ::cDirectory   := cDirectory
@@ -171,7 +170,7 @@ Coleta o Objeto padrao de controle da impressao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFwMsPrinter() class LibPdfObj	
+method getFwMsPrinter() class SysLibPdf	
   loadPrinter(@self)	
 return ::oPrinter
 
@@ -183,7 +182,7 @@ Coleta o diretorio para gravacao do arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getDirectory() class LibPdfObj
+method getDirectory() class SysLibPdf
 return ::cDirectory
 
 
@@ -194,7 +193,7 @@ Define o diretorio para gravacao do arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setDirectory(cDirectory) class LibPdfObj
+method setDirectory(cDirectory) class SysLibPdf
   ::cDirectory := AllTrim(cDirectory)
 return
 
@@ -206,7 +205,7 @@ Coleta o Arquivo PDF a ser gerado (com o diretorio e com a extensao)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getPdfFile() class LibPdfObj
+method getPdfFile() class SysLibPdf
 return ::cPdfFile
 
 
@@ -217,7 +216,7 @@ Coleta o Nome do PDF (sem o diretorio e sem a extensao)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFileName() class LibPdfObj
+method getFileName() class SysLibPdf
 return ::cFileName
 
 
@@ -228,7 +227,7 @@ Define o Nome do PDF (sem o diretorio e sem a extensao)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFileName(cFileName) class LibPdfObj
+method setFileName(cFileName) class SysLibPdf
   ::cFileName := AllTrim(cFileName)
 return
 
@@ -240,7 +239,7 @@ Indica se arquivo esta sendo gerado no Servidor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isServer() class LibPdfObj
+method isServer() class SysLibPdf
 return ::lServer
 
 
@@ -251,7 +250,7 @@ Indica se Exibe o PDF apos a geracao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isShowPdf() class LibPdfObj
+method isShowPdf() class SysLibPdf
 return ::lShowPdf
 
 
@@ -262,7 +261,7 @@ Define se Exibe o PDF apos a geracao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setShowPdf(lShowPdf) class LibPdfObj
+method setShowPdf(lShowPdf) class SysLibPdf
   ::lShowPdf := lShowPdf
 return
 
@@ -274,7 +273,7 @@ Coleta o e-mail para envio do Arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getEmail() class LibPdfObj
+method getEmail() class SysLibPdf
 return ::cEmail
 
 
@@ -285,7 +284,7 @@ Define o e-mail para envio do Arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setEmail(cEmail) class LibPdfObj
+method setEmail(cEmail) class SysLibPdf
   ::cEmail := AllTrim(cEmail)
 return
 
@@ -297,7 +296,7 @@ Coleta a Fonte padrao do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFontDefault() class LibPdfObj
+method getFontDefault() class SysLibPdf
 return ::oFontDefault
 
 
@@ -308,7 +307,7 @@ Define a Fonte padrao do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFontDefault(oFontDefault) class LibPdfObj
+method setFontDefault(oFontDefault) class SysLibPdf
   ::oFontDefault := oFontDefault
 return
 
@@ -320,7 +319,7 @@ Coleta o Tempo de Espera antes de gerar o PDF (milisegundos)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getSleep() class LibPdfObj
+method getSleep() class SysLibPdf
 return ::nSleep
 
 
@@ -331,7 +330,7 @@ Define o Tempo de Espera antes de gerar o PDF (milisegundos)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setSleep(nSleep) class LibPdfObj
+method setSleep(nSleep) class SysLibPdf
   ::nSleep := nSleep
 return
 
@@ -343,7 +342,7 @@ Exibe o Dialogo de Setup
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setup(cTitle, oParamBox) class LibPdfObj
+method setup(cTitle, oParamBox) class SysLibPdf
 
   local lOk				      := .F.
   local bValid			    := {|| validSetup(@self)}
@@ -493,7 +492,7 @@ Define o layout do relatorio como paisagem
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setLandscape() class LibPdfObj
+method setLandscape() class SysLibPdf
   
   loadPrinter(@self)
   
@@ -509,7 +508,7 @@ Define o layout do relatorio como retrato
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setPortrait() class LibPdfObj
+method setPortrait() class SysLibPdf
   
   loadPrinter(@self)
   
@@ -525,7 +524,7 @@ Imprime um Texto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method say(nRow, nCol, cText, oFont, nWidth, nColor, nAngle, nAlign) class LibPdfObj		
+method say(nRow, nCol, cText, oFont, nWidth, nColor, nAngle, nAlign) class SysLibPdf		
   
   default oFont := ::oFontDefault
   
@@ -543,7 +542,7 @@ Imprime um Texto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method sayAlign(nRow, nCol, cText, oFont, nWidth, nHeight, nColor, nAlignHorz, nAlignVert) class LibPdfObj		
+method sayAlign(nRow, nCol, cText, oFont, nWidth, nHeight, nColor, nAlignHorz, nAlignVert) class SysLibPdf		
   
   default oFont := ::oFontDefault
   
@@ -561,7 +560,7 @@ Imprime uma linha
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method line(nTop, nLeft, nBottom, nRight, nColor, cPixel) class LibPdfObj
+method line(nTop, nLeft, nBottom, nRight, nColor, cPixel) class SysLibPdf
   
   loadPrinter(@self)
   
@@ -576,7 +575,7 @@ Imprime um quadrado
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method box(nRow, nCol, nBottom, nRight, cPixel) class LibPdfObj
+method box(nRow, nCol, nBottom, nRight, cPixel) class SysLibPdf
   
   loadPrinter(@self)
   
@@ -591,7 +590,7 @@ Imprime um quadrado colorido
 @author soulsys:waldiresmerio
 @since 05/09/2022
 /*/	
-method coloredBox(nRow, nCol, nBottom, nRight, cColor, cPixel) class LibPdfObj
+method coloredBox(nRow, nCol, nBottom, nRight, cColor, cPixel) class SysLibPdf
   
   local oBrush   := TBrush():new(nil, cColor)
   default cColor := CLR_WHITE
@@ -610,7 +609,7 @@ impressao de um bitmap
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method bitmap(nRow, nCol, cBitmap, nWidth, nHeight) class LibPdfObj
+method bitmap(nRow, nCol, cBitmap, nWidth, nHeight) class SysLibPdf
   
   loadPrinter(@self)
   
@@ -626,7 +625,7 @@ Inicia uma nova pagina
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method startPage() class LibPdfObj
+method startPage() class SysLibPdf
   
   loadPrinter(@self)
   
@@ -642,7 +641,7 @@ Encerra uma pagina
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method endPage() class LibPdfObj
+method endPage() class SysLibPdf
   
   loadPrinter(@self)
   
@@ -658,7 +657,7 @@ Define as Margens de impressao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method setMargin(nLeft, nTop, nRight, nBottom) class LibPdfObj
+method setMargin(nLeft, nTop, nRight, nBottom) class SysLibPdf
   
   loadPrinter(@self)
   
@@ -674,10 +673,10 @@ Cria o PDF
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method create(lSendMail) class LibPdfObj	
+method create(lSendMail) class SysLibPdf	
   
   local lOk	 	      := .F.
-   local oFile  	    := LibFileObj():newLibFileObj(::cPdfFile)	
+   local oFile  	    := SysLibFile():new(::cPdfFile)	
    default lSendMail := .T.
   
   if oFile:exists() .and. !oFile:delete()
@@ -712,7 +711,7 @@ static function eraseRelFile(oSelf)
   
   local cFileName := AllTrim(oSelf:getFileName())
   local cRelFile  := "\spool\"+cFileName+".rel"
-  local oFile     := LibFileObj():newLibFileObj(cRelFile)
+  local oFile     := SysLibFile():new(cRelFile)
   
   if oFile:exists()
     oFile:delete()
@@ -735,7 +734,7 @@ Envia o PDF por e-mail
 
 @return Logico Indica se o e-mail foi enviado
 /*/
-method sendEmail(cSubject, cBody) class LibPdfObj
+method sendEmail(cSubject, cBody) class SysLibPdf
   
   local lOk 		  := .F.
   local cTo		    := ::getEmail()
@@ -744,12 +743,12 @@ method sendEmail(cSubject, cBody) class LibPdfObj
   local cSrvFile	:= "\spool\"+AllTrim(cFileName)+".pdf"
   local lServer	  := ::isServer()
   local oFile		  := nil
-  local oMail		  := LibMailObj():newLibMailObj()
+  local oMail		  := SysLibMail():new()
   
   if Empty(cPdfFile) .or. Empty(cTo)
     return .F.
   else
-    oFile := LibFileObj():newLibFileObj(cPdfFile)
+    oFile := SysLibFile():new(cPdfFile)
     if !oFile:exists()
       return .F.
     endIf
@@ -758,7 +757,7 @@ method sendEmail(cSubject, cBody) class LibPdfObj
   if !lServer
     if oFile:copy(cSrvFile)
       oFile:close()
-      oFile := LibFileObj():newLibFileObj(cSrvFile)
+      oFile := SysLibFile():new(cSrvFile)
     else
       MsgBox("Falha ao copiar o arquivo "+cPdfFile+" para o servidor", "Atencao", "STOP")
       oFile:close()	 
@@ -801,6 +800,6 @@ Limpa o objeto de impressao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method clear() class LibPdfObj	
+method clear() class SysLibPdf	
   ::oPrinter := nil	
 return

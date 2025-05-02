@@ -1,7 +1,7 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
 #include "rwmake.ch"
 
-#define DEFAULT_JWT_SECRET 	"#LibJwtObj@!" 
+#define DEFAULT_JWT_SECRET 	"#SysLibJwt@!" 
 
 #define ALGORITHM_MD5		  1
 #define ALGORITHM_SHA1		3
@@ -12,33 +12,33 @@
 #define HEX_HASH	2
 
 
-/*/{Protheus.doc} LibJwtObj
+/*/{Protheus.doc} SysLibJwt
 
 Objeto para manipulacao de tokens no padrao JWT
     
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibJwtObj
+class SysLibJwt
 
-  data cError
+  public data cError
   
-  method newLibJwtObj() constructor
-  method encode()
-  method decode()
-  method getError()
+  public method new() constructor
+  public method encode()
+  public method decode()
+  public method getError()
   
 endClass
 
 
-/*/{Protheus.doc} newLibJwtObj
+/*/{Protheus.doc} new
 
 Construtor
     
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibJwtObj() class LibJwtObj
+method new() class SysLibJwt
 
   ::cError := ""
   
@@ -52,7 +52,7 @@ Gera um token
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method encode(cPayload, cSecret, nAlgorithm) class LibJwtObj
+method encode(cPayload, cSecret, nAlgorithm) class SysLibJwt
   
   local cToken		   := ""
   local cSignature	 := ""	
@@ -106,7 +106,7 @@ Obtem os dados de um token
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method decode(cToken, cSecret, nAlgorithm) class LibJwtObj
+method decode(cToken, cSecret, nAlgorithm) class SysLibJwt
   
   local aData      		   := StrTokArr(cToken, ".")
   local cHeader			     := ""
@@ -149,6 +149,6 @@ Retorna a mensagem de erro do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getError() class LibJwtObj
+method getError() class SysLibJwt
 return ::cError
 

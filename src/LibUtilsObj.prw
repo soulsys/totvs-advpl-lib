@@ -9,7 +9,7 @@ Objeto com funcionalidades genericas
 @author soulsys:victorhugo
 @since 18/09/2021 
 /*/
-class LibUtilsObj from LibAdvplObj
+class LibUtilsObj from SysLibAdvpl
 
   method newLibUtilsObj() constructor
   
@@ -82,7 +82,7 @@ Construtor
 @since 18/09/2021
 /*/
 method newLibUtilsObj() class LibUtilsObj
-  ::newLibAdvplObj()
+  _Super:new()
 return
 
 
@@ -203,7 +203,7 @@ method consoleLog(xValue, lShowMsg, nSleep) class LibUtilsObj
   local cFile      := nil
   local lConsole   := .T.
   local lWriteFile := .F.
-  local oLog       := LibLogObj():newLibLogObj(cFile, lConsole, lWriteFile)
+  local oLog       := SysLibLog():new(cFile, lConsole, lWriteFile)
   default lShowMsg := .F.
   default nSleep   := 0
   
@@ -247,7 +247,7 @@ method debugMsg(cVar, xValue, lConsole, nSleep) class LibUtilsObj
     return Alert("[DEBUG] - " + cMsg)
   endIf  
 
-  oLog := LibLogObj():newLibLogObj()
+  oLog := SysLibLog():new()
   oLog:setConsole(.T.)  
   oLog:setShowCompany(.T.)
   oLog:setShowThreadId(.T.)
@@ -681,7 +681,7 @@ Coleta o diretorio do Smartclient
 /*/
 method getRemoteDirectory() class LibUtilsObj
   
-  local oIniFile := LibFileObj():newLibFileObj(GetRemoteIniName())
+  local oIniFile := SysLibFile():new(GetRemoteIniName())
   
 return oIniFile:getDirectory()
 
@@ -1211,7 +1211,7 @@ method showArrayAuto(aExecAuto) class LibUtilsObj
 
   local nI     := 0
   local cStr   := ""
-  local oLog   := LibLogObj():newLibLogObj()
+  local oLog   := SysLibLog():new()
   local oUtils := LibUtilsObj():newLibUtilsObj()
 
   for nI := 1 to Len(aExecAuto)

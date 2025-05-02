@@ -8,7 +8,7 @@ Servico para interacao com API do TReports
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
-class LibTReportsObj from LibAdvplObj
+class LibTReportsObj from SysLibAdvpl
 
   data cErrorMessage
   data cAuthToken

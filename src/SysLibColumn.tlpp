@@ -1,86 +1,85 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
  
  
-/*/{Protheus.doc} LibColumnObj
+/*/{Protheus.doc} SysLibColumn
  
-Colunas do objeto LibGridObj
+Colunas do objeto SysLibGrid
   
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibColumnObj from LibAdvplObj	
+class SysLibColumn from SysLibAdvpl	
   
-  data cId
-  data cBmpId
-  data cTitle
-  data cType
-  data nSize
-  data cPicture
-  data nDecimals
-  data cValidation
-  data cF3
-  data cComboBox
-  data cInitializer
-  data lReadOnly	
-  data cContext
-  data cBrowseInitializer
-  data cShowOnBrowse
-  data lMarkColumn
-  data lBmpColumn
-  data lSx3
-  data lRequired
+  public data cId
+  public data cBmpId
+  public data cTitle
+  public data cType
+  public data nSize
+  public data cPicture
+  public data nDecimals
+  public data cValidation
+  public data cF3
+  public data cComboBox
+  public data cInitializer
+  public data lReadOnly	
+  public data cContext
+  public data cBrowseInitializer
+  public data cShowOnBrowse
+  public data lMarkColumn
+  public data lBmpColumn
+  public data lSx3
+  public data lRequired
   
-  method newLibColumnObj() constructor	
+  public method new() constructor	
   
-  method getId()
-  method setId()
-  method getBmpId()
-  method setBmpId()
-  method getTitle()
-  method setTitle()
-  method getType()
-  method setType()
-  method getSize()
-  method setSize()
-  method getPicture()
-  method setPicture()
-  method getDecimals()
-  method setDecimals()
-  method getValidation()
-  method setValidation()
-  method getF3()
-  method setF3()
-  method getComboBox()
-  method setComboBox()
-  method getInitializer()
-  method setInitializer()
-  method isReadOnly()
-  method setReadOnly()
-  method getContext()
-  method setContext()
-  method getBrowseInitializer()
-  method setBrowseInitializer()
-  method getShowOnBrowse()
-  method setShowOnBrowse()
-  method isMarkColumn()
-  method isBmpColumn()
-  method isSx3()
-  method isRequired()
-  method setRequired()
-  
-  method getEmptyValue()
+  public method getId()
+  public method setId()
+  public method getBmpId()
+  public method setBmpId()
+  public method getTitle()
+  public method setTitle()
+  public method getType()
+  public method setType()
+  public method getSize()
+  public method setSize()
+  public method getPicture()
+  public method setPicture()
+  public method getDecimals()
+  public method setDecimals()
+  public method getValidation()
+  public method setValidation()
+  public method getF3()
+  public method setF3()
+  public method getComboBox()
+  public method setComboBox()
+  public method getInitializer()
+  public method setInitializer()
+  public method isReadOnly()
+  public method setReadOnly()
+  public method getContext()
+  public method setContext()
+  public method getBrowseInitializer()
+  public method setBrowseInitializer()
+  public method getShowOnBrowse()
+  public method setShowOnBrowse()
+  public method isMarkColumn()
+  public method isBmpColumn()
+  public method isSx3()
+  public method isRequired()
+  public method setRequired()
+  public method getEmptyValue()
   
 endClass
 
 
-/*/{Protheus.doc} newLibColumnObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibColumnObj(cId, cTitle, cType, nSize, nDecimals, cPicture) class LibColumnObj	
+method new(cId, cTitle, cType, nSize, nDecimals, cPicture) class SysLibColumn	
   
   default cId			  := ""
   default cTitle 		:= ""
@@ -89,7 +88,7 @@ method newLibColumnObj(cId, cTitle, cType, nSize, nDecimals, cPicture) class Lib
   default nDecimals	:= 0
   default cPicture	:= ""	
   
-  ::newLibAdvplObj()
+  _Super:new()
   
   ::cId := cId
 
@@ -216,7 +215,7 @@ Coleta o ID da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getId() class LibColumnObj
+method getId() class SysLibColumn
 return ::cId
 
 
@@ -227,7 +226,7 @@ Define o ID da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setId(cId) class LibColumnObj
+method setId(cId) class SysLibColumn
   ::cId := cId
   checkMarkBmp(@self)
   checkSx3(@self)
@@ -243,7 +242,7 @@ Coleta o ID de Bitmap da coluna
 
 @return String ID de Bitmap
 /*/
-method getBmpId() class LibColumnObj
+method getBmpId() class SysLibColumn
 return ::cBmpId
 
 
@@ -256,7 +255,7 @@ Define o ID de Bitmap da coluna
 
 @param cId, String, ID de Bitmap
 /*/
-method setBmpId(cBmpId) class LibColumnObj
+method setBmpId(cBmpId) class SysLibColumn
   ::cBmpId := cBmpId
 return
 
@@ -268,7 +267,7 @@ Coleta o titulo da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getTitle() class LibColumnObj
+method getTitle() class SysLibColumn
 return ::cTitle
 
 
@@ -279,7 +278,7 @@ Define o titulo da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setTitle(cTitle) class LibColumnObj
+method setTitle(cTitle) class SysLibColumn
   ::cTitle := cTitle
 return
 
@@ -291,7 +290,7 @@ Coleta o Tipo da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getType() class LibColumnObj	
+method getType() class SysLibColumn	
 return ::cType
 
 
@@ -302,7 +301,7 @@ Define o Tipo da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setType(cType) class LibColumnObj
+method setType(cType) class SysLibColumn
   ::cType := cType
 return
 
@@ -314,7 +313,7 @@ Coleta o Tamanho da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getSize() class LibColumnObj
+method getSize() class SysLibColumn
 return ::nSize
 
 
@@ -325,7 +324,7 @@ Define o Tamanho da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setSize(nSize) class LibColumnObj
+method setSize(nSize) class SysLibColumn
   ::nSize := nSize
 return
 
@@ -337,7 +336,7 @@ Coleta a Picture da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method getPicture() class LibColumnObj
+method getPicture() class SysLibColumn
 return ::cPicture
 
 
@@ -348,7 +347,7 @@ Define a Picture da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setPicture(cPicture) class LibColumnObj
+method setPicture(cPicture) class SysLibColumn
   ::cPicture := cPicture
 return
 
@@ -360,7 +359,7 @@ Coleta os Decimais da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getDecimals() class LibColumnObj
+method getDecimals() class SysLibColumn
 return ::nDecimals
 
 
@@ -371,7 +370,7 @@ Define os Decimais da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setDecimals(nDecimals) class LibColumnObj
+method setDecimals(nDecimals) class SysLibColumn
   ::nDecimals := nDecimals
 return 
 
@@ -383,7 +382,7 @@ Coleta a validacao da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method getValidation() class LibColumnObj
+method getValidation() class SysLibColumn
 return ::cValidation
 
 
@@ -394,7 +393,7 @@ Define a validacao da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setValidation(cValidation) class LibColumnObj
+method setValidation(cValidation) class SysLibColumn
   ::cValidation := cValidation
 return
 
@@ -406,7 +405,7 @@ Coleta a consulta F3 da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getF3() class LibColumnObj
+method getF3() class SysLibColumn
 return ::cF3
 
 
@@ -417,7 +416,7 @@ Define a Consulta F3 da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setF3(cF3) class LibColumnObj
+method setF3(cF3) class SysLibColumn
   ::cF3 := cF3
 return
 
@@ -429,7 +428,7 @@ Coleta o ComboBox da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getComboBox() class LibColumnObj
+method getComboBox() class SysLibColumn
 return ::cComboBox
 
 
@@ -440,7 +439,7 @@ Define o ComboBox da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setComboBox(cComboBox) class LibColumnObj
+method setComboBox(cComboBox) class SysLibColumn
   ::cComboBox := cComboBox
 return
 
@@ -452,7 +451,7 @@ Coleta o Inicializador padrao da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getInitializer() class LibColumnObj
+method getInitializer() class SysLibColumn
 return ::cInitializer
 
 
@@ -463,7 +462,7 @@ Define o Inicializador padrao da coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setInitializer(cInitializer) class LibColumnObj
+method setInitializer(cInitializer) class SysLibColumn
   ::cInitializer := cInitializer
 return
 
@@ -475,7 +474,7 @@ Indica se a coluna eh somente visualizacao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isReadOnly() class LibColumnObj
+method isReadOnly() class SysLibColumn
 return ::lReadOnly
 
 
@@ -486,7 +485,7 @@ Define se a coluna eh somente visualizacao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setReadOnly(lReadOnly) class LibColumnObj
+method setReadOnly(lReadOnly) class SysLibColumn
   ::lReadOnly := lReadOnly
 return
 
@@ -497,7 +496,7 @@ Coleta o contexto do campo ("R"=Real, "V"=Virtual)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getContext() class LibColumnObj
+method getContext() class SysLibColumn
 return ::cContext
 
 
@@ -508,7 +507,7 @@ Define o contexto do campo ("R"=Real, "V"=Virtual)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setContext(cContext) class LibColumnObj
+method setContext(cContext) class SysLibColumn
   ::cContext := cContext
 return
 
@@ -520,7 +519,7 @@ Coleta o inicializador do browse
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getBrowseInitializer() class LibColumnObj
+method getBrowseInitializer() class SysLibColumn
 return ::cBrowseInitializer
 
 
@@ -531,7 +530,7 @@ Define o inicializador do browse
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setBrowseInitializer(cBrowseInitializer) class LibColumnObj
+method setBrowseInitializer(cBrowseInitializer) class SysLibColumn
   ::cBrowseInitializer := cBrowseInitializer
 return
 
@@ -543,7 +542,7 @@ Indica se exibe a coluna em Browses ("S","N")
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getShowOnBrowse() class LibColumnObj 
+method getShowOnBrowse() class SysLibColumn 
 return ::cShowOnBrowse
 
 
@@ -554,7 +553,7 @@ Define se exibe a coluna em Browses ("S"/"N")
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setShowOnBrowse(cShowOnBrowse) class LibColumnObj
+method setShowOnBrowse(cShowOnBrowse) class SysLibColumn
   ::cShowOnBrowse := cShowOnBrowse
 return
   
@@ -566,7 +565,7 @@ Indica se � uma coluna de selecao de registros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isMarkColumn() class LibColumnObj	
+method isMarkColumn() class SysLibColumn	
 return ::lMarkColumn
 
 
@@ -577,7 +576,7 @@ Indica se � uma coluna tipo bitmap
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isBmpColumn() class LibColumnObj	
+method isBmpColumn() class SysLibColumn	
 return ::lBmpColumn 
 
 
@@ -588,7 +587,7 @@ Indica se a coluna foi criada a partir do SX3
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isSx3() class LibColumnObj	
+method isSx3() class SysLibColumn	
 return ::lSx3 
 
 
@@ -599,7 +598,7 @@ Indica se � um campo de preenchimento obrigatorio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isRequired() class LibColumnObj
+method isRequired() class SysLibColumn
 return ::lRequired
 
 
@@ -610,7 +609,7 @@ Define se � um campo de preenchimento obrigatorio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setRequired(lRequired) class LibColumnObj
+method setRequired(lRequired) class SysLibColumn
   ::lRequired := lRequired
 return
 
@@ -622,7 +621,7 @@ Retorna um valor para uma coluna vazia
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getEmptyValue() class LibColumnObj
+method getEmptyValue() class SysLibColumn
   
   local xValue 	:= nil
   local cType  	:= ::getType()

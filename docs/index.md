@@ -36,16 +36,16 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 
 ### Classes
 
-- [LibAdvplObj](classes/main)
-- LibColumnObj
-- LibFileObj
-- LibGridObj
-- LibJwtObj
-- LibLogObj
-- LibMailObj
-- LibParamBoxObj
-- LibParamObj
-- [LibPdfObj](classes/pdf)
+- [SysLibAdvpl](classes/main)
+- SysLibColumn
+- SysLibFile
+- SysLibGrid
+- SysLibJwt
+- SysLibLog
+- SysLibMail
+- SysLibParamBox
+- SysLibParam
+- [SysLibPdf](classes/pdf)
 - LibSqlObj
 - LibTaxObj
 - LibUtilsObj

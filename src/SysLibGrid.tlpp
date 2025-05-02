@@ -1,4 +1,4 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
 #include "tcbrowse.ch"
 #include "rwmake.ch"
 
@@ -26,123 +26,123 @@
 #define DELETED_COL_POS		if(Len(::aColumns) > 0, Len(::aColumns)+1, 0)
 
 
-/*/{Protheus.doc} LibGridObj
+/*/{Protheus.doc} SysLibGrid
 
 Objeto para manipulacao de Grids
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibGridObj from LibAdvplObj
+class SysLibGrid from SysLibAdvpl
 
-  data nCol
-  data nRow
-  data nWidth
-  data nHeight
-  data oWnd
-  data oGrid
-  data aColumns
-  data aLines
-  data aOldLines
-  data bOnChange
-  data bOnMark
-  data bOnMarkAll
-  data lReadOnly
-  data nAccessMode
-  data cLinesValidation
-  data cDeleteValidation
-  data lMarkOne
-  data lFiltered
-  data lFreeze
-  data lCreated
-  data aUpdateFields
-  data cMarkImage
-  data cUnMarkImage
+  public data nCol
+  public data nRow
+  public data nWidth
+  public data nHeight
+  public data oWnd
+  public data oGrid
+  public data aColumns
+  public data aLines
+  public data aOldLines
+  public data bOnChange
+  public data bOnMark
+  public data bOnMarkAll
+  public data lReadOnly
+  public data nAccessMode
+  public data cLinesValidation
+  public data cDeleteValidation
+  public data lMarkOne
+  public data lFiltered
+  public data lFreeze
+  public data lCreated
+  public data aUpdateFields
+  public data cMarkImage
+  public data cUnMarkImage
   
-  method newLibGridObj() constructor
+  public method new() constructor
 
-  method getCol()
-  method setCol()
-  method getRow()
-  method setRow()
-  method getWidth()
-  method setWidth()
-  method getHeight()
-  method setHeight()
-  method getWnd()
-  method setWnd()
-  method getGrid()
-  method getColumns()
-  method getLines()
-  method getOnChange()
-  method setOnChange()
-  method getOnMark()
-  method setOnMark()
-  method getOnMarkAll()
-  method setOnMarkAll()
-  method isReadOnly()
-  method setReadOnly()
-  method getAccessMode()
-  method setAccessMode()
-  method getLinesValidation()
-  method setLinesValidation()
-  method getDeleteValidation()
-  method setDeleteValidation()
-  method isMarkOne()
-  method setMarkOne()
-  method isFiltered()
-  method setFiltered()
-  method isFreeze()
-  method setFreeze()
-  method isCreated()	  
-  method getUpdateFields()	
-  method setUpdateFields()
-  method setMarkImage()
-  method getMarkImage()
-  method setUnMarkImage()
-  method getUnMarkImage()
+  public method getCol()
+  public method setCol()
+  public method getRow()
+  public method setRow()
+  public method getWidth()
+  public method setWidth()
+  public method getHeight()
+  public method setHeight()
+  public method getWnd()
+  public method setWnd()
+  public method getGrid()
+  public method getColumns()
+  public method getLines()
+  public method getOnChange()
+  public method setOnChange()
+  public method getOnMark()
+  public method setOnMark()
+  public method getOnMarkAll()
+  public method setOnMarkAll()
+  public method isReadOnly()
+  public method setReadOnly()
+  public method getAccessMode()
+  public method setAccessMode()
+  public method getLinesValidation()
+  public method setLinesValidation()
+  public method getDeleteValidation()
+  public method setDeleteValidation()
+  public method isMarkOne()
+  public method setMarkOne()
+  public method isFiltered()
+  public method setFiltered()
+  public method isFreeze()
+  public method setFreeze()
+  public method isCreated()	  
+  public method getUpdateFields()	
+  public method setUpdateFields()
+  public method setMarkImage()
+  public method getMarkImage()
+  public method setUnMarkImage()
+  public method getUnMarkImage()
 
-  method addColumn()
-  method addSqlColumns()
-  method getColumn()
-  method addMarkColumn()
-  method addBmpColumn()
-  method getColumnPosition()
-  method getMarkColumnPosition()
-  method newLine()
-  method removeLine()
-  method setValue()
-  method getValue()
-  method create()
-  method clear()
-  method markAll()
-  method hasMarkColumn()
-  method setMarkedLine()
-  method isMarkedLine()
-  method hasMarkedLines()
-  method setDeletedLine()
-  method isDeletedLine()
-  method isValidLine()
-  method setBmpValue()
-  method refresh()
-  method length()
-  method filter()
-  method clearFilter()
-  method getCursorLine()
-  method recordValues()
-  method chkRequiredFields()
+  public method addColumn()
+  public method addSqlColumns()
+  public method getColumn()
+  public method addMarkColumn()
+  public method addBmpColumn()
+  public method getColumnPosition()
+  public method getMarkColumnPosition()
+  public method newLine()
+  public method removeLine()
+  public method setValue()
+  public method getValue()
+  public method create()
+  public method clear()
+  public method markAll()
+  public method hasMarkColumn()
+  public method setMarkedLine()
+  public method isMarkedLine()
+  public method hasMarkedLines()
+  public method setDeletedLine()
+  public method isDeletedLine()
+  public method isValidLine()
+  public method setBmpValue()
+  public method refresh()
+  public method length()
+  public method filter()
+  public method clearFilter()
+  public method getCursorLine()
+  public method recordValues()
+  public method chkRequiredFields()
 
 endClass
 
 
-/*/{Protheus.doc} newLibGridObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibGridObj(nCol, nRow, nWidth, nHeight, oWnd) class LibGridObj
+method new(nCol, nRow, nWidth, nHeight, oWnd) class SysLibGrid
 
   default nCol 	  := 0
   default nRow 	  := 0
@@ -150,7 +150,7 @@ method newLibGridObj(nCol, nRow, nWidth, nHeight, oWnd) class LibGridObj
   default nHeight	:= 0
   default oWnd	  := oMainWnd
 
-  ::newLibAdvplObj()
+  _Super:new()
 
   ::aColumns	:= {}
   ::aLines	  := {}
@@ -187,7 +187,7 @@ Coleta a coluna do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getCol() class LibGridObj
+method getCol() class SysLibGrid
 return ::nCol
 
 
@@ -198,7 +198,7 @@ Define a coluna do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setCol(nCol) class LibGridObj
+method setCol(nCol) class SysLibGrid
   ::nCol := nCol
 return
 
@@ -210,7 +210,7 @@ Coleta a linha do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getRow() class LibGridObj
+method getRow() class SysLibGrid
 return ::nRow
 
 
@@ -221,7 +221,7 @@ Define a linha do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setRow(nRow) class LibGridObj
+method setRow(nRow) class SysLibGrid
   ::nRow := nRow
 return
 
@@ -233,7 +233,7 @@ Coleta a largura do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getWidth() class LibGridObj
+method getWidth() class SysLibGrid
 return ::nWidth
 
 
@@ -244,7 +244,7 @@ Define a largura do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setWidth(nWidth) class LibGridObj
+method setWidth(nWidth) class SysLibGrid
   ::nWidth := nWidth
 return
 
@@ -256,7 +256,7 @@ Coleta a altura do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getHeight() class LibGridObj
+method getHeight() class SysLibGrid
 return ::nHeight
 
 
@@ -267,7 +267,7 @@ Define a altura do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setHeight(nHeight) class LibGridObj
+method setHeight(nHeight) class SysLibGrid
   ::nHeight := nHeight
 return
 
@@ -279,7 +279,7 @@ Coleta o objeto pai do grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getWnd() class LibGridObj
+method getWnd() class SysLibGrid
 return ::oWnd
 
 
@@ -290,7 +290,7 @@ Define o objeto pai do grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setWnd(oWnd) class LibGridObj
+method setWnd(oWnd) class SysLibGrid
   ::oWnd := oWnd
 return
 
@@ -302,7 +302,7 @@ Coleta o objeto de grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getGrid() class LibGridObj
+method getGrid() class SysLibGrid
 return ::oGrid
 
 
@@ -313,7 +313,7 @@ Coleta o array de colunas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getColumns() class LibGridObj
+method getColumns() class SysLibGrid
 return ::aColumns
 
 
@@ -324,7 +324,7 @@ Coleta o array de linhas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getLines() class LibGridObj
+method getLines() class SysLibGrid
 return ::aLines
 
 
@@ -335,7 +335,7 @@ Coleta o bloco de codigo a ser executado quando um registro for marcado
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getOnMark() class LibGridObj
+method getOnMark() class SysLibGrid
 return ::bOnMark
 
 
@@ -346,7 +346,7 @@ Define o bloco de codigo a ser executado quando o grid sofrer alteracoes
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setOnChange(bOnChange) class LibGridObj
+method setOnChange(bOnChange) class SysLibGrid
   ::bOnChange := bOnChange
 return
 
@@ -358,7 +358,7 @@ Coleta o bloco de codigo a ser executado quando o grid sofrer alteracoes
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getOnChange() class LibGridObj
+method getOnChange() class SysLibGrid
 return ::bOnChange
 
 
@@ -369,7 +369,7 @@ Define o bloco de codigo a ser executado quando um registro for marcado
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setOnMark(bOnMark) class LibGridObj
+method setOnMark(bOnMark) class SysLibGrid
   ::bOnMark := bOnMark
 return
 
@@ -381,7 +381,7 @@ Coleta o bloco de codigo a ser executado quando todos os registros forem marcado
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getOnMarkAll() class LibGridObj
+method getOnMarkAll() class SysLibGrid
 return ::bOnMarkAll
 
 
@@ -392,7 +392,7 @@ Define o bloco de codigo a ser executado quando todos os registros forem marcado
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setOnMarkAll(bOnMarkAll) class LibGridObj
+method setOnMarkAll(bOnMarkAll) class SysLibGrid
   ::bOnMarkAll := bOnMarkAll
 return
 
@@ -404,7 +404,7 @@ Indica se o grid eh somente visualizacao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isReadOnly() class LibGridObj
+method isReadOnly() class SysLibGrid
 return ::lReadOnly
 
 
@@ -415,7 +415,7 @@ Define se o grid eh somente visualizacao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setReadOnly(lReadOnly) class LibGridObj
+method setReadOnly(lReadOnly) class SysLibGrid
   ::lReadOnly := lReadOnly
   if lReadOnly
     ::nAccessMode := 0
@@ -430,7 +430,7 @@ Coleta o modo de acesso ao grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getAccessMode() class LibGridObj
+method getAccessMode() class SysLibGrid
 return ::nAccessMode
 
 
@@ -443,7 +443,7 @@ Exemplo para nao permitir inclusao: oGrid:setAccessMode("delete", "update")
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setAccessMode(cMode1, cMode2, cMode3) class LibGridObj
+method setAccessMode(cMode1, cMode2, cMode3) class SysLibGrid
 
   default cMode1 := ""
   default cMode2 := ""
@@ -482,7 +482,7 @@ Coleta a validacao ao trocar de linhas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getLinesValidation() class LibGridObj
+method getLinesValidation() class SysLibGrid
 return ::cLinesValidation
 
 
@@ -493,7 +493,7 @@ Define a validacao ao trocar de linhas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setLinesValidation(cLinesValidation) class LibGridObj
+method setLinesValidation(cLinesValidation) class SysLibGrid
   ::cLinesValidation := cLinesValidation
 return
 
@@ -505,7 +505,7 @@ Coleta a validacao ao deletar linhas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getDeleteValidation() class LibGridObj
+method getDeleteValidation() class SysLibGrid
 return ::cDeleteValidation
 
 
@@ -516,7 +516,7 @@ Define a validacao ao deletar linhas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setDeleteValidation(cDeleteValidation) class LibGridObj
+method setDeleteValidation(cDeleteValidation) class SysLibGrid
   ::cDeleteValidation := cDeleteValidation
 return
 
@@ -528,7 +528,7 @@ Indica se Marca somente um registro do grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isMarkOne() class LibGridObj
+method isMarkOne() class SysLibGrid
 return ::lMarkOne
 
 
@@ -539,7 +539,7 @@ Define se Marca somente um registro do grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setMarkOne(lMarkOne) class LibGridObj
+method setMarkOne(lMarkOne) class SysLibGrid
   ::lMarkOne := lMarkOne
 return
 
@@ -551,7 +551,7 @@ Indica se o Grid esta filtrado
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isFiltered() class LibGridObj
+method isFiltered() class SysLibGrid
 return ::lFiltered
 
 
@@ -562,7 +562,7 @@ Define se o Grid esta filtrado
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFiltered(lFiltered) class LibGridObj
+method setFiltered(lFiltered) class SysLibGrid
   ::lFiltered := lFiltered
 return
 
@@ -574,7 +574,7 @@ Indica se o Grid foi criado
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isCreated() class LibGridObj
+method isCreated() class SysLibGrid
 return ::lCreated
 
 
@@ -585,7 +585,7 @@ Retorna Array com os Campos que podem ser Alterados na Grid, quando Grid com opc
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getUpdateFields() class LibGridObj
+method getUpdateFields() class SysLibGrid
 return (::aUpdateFields)
 
 
@@ -596,7 +596,7 @@ Define Array com os Campos que podem ser Alterados na Grid, quando Grid com opca
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setUpdateFields(aUpdateFields) class LibGridObj
+method setUpdateFields(aUpdateFields) class SysLibGrid
 
   default aUpdateFields := Nil
   
@@ -614,7 +614,7 @@ Recupera o Nome do Recurso de Imagem para representacao da Coluna Mark Marcada
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getMarkImage() class LibGridObj
+method getMarkImage() class SysLibGrid
 return (::cMarkImage)
              
 
@@ -625,7 +625,7 @@ Define o Nome do Recurso de Imagem para representacao da Coluna Mark Marcada
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setMarkImage(cMarkImage) class LibGridObj
+method setMarkImage(cMarkImage) class SysLibGrid
   default cMarkImage := BMP_MARK 
   ::cMarkImage := cMarkImage
 return
@@ -638,7 +638,7 @@ Recupera o Nome do Recurso de Imagem para representacao da Coluna Mark Desmarcad
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getUnMarkImage() class LibGridObj
+method getUnMarkImage() class SysLibGrid
 return (::cUnMarkImage)
 
 
@@ -649,7 +649,7 @@ Define o Nome do Recurso de Imagem para representacao da Coluna Mark Desmarcada
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setUnMarkImage(cUnMarkImage) class LibGridObj
+method setUnMarkImage(cUnMarkImage) class SysLibGrid
   default cUnMarkImage := BMP_UNMARK
   ::cUnMarkImage := cUnMarkImage
 return
@@ -662,7 +662,7 @@ Indica se Congela a primeira coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isFreeze() class LibGridObj
+method isFreeze() class SysLibGrid
 return ::lFreeze
 
 
@@ -673,24 +673,24 @@ Define se Congela a primeira coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFreeze(lFreeze) class LibGridObj
+method setFreeze(lFreeze) class SysLibGrid
   ::lFreeze := lFreeze
 return
 
 
 /*/{Protheus.doc} addColumn
 
-Adiciona uma coluna do browse. Pode receber uma String com um campo contido no SX3 ou um objeto LibColumnObj.
+Adiciona uma coluna do browse. Pode receber uma String com um campo contido no SX3 ou um objeto SysLibColumn.
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method addColumn(xColumn) class LibGridObj
+method addColumn(xColumn) class SysLibGrid
 
   local oCol := nil
 
   if (ValType(xColumn) == "C")
-    oCol := LibColumnObj():newLibColumnObj(xColumn)
+    oCol := SysLibColumn():new(xColumn)
   else
     oCol := xColumn
   endIf
@@ -709,7 +709,7 @@ Adiciona colunas no browse a partir de uma query SQL
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method addSqlColumns(cQuery, lFill, aSetField) class LibGridObj
+method addSqlColumns(cQuery, lFill, aSetField) class SysLibGrid
 
   local nI          := 0
   local oSql 		    := LibSqlObj():newLibSqlObj()
@@ -748,7 +748,7 @@ static function createSqlColumns(oGrid, oSql)
     cField	:= aStruct[nI,1]
     cType	:= aStruct[nI,2]
     nSize	:= aStruct[nI,3]
-    oCol 	:= LibColumnObj():newLibColumnObj(cField)
+    oCol 	:= SysLibColumn():new(cField)
     if !oCol:isSx3()
       oCol:setTitle(Capital(cField))
       oCol:setType(cType)
@@ -790,7 +790,7 @@ Coleta uma coluna do grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getColumn(cId) class LibGridObj
+method getColumn(cId) class SysLibGrid
 
   local oCol := nil
   local nPos := ::getColumnPosition(cId)
@@ -809,7 +809,7 @@ Adiciona uma coluna de sele��o de registros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method addMarkColumn(bOnMark, bOnMarkAll) class LibGridObj
+method addMarkColumn(bOnMark, bOnMarkAll) class SysLibGrid
 
   default bOnMark 	 := {|| Sleep(0) }
   default bOnMarkAll := {|| Sleep(0) }
@@ -817,7 +817,7 @@ method addMarkColumn(bOnMark, bOnMarkAll) class LibGridObj
   ::setOnMark(bOnMark)
   ::setOnMarkAll(bOnMarkAll)
 
-  ::addColumn(LibColumnObj():newLibColumnObj("@mark"))
+  ::addColumn(SysLibColumn():new("@mark"))
 
   checkMarkColumn(@self)
 
@@ -865,8 +865,8 @@ Cria uma coluna tipo bitmap
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method addBmpColumn(cId) class LibGridObj
-  ::addColumn(LibColumnObj():newLibColumnObj("@bmp", cId))
+method addBmpColumn(cId) class SysLibGrid
+  ::addColumn(SysLibColumn():new("@bmp", cId))
 return
 
 
@@ -877,7 +877,7 @@ Coleta a posicao de uma coluna
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getColumnPosition(cId) class LibGridObj
+method getColumnPosition(cId) class SysLibGrid
 
   local nI 	 := 0
   local nPos := 0
@@ -899,7 +899,7 @@ Coleta a posicao de uma coluna tipo marcacao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getMarkColumnPosition() class LibGridObj
+method getMarkColumnPosition() class SysLibGrid
 
   local nI 	  := 0
   local nPos 	:= 0
@@ -922,7 +922,7 @@ Adiciona uma nova linha no browse
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLine() class LibGridObj
+method newLine() class SysLibGrid
 
   local nCols 	:= Len(::aColumns)
   local nPosDel	:= (nCols + 1)
@@ -954,7 +954,7 @@ Remove linhas do grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method removeLine(nLine) class LibGridObj
+method removeLine(nLine) class SysLibGrid
 
   local nI 		    := 0
   local aNewLines	:= {}
@@ -984,7 +984,7 @@ Define valores para as linhas do browse
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setValue(cId, xValue, nLine) class LibGridObj
+method setValue(cId, xValue, nLine) class SysLibGrid
 
   local nColPos	:= ::getColumnPosition(cId)
   default nLine	:= DEFAULT_LINE_POS
@@ -1007,7 +1007,7 @@ Coleta valores das linhas do browse
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getValue(cId, nLine, lOldValue) class LibGridObj
+method getValue(cId, nLine, lOldValue) class SysLibGrid
 
   local xValue 	 	  := nil
   local cMemVar 	  := "M->"+cId
@@ -1033,7 +1033,7 @@ Cria o objeto de grid. Deve ser invocado apos a criacao das colunas e linhas.
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method create() class LibGridObj
+method create() class SysLibGrid
 
   local nI			      := 0
   local nFreeze		    := if(::isFreeze(), 1, 0)
@@ -1090,7 +1090,7 @@ Limpa todos os registros do grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method clear() class LibGridObj
+method clear() class SysLibGrid
 
   ::aLines := {}
 
@@ -1141,7 +1141,7 @@ Valida os campos obrigatorios
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method chkRequiredFields() class LibGridObj
+method chkRequiredFields() class SysLibGrid
 
    local lOk			      := .T.
   local nI 			      := 0
@@ -1224,7 +1224,7 @@ Seleciona todos os registros do grid caso exista a coluna de marcacao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method markAll() class LibGridObj
+method markAll() class SysLibGrid
 
   local nI 		   := 0
   local nMarks	 := 0
@@ -1267,7 +1267,7 @@ Verifica se existe uma coluna de marcacao no grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method hasMarkColumn() class LibGridObj
+method hasMarkColumn() class SysLibGrid
 
   local nPosMark			 := ::getMarkColumnPosition()
   local lHasMarkColumn := (nPosMark > 0)
@@ -1282,7 +1282,7 @@ Define se a linha do grid esta marcada
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setMarkedLine(lMark, nLine) class LibGridObj
+method setMarkedLine(lMark, nLine) class SysLibGrid
 
   local nPosMark	:= ::getMarkColumnPosition()
   local cBmp	 	  := if(lMark, ::getMarkImage(), ::getUnMarkImage())
@@ -1302,7 +1302,7 @@ Verifica se a linha do grid esta marcada
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isMarkedLine(nLine) class LibGridObj
+method isMarkedLine(nLine) class SysLibGrid
 
   local lIsMarked := .F.
   default nLine   := DEFAULT_LINE_POS
@@ -1323,7 +1323,7 @@ Verifica se existe ao menos uma linha selecionada no grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method hasMarkedLines(lDeleted) class LibGridObj
+method hasMarkedLines(lDeleted) class SysLibGrid
   
   local nLine			      := 0
   local lHasMarkedLines := .F.
@@ -1351,7 +1351,7 @@ Define uma linha como deletada
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setDeletedLine(lDeleted, nLine) class LibGridObj
+method setDeletedLine(lDeleted, nLine) class SysLibGrid
 
   local nPosDel	:= DELETED_COL_POS
   default nLine	:= DEFAULT_LINE_POS
@@ -1370,7 +1370,7 @@ Indica se a linha esta deletada
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isDeletedLine(nLine) class LibGridObj
+method isDeletedLine(nLine) class SysLibGrid
 
   local nPosDel	 := DELETED_COL_POS
   local lDeleted := .F.
@@ -1390,7 +1390,7 @@ Indica se a linha eh valida
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isValidLine(nLine) class LibGridObj
+method isValidLine(nLine) class SysLibGrid
 
   ::refresh()
 
@@ -1429,7 +1429,7 @@ Define o valor de um bitmap do grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setBmpValue(cId, cBmp, nLine) class LibGridObj
+method setBmpValue(cId, cBmp, nLine) class SysLibGrid
 
   local nI		  := 0
   local nPosBmp	:= 0
@@ -1456,7 +1456,7 @@ Atualizacao do grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method refresh(lForce) class LibGridObj
+method refresh(lForce) class SysLibGrid
 
   default lForce := .F.
 
@@ -1477,7 +1477,7 @@ Retorna o numero de linhas do grid
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method length() class LibGridObj
+method length() class SysLibGrid
 
   ::refresh(.T.)
 
@@ -1491,7 +1491,7 @@ Filtra o grid. Permitido somente se o grid for somente leitura ( oGrid:setReadOn
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method filter(cFilter, xColumns) class LibGridObj
+method filter(cFilter, xColumns) class SysLibGrid
 
   local nI		 	       := 0
   local aLines		     := {}
@@ -1499,7 +1499,7 @@ method filter(cFilter, xColumns) class LibGridObj
   default xColumns 	   := ""
 
   if !::isReadOnly()
-    MsgBox("Nao e possivel filtrar um LibGridObj editavel", "Atencao", "ALERT")
+    MsgBox("Nao e possivel filtrar um SysLibGrid editavel", "Atencao", "ALERT")
     return
   endIf
 
@@ -1588,7 +1588,7 @@ Limpa o ultimo filtro aplicado
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method clearFilter() class LibGridObj
+method clearFilter() class SysLibGrid
 
   if !::isFiltered()
     return
@@ -1611,7 +1611,7 @@ Retorna a linha posicionada
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getCursorLine() class LibGridObj
+method getCursorLine() class SysLibGrid
 
   local nLine := 0
 

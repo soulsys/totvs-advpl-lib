@@ -9,7 +9,7 @@ Objeto para manipulacao de retornos de webservices REST
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibWsRestResponseObj from LibAdvplObj
+class LibWsRestResponseObj from SysLibAdvpl
 
   data oRequest
   

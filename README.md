@@ -1,7 +1,6 @@
-
 # Biblioteca de Componentes TOTVS Advpl
 
-Essa biblioteca de componentes tem por objetivo ajudar desenvolvedores Advpl a escrever códigos mais 
+Essa biblioteca de componentes tem por objetivo ajudar desenvolvedores Advpl a escrever códigos mais
 limpos, expressivos e coesos através do encapsulamento de funcionalidades usadas frequentemente.
 <br/><br/>
 
@@ -30,7 +29,7 @@ user function SqlSample()
 return
 ```
 
-Utilizando a classe ***LibSqlObj*** podemos escrever a mesma funcionalidade dessa forma:
+Utilizando a classe **_LibSqlObj_** podemos escrever a mesma funcionalidade dessa forma:
 
 ```xbase
 user function SqlSample()
@@ -38,7 +37,7 @@ user function SqlSample()
   local oSql         := LibSqlObj():newLibSqlObj()
   local cQuery       := ""
   local cDescription := ""
-  local cCode        := "P0001"  
+  local cCode        := "P0001"
 
   cQuery := " SELECT B1_DESC FROM %SB1.SQLNAME% "
   cQuery += " WHERE %SB1.XFILIAL% AND B1_COD = '" + cCode + "' AND %SB1.NOTDEL% "
@@ -69,7 +68,7 @@ Um simples e-mail pode ser enviado assim:
 ```xbase
 user function MailSample()
 
-  local oMail    := LibMailObj():newLibMailObj()
+  local oMail    := SysLibMail():new()
   local cTo      := "joao@fake-mail.com"
   local cSubject := "Assunto Importante"
   local cBody    := ""
@@ -77,7 +76,7 @@ user function MailSample()
   cBody := '<p>Olá! Esse é o corpo da mensagem em HTML.</p>'
   cBody += '<p>Quando não informadas, as configurações de e-mail são '
   cBody += 'obtidas automaticamente através dos parâmetros padrões (MV_RELXXX).</p>'
-  
+
   if oMail:send(cTo, cSubject, cBody)
     MsgInfo("E-mail enviado com sucesso")
   else
@@ -98,7 +97,7 @@ Recomendamos que a compilação dos fontes seja realizada da seguinte forma:
 
 2. Abra o diretório criado através do VS Code. Certifique-se de ter a última versão do plugin oficial da TOTVS.
 
-3. Compile a pasta ***src***
+3. Compile a pasta **_src_**
 
 <br/>
 Caso encontre algum bug ou sinta necessidade de alguma melhoria, nos envie um pull request.
@@ -111,7 +110,7 @@ Conheça todas as classes e recursos disponíveis acessando nossa [documentaçã
 
 ## Importante
 
-Esse repositório não possui qualquer relação com a TOTVS S/A. O uso dessa biblioteca é de total responsabilidade do usuário. Ao utilizar 
+Esse repositório não possui qualquer relação com a TOTVS S/A. O uso dessa biblioteca é de total responsabilidade do usuário. Ao utilizar
 nossos componentes você concorda com os termos da licença MIT.
 
 ## Dúvidas e sugestões ❓

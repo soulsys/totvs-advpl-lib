@@ -12,7 +12,7 @@ Objeto para manipulacao de barras de progresso
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-class LibProgressBarObj from LibAdvplObj
+class LibProgressBarObj from SysLibAdvpl
   
   data oBar
 
@@ -47,7 +47,7 @@ Construtor
 /*/
 method newLibProgressBarObj(bAction, cText, cTitle) class LibProgressBarObj
   
-  ::newLibAdvplObj()  
+  _Super:new()  
   
   ::oBar     := nil
   ::lTwoBars := .F.

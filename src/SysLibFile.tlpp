@@ -1,65 +1,64 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
 #include "fileio.ch"
 #include "rwmake.ch"
 
 #define CHECK_FILE_MSG	"Verifique se o arquivo existe ou se esta sendo usado."		
  
  
-/*/{Protheus.doc} LibFileObj
+/*/{Protheus.doc} SysLibFile
  
 Objeto para manipulacao de Arquivos
   
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibFileObj from LibAdvplObj
+class SysLibFile from SysLibAdvpl
   
-  data cFile as string	
-  data lOpen as boolean
-  data aLines as array
+  public data cFile as string
+  public data lOpen as boolean
+  public data aLines as array
   
-  method newLibFileObj() constructor
+  public method new() constructor
   
-  method getFile()
-  method setFile()
-  method isOpen()
-  method getLines()
-  
-  method createFile()		
-  method writeLine()
-  method readLine()
-  method saveLines()	
-  method isEof()
-  method notIsEof()
-  method skipLine()
-  method goTop()
-  method open()
-  method close()
-  method delete()
-  method copy()
-  method countLines()
-  method getFileName()
-  method exists()
-  method getFileSize()
-  method getFileMegabytes()
-  method getDirectory()
-  method readContent()
+  public method getFile()
+  public method setFile()
+  public method isOpen()
+  public method getLines()  
+  public method createFile()		
+  public method writeLine()
+  public method readLine()
+  public method saveLines()	
+  public method isEof()
+  public method notIsEof()
+  public method skipLine()
+  public method goTop()
+  public method open()
+  public method close()
+  public method delete()
+  public method copy()
+  public method countLines()
+  public method getFileName()
+  public method exists()
+  public method getFileSize()
+  public method getFileMegabytes()
+  public method getDirectory()
+  public method readContent()
   
 endClass
 
 
-/*/{Protheus.doc} newLibFileObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibFileObj(cFile) class LibFileObj
+method new(cFile) class SysLibFile
   
   default cFile := ""
   
-  ::newLibAdvplObj()
+  _Super:new()
   
   ::setFile(cFile)
 
@@ -76,7 +75,7 @@ Coleta o arquivo definido
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFile() class LibFileObj
+method getFile() class SysLibFile
 return ::cFile
 
 
@@ -87,7 +86,7 @@ Define o arquivo do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFile(cFile) class LibFileObj
+method setFile(cFile) class SysLibFile
   ::cFile := AllTrim(cFile)
 return
 
@@ -99,7 +98,7 @@ Indica se o arquivo esta aberto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isOpen() class LibFileObj
+method isOpen() class SysLibFile
 return ::lOpen
 
 
@@ -110,7 +109,7 @@ Coleta todas as linhas do arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getLines() class LibFileObj
+method getLines() class SysLibFile
 return ::aLines
 
 
@@ -121,7 +120,7 @@ Cria o Arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method createFile() class LibFileObj
+method createFile() class SysLibFile
   
   local cFile		:= ::getFile()
   local nHandle := -1
@@ -149,7 +148,7 @@ Gravacao de linhas no arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method writeLine(cText) class LibFileObj
+method writeLine(cText) class SysLibFile
   
   local nHandle := 0                        
   local lWrite	:= .T.
@@ -189,7 +188,7 @@ Esse metodo trabalha como a funcao SubString(), possibilitando a leitura da linh
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method readLine(nCol, nChrs) class LibFileObj
+method readLine(nCol, nChrs) class SysLibFile
   
   local cLine  := ""	
   default nCol := 0
@@ -219,7 +218,7 @@ Para coletar as linhas utilize o metodo getLines().
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method saveLines() class LibFileObj
+method saveLines() class SysLibFile
   
   ::aLines := {}
   
@@ -242,7 +241,7 @@ Indica se esta no final do arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isEof() class LibFileObj
+method isEof() class SysLibFile
   
   local lEof := .F.
   
@@ -260,7 +259,7 @@ Indica se nao esta no final do arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method notIsEof() class LibFileObj		
+method notIsEof() class SysLibFile		
 return !::isEof()
 
 
@@ -271,7 +270,7 @@ Avanca uma linha
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method skipLine() class LibFileObj
+method skipLine() class SysLibFile
   
   if !::open()
     return .F.
@@ -289,7 +288,7 @@ Posiciona na primeira linha do arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method goTop() class LibFileObj		
+method goTop() class SysLibFile		
   
   if !::open()
     return .F.
@@ -307,7 +306,7 @@ Abre o arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method open() class LibFileObj
+method open() class SysLibFile
   
   local cFile := ::getFile()
   
@@ -330,7 +329,7 @@ Fecha o arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method close() class LibFileObj
+method close() class SysLibFile
   
   if ::isOpen()
     FT_Fuse()
@@ -347,7 +346,7 @@ Apaga o arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method delete() class LibFileObj
+method delete() class SysLibFile
   
   local lOk	:= .T.
   local cFile := ::getFile()	
@@ -366,7 +365,7 @@ Realiza a copia o arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method copy(cNewFile) class LibFileObj
+method copy(cNewFile) class SysLibFile
   
   local nI  := 0
   local lOk := .F.
@@ -395,7 +394,7 @@ Retorna a quantidade total de linhas do arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method countLines() class LibFileObj
+method countLines() class SysLibFile
   
   local nLines := 0
   
@@ -418,7 +417,7 @@ Retorna o nome do arquivo sem o diretorio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFileName(lExtens, cBar) class LibFileObj
+method getFileName(lExtens, cBar) class SysLibFile
   
   local nI		    := 0
   local cChr  	  := ""
@@ -455,7 +454,7 @@ Verifica se o arquivo existe
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method exists() class LibFileObj
+method exists() class SysLibFile
     
 return File(::getFile())
 
@@ -467,7 +466,7 @@ Coleta o tamanho do arquivo em bytes
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFileSize() class LibFileObj
+method getFileSize() class SysLibFile
   
   local nSize	  := 0
   local cFile	  := ::getFile()
@@ -489,7 +488,7 @@ Retorna o tamanho do arquivo em megabytes
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFileMegabytes() class LibFileObj
+method getFileMegabytes() class SysLibFile
   
   local nMegabytes := 0
   local nConv      := 1024	
@@ -509,7 +508,7 @@ Retorna o diretorio do arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getDirectory() class LibFileObj
+method getDirectory() class SysLibFile
   
   local cFile := AllTrim(Lower(::getFile()))
   local cName := AllTrim(Lower(::getFileName()))
@@ -524,7 +523,7 @@ Retorna todo o conteudo do arquivo em uma string
 @author soulsys:victorhugo
 @since 05/06/2023
 /*/
-method readContent() class LibFileObj
+method readContent() class SysLibFile
   
   local cContent := ""
   local oReader  := FwFileReader():new(::getFile())

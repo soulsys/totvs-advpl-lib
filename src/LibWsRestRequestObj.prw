@@ -9,7 +9,7 @@ Objeto para manipulacao de requisicoes de webservices REST
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibWsRestRequestObj from LibAdvplObj
+class LibWsRestRequestObj from SysLibAdvpl
 
   data oRequest
   

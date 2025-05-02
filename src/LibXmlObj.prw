@@ -8,7 +8,7 @@ Objeto para manipulacao de arquivos XML
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibXmlObj from LibAdvplObj
+class LibXmlObj from SysLibAdvpl
 
   data oXml
   data cXml
@@ -38,7 +38,7 @@ method newLibXmlObj(cXml) class LibXmlObj
 
   default cXml := ""
 
-  ::newLibAdvplObj()
+  _Super:new()
   ::setXml(cXml)
   
   ::cError := ""
@@ -110,7 +110,7 @@ return lOk
  */
 static function copyFileToServer(cXml)
 
-  local oFile         := LibFileObj():newLibFileObj(cXml)
+  local oFile         := SysLibFile():new(cXml)
   local cFileOnServer := "/system/" + oFile:getFileName()
 
   if !oFile:copy(cFileOnServer)    

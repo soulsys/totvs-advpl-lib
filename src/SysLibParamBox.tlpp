@@ -1,64 +1,63 @@
-#include "totvs.ch"
-#include "rwmake.ch"		
+#include "tlpp-core.th"
+#include "rwmake.ch"
 
  
-/*/{Protheus.doc} LibParamBoxObj
+/*/{Protheus.doc} SysLibParamBox
  
 Objeto para apresentacao de uma tela de parametros
   
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibParamBoxObj from LibAdvplObj	
+class SysLibParamBox from SysLibAdvpl	
   
-  data cId
-  data cTitle
-  data aParams	
-  data bValidation
-  data lCanSave
-  data lUserSave
-  data lCentered 
-  data cSomething
-  data aValues
-  data aMvs 
+  public data cId
+  public data cTitle
+  public data aParams	
+  public data bValidation
+  public data lCanSave
+  public data lUserSave
+  public data lCentered 
+  public data cSomething
+  public data aValues
+  public data aMvs 
   
-  method newLibParamBoxObj() constructor	
+  public method new() constructor	
   
-  method getId()
-  method setId()
-  method getTitle()
-  method setTitle()
-  method getParams()
-  method getValidation()
-  method setValidation()
-  method isCanSave()
-  method setCanSave()
-  method isUserSave()
-  method setUserSave()
-  method isCentered()
-  method setCentered()
-  
-  method addParam()	
-  method show()
-  method getValue()
+  public method getId()
+  public method setId()
+  public method getTitle()
+  public method setTitle()
+  public method getParams()
+  public method getValidation()
+  public method setValidation()
+  public method isCanSave()
+  public method setCanSave()
+  public method isUserSave()
+  public method setUserSave()
+  public method isCentered()
+  public method setCentered()  
+  public method addParam()	
+  public method show()
+  public method getValue()
   
 endClass
 
 
-/*/{Protheus.doc} newLibParamBoxObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibParamBoxObj(cId, cTitle, bValidation) class LibParamBoxObj	
+method new(cId, cTitle, bValidation) class SysLibParamBox	
   
   default cId 		    := ""
-  default cTitle		  := "LibParamBoxObj"
+  default cTitle		  := "SysLibParamBox"
   default bValidation	:= {|| .T. }
   
-  ::newLibAdvplObj()
+  _Super:new()
   
   ::aParams := {}
   ::aValues := {}
@@ -80,7 +79,7 @@ Coleta o ID do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getId() class LibParamBoxObj
+method getId() class SysLibParamBox
 return ::cId
 
 
@@ -91,7 +90,7 @@ Define o ID do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setId(cId) class LibParamBoxObj
+method setId(cId) class SysLibParamBox
   ::cId := cId
 return
 
@@ -103,7 +102,7 @@ Coleta o Titulo da tela de parametros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getTitle() class LibParamBoxObj
+method getTitle() class SysLibParamBox
 return ::cTitle
 
 
@@ -114,7 +113,7 @@ Define o Titulo da tela de parametros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setTitle(cTitle) class LibParamBoxObj
+method setTitle(cTitle) class SysLibParamBox
   ::cTitle := cTitle
 return
 
@@ -126,7 +125,7 @@ Coleta os parametros do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getParams() class LibParamBoxObj
+method getParams() class SysLibParamBox
 return ::aParams
 
 
@@ -137,7 +136,7 @@ Coleta a validacao ao clicar no botao OK da tela de parametros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getValidation() class LibParamBoxObj
+method getValidation() class SysLibParamBox
 return ::bValidation
 
 
@@ -148,7 +147,7 @@ Define o validacao ao clicar no botao OK da tela de parametros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setValidation(bValidation) class LibParamBoxObj
+method setValidation(bValidation) class SysLibParamBox
   ::bValidation := bValidation
 return
 
@@ -160,7 +159,7 @@ Indica se pode salvar as respostas dos parametros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isCanSave() class LibParamBoxObj
+method isCanSave() class SysLibParamBox
 return ::lCanSave
 
 
@@ -171,7 +170,7 @@ Define se pode salvar as respostas dos parametros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setCanSave(lCanSave) class LibParamBoxObj
+method setCanSave(lCanSave) class SysLibParamBox
   ::lCanSave := lCanSave
 return
 
@@ -183,7 +182,7 @@ Indica se o usuario comum pode salvar as repostas dos parametros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isUserSave() class LibParamBoxObj
+method isUserSave() class SysLibParamBox
 return ::lUserSave
 
 
@@ -194,7 +193,7 @@ Define se o usuario comum pode salvar as repostas dos parametros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setUserSave(lUserSave) class LibParamBoxObj
+method setUserSave(lUserSave) class SysLibParamBox
   ::lUserSave := lUserSave
 return
 
@@ -208,7 +207,7 @@ Indica se exibe a tela de parametros centralizada
 
 @return Logico Indica se exibe a tela de parametros centralizada
 /*/
-method isCentered() class LibParamBoxObj
+method isCentered() class SysLibParamBox
 return ::lCentered
 
 
@@ -221,19 +220,19 @@ Define o Indica se exibe a tela de parametros centralizada
 
 @param lCentered, Logico, Indica se exibe a tela de parametros centralizada
 /*/
-method setCentered(lCentered) class LibParamBoxObj
+method setCentered(lCentered) class SysLibParamBox
   ::lCentered := lCentered
 return
 
 
 /*/{Protheus.doc} addParams
 
-Adiciona parametros tipo LibParamObj
+Adiciona parametros tipo SysLibParam
   
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method addParam(oParam) class LibParamBoxObj
+method addParam(oParam) class SysLibParamBox
   
   local nI	  	:= 0
   local lExists	:= .F.
@@ -264,7 +263,7 @@ Exibicao da tela de parametros. Nao afeta o conteudo das variaveis publicas MV_P
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	 
-method show() class LibParamBoxObj
+method show() class SysLibParamBox
   
   local lOk			    := .F.		
   local aRet			  := {}
@@ -277,7 +276,7 @@ method show() class LibParamBoxObj
   private cCadastro	:= ::getTitle()
   
   if Empty(cLoad)
-    MsgBox("Id do grupo de parametros nao definido", "LibParamBoxObj", "ALERT")
+    MsgBox("Id do grupo de parametros nao definido", "SysLibParamBox", "ALERT")
     return
   endIf
   
@@ -355,7 +354,7 @@ Coleta o valor de um parametro informado pelo usuario
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getValue(cParamId, lMemory) class LibParamBoxObj
+method getValue(cParamId, lMemory) class SysLibParamBox
   
   local nI		     := 0
   local xValue 	   := nil
@@ -406,7 +405,7 @@ static function loadLastValues(oSelf)
   endIf
   
   cPrbFile := "\profile\"+__cUserId+"_"+cLoad+".prb"
-  oFile    := LibFileObj():newLibFileObj(cPrbFile)
+  oFile    := SysLibFile():new(cPrbFile)
   
   if !oFile:exists()
     return .F.

@@ -1,83 +1,82 @@
-#include "totvs.ch"
-#include "totvs.ch"
+#include "tlpp-core.th"
 
 
-/*/{Protheus.doc} LibMailObj
+/*/{Protheus.doc} SysLibMail
  
 Objeto para controle de envio de e-mail
   
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/   
-class LibMailObj from LibAdvplObj
+class SysLibMail from SysLibAdvpl
 
-  data cServer
-  data nPort 		
-  data cAccount	    
-  data cPassword	
-  data cError 		
-  data cFrom 			
-  data lAuthenticate	
-  data lConnected 	
-  data lSSL 			
-  data lTLS
-  data lImap 			
-  data nTimeOut	
-  data cHtmlLayout 		
-  data oMailManager	
-  data oMailMsg 
-  data oWfHtml 		
-  data nLastError	
+  public data cServer
+  public data nPort 		
+  public data cAccount	    
+  public data cPassword	
+  public data cError 		
+  public data cFrom 			
+  public data lAuthenticate	
+  public data lConnected 	
+  public data lSSL 			
+  public data lTLS
+  public data lImap 			
+  public data nTimeOut	
+  public data cHtmlLayout 		
+  public data oMailManager	
+  public data oMailMsg 
+  public data oWfHtml 		
+  public data nLastError	
   
-  method newLibMailObj() constructor
+  public method new() constructor
   
-  method getServer()		
-  method setServer()
-  method getPort()		
-  method setPort()		
-  method getAccount()	
-  method setAccount()	
-  method getPassword()	
-  method setPassword()	
-  method getError()		
-  method setError()		
-  method getFrom()		
-  method setFrom()		
-  method isAuthenticate()
-  method setAuthenticate() 
-  method isConnected()	 
-  method setConnected()	
-  method isSSL()		
-  method setSSL()		
-  method isTLS()		
-  method setTLS()
-  method isImap()		
-  method setImap()		
-  method getTimeOut()	
-  method setTimeOut()
-  method getHtmlLayout()
-  method setHtmlLayout()	
+  public method getServer()		
+  public method setServer()
+  public method getPort()		
+  public method setPort()		
+  public method getAccount()	
+  public method setAccount()	
+  public method getPassword()	
+  public method setPassword()	
+  public method getError()		
+  public method setError()		
+  public method getFrom()		
+  public method setFrom()		
+  public method isAuthenticate()
+  public method setAuthenticate() 
+  public method isConnected()	 
+  public method setConnected()	
+  public method isSSL()		
+  public method setSSL()		
+  public method isTLS()		
+  public method setTLS()
+  public method isImap()		
+  public method setImap()		
+  public method getTimeOut()	
+  public method setTimeOut()
+  public method getHtmlLayout()
+  public method setHtmlLayout()	
     
-  method connect()					
-  method send()						
-  method disconnect()				
-  method attachFile()				
-  method setConfirmRead()	
-  method setHtmlValue()
-  method addHtmlTableValue()		
-  method showProperties()			
+  public method connect()					
+  public method send()						
+  public method disconnect()				
+  public method attachFile()				
+  public method setConfirmRead()	
+  public method setHtmlValue()
+  public method addHtmlTableValue()		
+  public method showProperties()			
   
 endClass
 
 
-/*/{Protheus.doc} newLibMailObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibMailObj(cServer, cAccount, cPassword, cFrom, lAuthenticate, lSSL, lTLS, nTimeOut, cHtml) class LibMailObj
+method new(cServer, cAccount, cPassword, cFrom, lAuthenticate, lSSL, lTLS, nTimeOut, cHtml) class SysLibMail
   
   default cServer 		  := GetMV("MV_RELSERV")
   default cAccount    	:= GetMV("MV_RELACNT") 
@@ -89,7 +88,7 @@ method newLibMailObj(cServer, cAccount, cPassword, cFrom, lAuthenticate, lSSL, l
   default nTimeOut		  := GetMV("MV_RELTIME") 	
   default cHtml			    := ""
   
-  ::newLibAdvplObj()
+  _Super:new()
   
   ::setPort(25)
   ::setServer(cServer) 	
@@ -124,7 +123,7 @@ Coleta o servidor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getServer() class LibMailObj
+method getServer() class SysLibMail
 return ::cServer
 
 
@@ -135,7 +134,7 @@ Define o Servidor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setServer(cServer) class LibMailObj
+method setServer(cServer) class SysLibMail
   
   local cStrPort := ""
   
@@ -157,7 +156,7 @@ Coleta a porta do servidor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getPort() class LibMailObj
+method getPort() class SysLibMail
 return ::nPort
 
 
@@ -168,7 +167,7 @@ Define a porta do servidor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setPort(nPort) class LibMailObj
+method setPort(nPort) class SysLibMail
   ::nPort := nPort
 return 
 
@@ -180,7 +179,7 @@ Coleta a conta de e-mail
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getAccount() class LibMailObj
+method getAccount() class SysLibMail
 return ::cAccount
 
 
@@ -191,7 +190,7 @@ Define a conta de e-mail
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setAccount(cAccount) class LibMailObj
+method setAccount(cAccount) class SysLibMail
   ::cAccount := cAccount
 return 
 
@@ -203,7 +202,7 @@ Coleta a Senha de Usuario
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getPassword() class LibMailObj
+method getPassword() class SysLibMail
 return ::cPassword
 
 
@@ -214,7 +213,7 @@ Define a Senha de Usuario
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setPassword(cPassword) class LibMailObj
+method setPassword(cPassword) class SysLibMail
   ::cPassword := cPassword
 return      
 
@@ -226,7 +225,7 @@ Coleta a Mensagem de Erro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getError() class LibMailObj
+method getError() class SysLibMail
 return ::cError
 
 
@@ -237,7 +236,7 @@ Define a Mensagem de Erro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setError(cError) class LibMailObj
+method setError(cError) class SysLibMail
   ::cError := cError
 return
 
@@ -249,7 +248,7 @@ Coleta o Remetente do Email
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFrom() class LibMailObj
+method getFrom() class SysLibMail
 return ::cFrom
 
 
@@ -260,7 +259,7 @@ Define o Remetente do Email
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFrom(cFrom) class LibMailObj
+method setFrom(cFrom) class SysLibMail
   ::cFrom := cFrom
 return
                         
@@ -272,7 +271,7 @@ Indica se o Servidor requer autenticacao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isAuthenticate() class LibMailObj
+method isAuthenticate() class SysLibMail
 return ::lAuthenticate
 
 
@@ -283,7 +282,7 @@ Define se o Servidor requer autenticacao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setAuthenticate(lAuthenticate) class LibMailObj
+method setAuthenticate(lAuthenticate) class SysLibMail
   ::lAuthenticate := lAuthenticate
 return 
 
@@ -295,7 +294,7 @@ Indica se o Objeto esta conectado ao Servidor de Email
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isConnected() class LibMailObj
+method isConnected() class SysLibMail
 return ::lConnected
 
 
@@ -306,7 +305,7 @@ Define se o Objeto esta conectado ao Servidor de Email
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setConnected(lConnected) class LibMailObj
+method setConnected(lConnected) class SysLibMail
   ::lConnected := lConnected
 return
 
@@ -318,7 +317,7 @@ Indica se o Servidor utiliza conexao SSL
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isSSL() class LibMailObj
+method isSSL() class SysLibMail
 return ::lSSL
 
 
@@ -329,7 +328,7 @@ Define se o Servidor utiliza conexao SSL
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setSSL(lSSL) class LibMailObj
+method setSSL(lSSL) class SysLibMail
   ::lSSL := lSSL
 return
 
@@ -341,7 +340,7 @@ Indica se o Servidor utiliza conexao TLS
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isTLS() class LibMailObj
+method isTLS() class SysLibMail
 return ::lTLS
 
 
@@ -352,7 +351,7 @@ Define se o Servidor utiliza conexao TLS
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setTLS(lTLS) class LibMailObj
+method setTLS(lTLS) class SysLibMail
   ::lTLS := lTLS
 return
 
@@ -364,7 +363,7 @@ Indica se o Servidor utiliza conexao IMAP
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isImap() class LibMailObj
+method isImap() class SysLibMail
 return ::lImap
 
 
@@ -375,7 +374,7 @@ Define se o Servidor utiliza conexao IMAP
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setImap(lImap) class LibMailObj
+method setImap(lImap) class SysLibMail
   ::lImap := lImap
 return
 
@@ -387,7 +386,7 @@ Coleta o Time-Out do Servidor SMTP
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getTimeOut() class LibMailObj
+method getTimeOut() class SysLibMail
 return ::nTimeOut
 
 
@@ -398,7 +397,7 @@ Define o Time-Out do Servidor SMTP
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setTimeOut(nTimeOut) class LibMailObj
+method setTimeOut(nTimeOut) class SysLibMail
   ::nTimeOut := nTimeOut
 return
 
@@ -410,7 +409,7 @@ Coleta o arquivo HTML de Layout
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getHtmlLayout() class LibMailObj	
+method getHtmlLayout() class SysLibMail	
 return ::cHtmlLayout
 
 
@@ -421,7 +420,7 @@ Define o arquivo HTML de Layout
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setHtmlLayout(cHtml) class LibMailObj
+method setHtmlLayout(cHtml) class SysLibMail
   
   local lOk := File(cHtml)
   
@@ -440,7 +439,7 @@ Conecta ao Servidor de Email
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method connect() class LibMailObj
+method connect() class SysLibMail
 
   ::oMailManager:setUseSSL(::isSSL())
   ::oMailManager:setUseTLS(::isTLS())
@@ -470,7 +469,7 @@ Envia o e-mail
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method send(cTo, cSubject, cBody, cAttachment, cCC, cBCC) class LibMailObj
+method send(cTo, cSubject, cBody, cAttachment, cCC, cBCC) class SysLibMail
                                                                                    
   local lSendOk 	    := .F.
   local lAuthOk		    := .T.	
@@ -529,7 +528,7 @@ Desconecta do Servidor de E-mail
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method disconnect() class LibMailObj
+method disconnect() class SysLibMail
   
   local lDisconnectOk := .F.
     
@@ -545,11 +544,11 @@ return lDisconnectOk
 /**
  * Define as Mensagens de Erro
  */
-static function setErrorMessage(oLibMailObj, cActionMessage) 
+static function setErrorMessage(oSysLibMail, cActionMessage) 
   
-  local cErrorMsg := oLibMailObj:oMailManager:getErrorString(oLibMailObj:nLastError)
+  local cErrorMsg := oSysLibMail:oMailManager:getErrorString(oSysLibMail:nLastError)
       
-  oLibMailObj:setError(cActionMessage+CRLF+CRLF+cErrorMsg)
+  oSysLibMail:setError(cActionMessage+CRLF+CRLF+cErrorMsg)
     
 return
 
@@ -561,7 +560,7 @@ Anexa arquivos a Mensagem
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method attachFile(cFile) class LibMailObj
+method attachFile(cFile) class SysLibMail
   
   local lOk := .F.
   
@@ -579,7 +578,7 @@ Define se solicita confirmacao de leitura das mensagens enviadas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setConfirmRead(lConfirm) class LibMailObj	
+method setConfirmRead(lConfirm) class SysLibMail	
   ::oMailMsg:setConfirmRead(lConfirm)	
 return
 
@@ -591,7 +590,7 @@ Define valores para o Html
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setHtmlValue(cVar, xValue) class LibMailObj	
+method setHtmlValue(cVar, xValue) class SysLibMail	
   ::oWfHtml:valByName(cVar, xValue)	
 return
 
@@ -603,7 +602,7 @@ Define valores para tabelas do Html
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method addHtmlTableValue(cVar, xValue) class LibMailObj
+method addHtmlTableValue(cVar, xValue) class SysLibMail
   aAdd((::oWfHtml:valByName(cVar)), xValue)	
 return
 
@@ -615,7 +614,7 @@ Exibe as propriedades configuradas para o objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method showProperties() class LibMailObj
+method showProperties() class SysLibMail
   
   local cMsg   := ""	
   local oUtils := LibUtilsObj():newLibUtilsObj()

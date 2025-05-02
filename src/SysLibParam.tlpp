@@ -1,92 +1,91 @@
-#include "totvs.ch"		
+#include "tlpp-core.th"
 
  
-/*/{Protheus.doc} LibParamObj
+/*/{Protheus.doc} SysLibParam
  
-Objeto que representa uma parametro da classe LibParamBoxObj
+Objeto que representa uma parametro da classe SysLibParamBox
   
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibParamObj from LibAdvplObj	
+class SysLibParam from SysLibAdvpl	
   
-  data cId
-  data cType
-  data cDataType
-  data cDescription
-  data cInitializer
-  data cPicture
-  data cValidation
-  data cF3
-  data cWhen
-  data nWidth
-  data nSize
-  data lRequired
-  data aValues
-  data cFileTypes
-  data cFileStartDirectory
-  data nFileParams
-  data cFilterAlias
-  data cFilterWhen
-  data nHeight
-  data lBold			
+  public data cId
+  public data cType
+  public data cDataType
+  public data cDescription
+  public data cInitializer
+  public data cPicture
+  public data cValidation
+  public data cF3
+  public data cWhen
+  public data nWidth
+  public data nSize
+  public data lRequired
+  public data aValues
+  public data cFileTypes
+  public data cFileStartDirectory
+  public data nFileParams
+  public data cFilterAlias
+  public data cFilterWhen
+  public data nHeight
+  public data lBold			
   
-  method newLibParamObj() constructor	
+  public method new() constructor	
   
-  method getId()
-  method setId()
-  method getType()
-  method setType()
-  method getDataType()
-  method setDataType()
-  method getDescription()
-  method setDescription()
-  method getInitializer()
-  method setInitializer()
-  method getPicture()
-  method setPicture()
-  method getValidation()
-  method setValidation()
-  method getF3()
-  method setF3()
-  method getWhen()
-  method setWhen()
-  method getWidth()
-  method setWidth()
-  method getSize()
-  method setSize()
-  method isRequired()
-  method setRequired()
-  method getValues()
-  method setValues()
-  method getFileTypes()
-  method setFileTypes()	
-  method getFileStartDirectory()
-  method setFileStartDirectory()
-  method getFileParams()
-  method setFileParams()
-  method getFilterAlias()
-  method setFilterAlias()
-  method getFilterWhen()
-  method setFilterWhen()
-  method getHeight()
-  method setHeight()	
-  method isBold()
-  method setBold()
-  
-  method toArray()
+  public method getId()
+  public method setId()
+  public method getType()
+  public method setType()
+  public method getDataType()
+  public method setDataType()
+  public method getDescription()
+  public method setDescription()
+  public method getInitializer()
+  public method setInitializer()
+  public method getPicture()
+  public method setPicture()
+  public method getValidation()
+  public method setValidation()
+  public method getF3()
+  public method setF3()
+  public method getWhen()
+  public method setWhen()
+  public method getWidth()
+  public method setWidth()
+  public method getSize()
+  public method setSize()
+  public method isRequired()
+  public method setRequired()
+  public method getValues()
+  public method setValues()
+  public method getFileTypes()
+  public method setFileTypes()	
+  public method getFileStartDirectory()
+  public method setFileStartDirectory()
+  public method getFileParams()
+  public method setFileParams()
+  public method getFilterAlias()
+  public method setFilterAlias()
+  public method getFilterWhen()
+  public method setFilterWhen()
+  public method getHeight()
+  public method setHeight()	
+  public method isBold()
+  public method setBold()  
+  public method toArray()
   
 endClass
 
 
-/*/{Protheus.doc} newLibParamObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibParamObj(cId, cType, cDescription, cDataType, nWidth, nSize) class LibParamObj	
+method new(cId, cType, cDescription, cDataType, nWidth, nSize) class SysLibParam	
   
   default cId 			   := ""
   default cType 			 := "get"
@@ -95,7 +94,7 @@ method newLibParamObj(cId, cType, cDescription, cDataType, nWidth, nSize) class 
   default nWidth			 := 10
   default nSize			   := 10
   
-  ::newLibAdvplObj()
+  _Super:new()
   
   if (cDataType == "D")
     nWidth := 60
@@ -180,7 +179,7 @@ Coleta o Id do parametro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getId() class LibParamObj
+method getId() class SysLibParam
 return ::cId
 
 
@@ -191,7 +190,7 @@ Define o Id do parametro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setId(cId) class LibParamObj
+method setId(cId) class SysLibParam
   ::cId := cId
 return
 
@@ -203,7 +202,7 @@ Coleta o Tipo do parametro. Valores aceitos: "get","combo","radio","checkbox","f
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getType() class LibParamObj
+method getType() class SysLibParam
 return ::cType
 
 
@@ -214,7 +213,7 @@ Define o Tipo do parametro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setType(cType) class LibParamObj
+method setType(cType) class SysLibParam
   ::cType := Lower(AllTrim(cType))
 return
 
@@ -226,7 +225,7 @@ Coleta o Tipo de dados do parametro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getDataType() class LibParamObj
+method getDataType() class SysLibParam
 return ::cDataType
 
 
@@ -237,7 +236,7 @@ Define o Tipo de dados do parametro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setDataType(cDataType) class LibParamObj
+method setDataType(cDataType) class SysLibParam
   ::cDataType := cDataType
 return
 
@@ -249,7 +248,7 @@ Coleta a descricao do parametro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getDescription() class LibParamObj
+method getDescription() class SysLibParam
 return ::cDescription
 
 
@@ -260,7 +259,7 @@ Define a descricao do parametro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setDescription(cDescription) class LibParamObj
+method setDescription(cDescription) class SysLibParam
   ::cDescription := cDescription
 return
 
@@ -272,7 +271,7 @@ Coleta o Inicializador padrao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getInitializer() class LibParamObj
+method getInitializer() class SysLibParam
 return ::cInitializer
 
 
@@ -283,7 +282,7 @@ Define o Inicializador padrao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setInitializer(cInitializer) class LibParamObj
+method setInitializer(cInitializer) class SysLibParam
   ::cInitializer := cInitializer
 return
 
@@ -295,7 +294,7 @@ Coleta a Picture
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getPicture() class LibParamObj
+method getPicture() class SysLibParam
 return ::cPicture
 
 
@@ -306,7 +305,7 @@ Define a Picture
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setPicture(cPicture) class LibParamObj
+method setPicture(cPicture) class SysLibParam
   ::cPicture := cPicture
 return
 
@@ -318,7 +317,7 @@ Coleta a validacao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getValidation() class LibParamObj
+method getValidation() class SysLibParam
 return ::cValidation
 
 
@@ -329,7 +328,7 @@ Define a validacao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setValidation(cValidation) class LibParamObj
+method setValidation(cValidation) class SysLibParam
   ::cValidation := cValidation
 return
 
@@ -341,7 +340,7 @@ Coleta a Consulta F3
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getF3() class LibParamObj
+method getF3() class SysLibParam
 return ::cF3
 
 
@@ -352,7 +351,7 @@ Define a Consulta F3
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setF3(cF3) class LibParamObj
+method setF3(cF3) class SysLibParam
   ::cF3 := cF3
 return
 
@@ -364,7 +363,7 @@ Coleta a validacao When
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getWhen() class LibParamObj
+method getWhen() class SysLibParam
 return ::cWhen
 
 
@@ -375,7 +374,7 @@ Define a validacao When
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setWhen(cWhen) class LibParamObj
+method setWhen(cWhen) class SysLibParam
   ::cWhen := cWhen
 return
 
@@ -387,7 +386,7 @@ Coleta a Largura do parametro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getWidth() class LibParamObj
+method getWidth() class SysLibParam
 return ::nWidth
 
 
@@ -398,7 +397,7 @@ Define o Largura do parametro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setWidth(nWidth) class LibParamObj
+method setWidth(nWidth) class SysLibParam
   ::nWidth := nWidth
 return
 
@@ -410,7 +409,7 @@ Coleta o Tamanho de parametros tipo "get"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getSize() class LibParamObj
+method getSize() class SysLibParam
 return ::nSize
 
 
@@ -421,7 +420,7 @@ Define o Tamanho de parametros tipo "get"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setSize(nSize) class LibParamObj
+method setSize(nSize) class SysLibParam
   ::nSize := nSize
 return
 
@@ -433,7 +432,7 @@ Indica se parametro eh obrigatorio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isRequired() class LibParamObj
+method isRequired() class SysLibParam
 return ::lRequired
 
 
@@ -444,7 +443,7 @@ Define se parametro eh obrigatorio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setRequired(lRequired) class LibParamObj
+method setRequired(lRequired) class SysLibParam
   ::lRequired := lRequired
 return
 
@@ -456,7 +455,7 @@ Coleta Valores para parametros tipo Combo ou Radio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getValues() class LibParamObj
+method getValues() class SysLibParam
 return ::aValues
 
 
@@ -467,7 +466,7 @@ Define o Valores para parametros tipo Combo ou Radio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setValues(aValues) class LibParamObj
+method setValues(aValues) class SysLibParam
   ::aValues := aValues
 return
 
@@ -479,7 +478,7 @@ Coleta os Tipos de arquivos para parametros tipo "file"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFileTypes() class LibParamObj
+method getFileTypes() class SysLibParam
 return ::cFileTypes
 
 
@@ -490,7 +489,7 @@ Define os Tipos de arquivos para parametros tipo "file"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFileTypes(cFileTypes) class LibParamObj
+method setFileTypes(cFileTypes) class SysLibParam
   ::cFileTypes := cFileTypes
 return
 
@@ -502,7 +501,7 @@ Coleta o diretorio inicial para parametros tipo "file"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFileStartDirectory() class LibParamObj
+method getFileStartDirectory() class SysLibParam
 return ::cFileStartDirectory
 
 
@@ -513,7 +512,7 @@ Define o diretorio inicial para parametros tipo "file"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFileStartDirectory(cFileStartDirectory) class LibParamObj
+method setFileStartDirectory(cFileStartDirectory) class SysLibParam
   ::cFileStartDirectory := cFileStartDirectory
 return
 
@@ -525,7 +524,7 @@ Coleta os Parametros de objetos tipo "file"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFileParams() class LibParamObj
+method getFileParams() class SysLibParam
 return ::nFileParams
 
 
@@ -536,7 +535,7 @@ Define os Parametros de objetos tipo "file"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFileParams(nFileParams) class LibParamObj
+method setFileParams(nFileParams) class SysLibParam
   ::nFileParams := nFileParams
 return
 
@@ -548,7 +547,7 @@ Coleta o Alias para parametros tipo "filter"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFilterAlias() class LibParamObj
+method getFilterAlias() class SysLibParam
 return ::cFilterAlias
 
 
@@ -559,7 +558,7 @@ Define o Alias para parametros tipo "filter"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFilterAlias(cFilterAlias) class LibParamObj
+method setFilterAlias(cFilterAlias) class SysLibParam
   ::cFilterAlias := cFilterAlias
 return
 
@@ -571,7 +570,7 @@ Coleta a validacao When de parametros tipo "filter"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFilterWhen() class LibParamObj
+method getFilterWhen() class SysLibParam
 return ::cFilterWhen
 
 
@@ -582,7 +581,7 @@ Define a validacao When de parametros tipo "filter"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFilterWhen(cFilterWhen) class LibParamObj
+method setFilterWhen(cFilterWhen) class SysLibParam
   ::cFilterWhen := cFilterWhen
 return
 
@@ -594,7 +593,7 @@ Coleta a Altura de parametros tipo "say"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getHeight() class LibParamObj
+method getHeight() class SysLibParam
 return ::nHeight
 
 
@@ -605,7 +604,7 @@ Define a Altura de parametros tipo "say"
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setHeight(nHeight) class LibParamObj
+method setHeight(nHeight) class SysLibParam
   ::nHeight := nHeight
 return
 
@@ -617,7 +616,7 @@ Indica se o parametro tipo "say" sera exibido em negrito
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isBold() class LibParamObj
+method isBold() class SysLibParam
 return ::lBold
 
 
@@ -628,7 +627,7 @@ Define se o parametro tipo "say" sera exibido em negrito
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setBold(lBold) class LibParamObj
+method setBold(lBold) class SysLibParam
   ::lBold := lBold
 return
 
@@ -640,7 +639,7 @@ Converte o parametro em Array para a funcao ParamBox
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method toArray() class LibParamObj
+method toArray() class SysLibParam
   
   local aArray	:= {}
   local cType		:= Lower(AllTrim(::getType()))

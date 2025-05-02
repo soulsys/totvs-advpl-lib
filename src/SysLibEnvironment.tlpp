@@ -1,6 +1,6 @@
-#include "totvs.ch"	
+#include "tlpp-core.th"
 #include "tbiconn.ch"	
-#include "rwmake.ch"	
+#include "rwmake.ch"
 
 #define SAVE_COMPANY		  1
 #define SAVE_BRANCH		 	  2
@@ -11,14 +11,14 @@
 #define SAVE_USER_ID		  7 
  
  
-/*/{Protheus.doc} LibEnvironmentObj
+/*/{Protheus.doc} SysLibEnvironment
  
 Objeto para manipulacao do Ambiente Protheus
   
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibEnvironmentObj from LibAdvplObj	
+class SysLibEnvironment from SysLibAdvpl	
   
   data cCompany
   data cBranch
@@ -32,7 +32,7 @@ class LibEnvironmentObj from LibAdvplObj
   data lPreparedEnvironment
   data aSave
   
-  method newLibEnvironmentObj() constructor	
+  method new() constructor	
   
   method getCompany()
   method setCompany()
@@ -63,14 +63,14 @@ class LibEnvironmentObj from LibAdvplObj
 endClass
 
 
-/*/{Protheus.doc} newLibEnvironmentObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibEnvironmentObj(cCompany, cBranch, cUsrName, cUserPassword, cTables, cModule, lCreateMainWindow) class LibEnvironmentObj	
+method new(cCompany, cBranch, cUsrName, cUserPassword, cTables, cModule, lCreateMainWindow) class SysLibEnvironment	
   
   default cCompany 			    := if(Type("cEmpAnt") == "C", cEmpAnt, "")
   default cBranch 			    := if(Type("cFilAnt") == "C", cFilAnt, "")
@@ -80,7 +80,7 @@ method newLibEnvironmentObj(cCompany, cBranch, cUsrName, cUserPassword, cTables,
   default cModule				    := "SIGAFAT"
   default lCreateMainWindow	:= .F.
   
-  ::newLibAdvplObj()
+  _Super:new()
   
   ::setCompany(cCompany)
   ::setBranch(cBranch)
@@ -104,7 +104,7 @@ Coleta o codigo da Empresa
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getCompany() class LibEnvironmentObj
+method getCompany() class SysLibEnvironment
 return ::cCompany
 
 
@@ -115,7 +115,7 @@ Define o codigo da Empresa
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setCompany(cCompany) class LibEnvironmentObj
+method setCompany(cCompany) class SysLibEnvironment
   ::cCompany := cCompany
   setNames(@self)
 return	
@@ -128,7 +128,7 @@ Coleta o codigo da Filial
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getBranch() class LibEnvironmentObj
+method getBranch() class SysLibEnvironment
 return ::cBranch
 
 
@@ -139,7 +139,7 @@ Define o codigo da Filial
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setBranch(cBranch) class LibEnvironmentObj
+method setBranch(cBranch) class SysLibEnvironment
   ::cBranch := cBranch
   setNames(@self)
 return
@@ -176,7 +176,7 @@ Coleta o Nome da Empresa
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getNameCompany() class LibEnvironmentObj
+method getNameCompany() class SysLibEnvironment
 return ::cNameCompany
 
 
@@ -187,7 +187,7 @@ Coleta o Nome da Filial
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getNameBranch() class LibEnvironmentObj
+method getNameBranch() class SysLibEnvironment
 return ::cNameBranch
 
 
@@ -198,7 +198,7 @@ Coleta o codigo do Uau�rio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getUserName() class LibEnvironmentObj
+method getUserName() class SysLibEnvironment
 return ::cUserName
 
 
@@ -209,7 +209,7 @@ Define o codigo do Uau�rio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setUserName(cUserName) class LibEnvironmentObj
+method setUserName(cUserName) class SysLibEnvironment
   ::cUserName := cUserName
 return
 
@@ -221,7 +221,7 @@ Coleta a Senha do Usua��rio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getUserPassword() class LibEnvironmentObj
+method getUserPassword() class SysLibEnvironment
 return ::cUserPassword
 
 
@@ -232,7 +232,7 @@ Define a Senha do Usua��rio
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setUserPassword(cUserPassword) class LibEnvironmentObj
+method setUserPassword(cUserPassword) class SysLibEnvironment
   ::cUserPassword := cUserPassword
 return
 
@@ -244,7 +244,7 @@ Coleta as Tabelas para abrir quando o ambiente for inicializado. Ex.: "SA1,SB1,S
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getTables() class LibEnvironmentObj
+method getTables() class SysLibEnvironment
 return ::cTables
 
 
@@ -255,7 +255,7 @@ Define as Tabelas para abrir quando o ambiente for inicializado. Ex.: "SA1,SB1,S
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setTables(cTables) class LibEnvironmentObj
+method setTables(cTables) class SysLibEnvironment
   ::cTables := cTables
 return
 
@@ -267,7 +267,7 @@ Coleta o modulo para inicializacao do ambiente. Ex.: "FAT
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getModule() class LibEnvironmentObj
+method getModule() class SysLibEnvironment
 return ::cModule
 
 
@@ -278,7 +278,7 @@ Define o modulo para inicializacao do ambiente. Ex.: "FAT
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setModule(cModule) class LibEnvironmentObj
+method setModule(cModule) class SysLibEnvironment
   ::cModule := cModule
 return
 
@@ -290,7 +290,7 @@ Indica se deve criar a Janela Principal (oMainWnd) do Protheus
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isCreateMainWindow() class LibEnvironmentObj
+method isCreateMainWindow() class SysLibEnvironment
 return ::lCreateMainWindow
 
 
@@ -301,7 +301,7 @@ Indica se deve criar a Janela Principal (oMainWnd) do Protheus
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setCreateMainWindow(lCreateMainWindow) class LibEnvironmentObj
+method setCreateMainWindow(lCreateMainWindow) class SysLibEnvironment
   ::lCreateMainWindow := lCreateMainWindow
 return
 
@@ -313,10 +313,10 @@ Carrega o ambiente Protheus
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method load(cFunName) class LibEnvironmentObj
+method load(cFunName) class SysLibEnvironment
   
   local lOk	 		:= .F. 
-  default cFunName	:= "MsgBox('It works !! =D', 'LibEnvironmentObj', 'INFO')"
+  default cFunName	:= "MsgBox('It works !! =D', 'SysLibEnvironment', 'INFO')"
   
   if (lOk := loadEnvironment(@self))
     if ::isCreateMainWindow()
@@ -454,7 +454,7 @@ Encerra o ambiente Protheus
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method close() class LibEnvironmentObj
+method close() class SysLibEnvironment
   
   if ::lPreparedEnvironment
     RESET ENVIRONMENT
@@ -470,7 +470,7 @@ Exibe dialogo para selecao de Empresas/Filiais
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getCompanies(cTitle, lSelectOne, lJustBranches, lJustCompanies, bFilter) class LibEnvironmentObj
+method getCompanies(cTitle, lSelectOne, lJustBranches, lJustCompanies, bFilter) class SysLibEnvironment
   
   local aRet				      := {}
   local aCompanies 		    := {}
@@ -569,18 +569,18 @@ static function createGrid(oDlg, oGrid, aCompanies, lSelectOne)
   local nHeight	:= 100	
   local oCol		:= nil
   
-  oGrid := LibGridObj():newLibGridObj(nCol, nRow, nWidth, nHeight, oDlg)
+  oGrid := SysLibGrid():new(nCol, nRow, nWidth, nHeight, oDlg)
   
   oGrid:addMarkColumn()
   
-  oCol := LibColumnObj():newLibColumnObj("company", "Empresa", "C", 10) 
+  oCol := SysLibColumn():new("company", "Empresa", "C", 10) 
   oGrid:addColumn(oCol)
   
-  oCol := LibColumnObj():newLibColumnObj("branch", "Filial", "C", 10)
+  oCol := SysLibColumn():new("branch", "Filial", "C", 10)
   oGrid:addColumn(oCol)
   
-  oCol := LibColumnObj():newLibColumnObj("name", "Nome", "C", 40)
-   oGrid:addColumn(oCol)
+  oCol := SysLibColumn():new("name", "Nome", "C", 40)
+  oGrid:addColumn(oCol)
   
   for nI := 1 to Len(aCompanies)
     oGrid:newLine()
@@ -627,7 +627,7 @@ Indica se a janela principal existe
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method hasMainWindow() class LibEnvironmentObj
+method hasMainWindow() class SysLibEnvironment
 return (Type("oMainWnd") == "O") 
 
 
@@ -638,7 +638,7 @@ Salva o ambiente atual
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method save() class LibEnvironmentObj
+method save() class SysLibEnvironment
   
   if !::hasMainWindow()
     return
@@ -663,7 +663,7 @@ Restaura o ambiente anterior
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method restore() class LibEnvironmentObj
+method restore() class SysLibEnvironment
   
   local oEnv := nil
       
@@ -671,7 +671,7 @@ method restore() class LibEnvironmentObj
     return
   endIf
   
-  oEnv := LibEnvironmentObj():newLibEnvironmentObj()
+  oEnv := SysLibEnvironment():new()
   oEnv:setCompany(::aSave[SAVE_COMPANY])
   oEnv:setBranch(::aSave[SAVE_BRANCH])
 
@@ -693,7 +693,7 @@ Apresenta tela para informacao de empresa e filial
 @author soulsys:victorhugo
 @since 17/05/2023
 /*/
-method inputCompanyScreen(aData) class LibEnvironmentObj
+method inputCompanyScreen(aData) class SysLibEnvironment
   
   local lOk      := .F.
   local oDlg     := nil
@@ -754,7 +754,7 @@ Apresenta tela para login como administrador
 @author soulsys:victorhugo
 @since 17/05/2023
 /*/
-method adminLoginScreen() class LibEnvironmentObj
+method adminLoginScreen() class SysLibEnvironment
   
   local lOk     := .F.
   local oDlg    := nil

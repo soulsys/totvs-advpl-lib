@@ -1,4 +1,4 @@
-## LibAdvplObj
+## SysLibAdvpl
 
 Objeto pai de todos os objetos da LibAdvpl.
 
@@ -6,28 +6,31 @@ Objeto pai de todos os objetos da LibAdvpl.
 
 ### Métodos
 
-
 <hr/>
 
-***newLibAdvplObj()***
+**_new()_**
 
 Construtor
 
 Parâmetros:
+
 - Nenhum
 
 Retorno
+
 - Nenhum
 <hr/>
 
-***isInJob()***
+**_isInJob()_**
 
 Indica se o Protheus esta sendo executado em Job (sem interface visual)
 
 Parâmetros:
+
 - Nenhum
 
 Retorno
+
 - Nenhum
 <hr/>
 

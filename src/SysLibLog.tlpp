@@ -1,50 +1,50 @@
-#include "totvs.ch"		
+#include "tlpp-core.th"
 
  
-/*/{Protheus.doc} LibLogObj
+/*/{Protheus.doc} SysLibLog
  
 Objeto para controle de Log
   
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibLogObj from LibFileObj	
+class SysLibLog from SysLibFile	
 
-  data lConsole
-  data lWriteFile
-  data lShowCompany
-  data lShowThreadId
-  data lCache
-  data aLogs
+  public data lConsole
+  public data lWriteFile
+  public data lShowCompany
+  public data lShowThreadId
+  public data lCache
+  public data aLogs
   
-  method newLibLogObj() constructor	
+  public method new() constructor	
   
-  method setConsole()
-  method setWriteFile()  
-  method info()
-  method warn()
-  method error()
-  method debug()
-  method lineBreak()  
-  method setShowCompany()
-  method setShowThreadId()
-  method setCache()
-  method getCachedLogs()
-  method clearCache()
+  public method setConsole()
+  public method setWriteFile()  
+  public method info()
+  public method warn()
+  public method error()
+  public method debug()
+  public method lineBreak()  
+  public method setShowCompany()
+  public method setShowThreadId()
+  public method setCache()
+  public method getCachedLogs()
+  public method clearCache()
   
 endClass
 
 
-/*/{Protheus.doc} newLibLogObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibLogObj(cFile, lConsole, lWriteFile, lShowCompany, lShowThreadId) class LibLogObj	
+method new(cFile, lConsole, lWriteFile, lShowCompany, lShowThreadId) class SysLibLog	
   
-  ::newLibFileObj(cFile)
+  ::new(cFile)
   
   ::lConsole      := .F.
   ::lWriteFile    := .T.
@@ -79,7 +79,7 @@ Define se deve exibir os logs no console
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setConsole(lConsole) class LibLogObj	
+method setConsole(lConsole) class SysLibLog	
   ::lConsole := lConsole
 return
 
@@ -91,7 +91,7 @@ Define se deve gravar o log em disco
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setWriteFile(lWriteFile) class LibLogObj	
+method setWriteFile(lWriteFile) class SysLibLog	
   ::lWriteFile := lWriteFile
 return
 
@@ -103,7 +103,7 @@ Grava uma mensagem de informacao no arquivo de log
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method info(cMessage) class LibLogObj	
+method info(cMessage) class SysLibLog	
 return libLog(self, "INFO", cMessage)
 
   
@@ -114,7 +114,7 @@ Grava uma mensagem de alerta no arquivo de log
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method warn(cMessage) class LibLogObj	
+method warn(cMessage) class SysLibLog	
 return libLog(self, "WARN", cMessage)
 
 
@@ -125,7 +125,7 @@ Grava uma mensagem de erro no arquivo de log
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method error(cMessage) class LibLogObj	
+method error(cMessage) class SysLibLog	
 return libLog(self, "ERROR", cMessage)
 
 
@@ -136,7 +136,7 @@ Grava uma mensagem de debug no arquivo de log
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method debug(cMessage) class LibLogObj	
+method debug(cMessage) class SysLibLog	
 return libLog(self, "DEBUG", cMessage)
 
 /**
@@ -182,7 +182,7 @@ Grava quebras de linha
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method lineBreak(nLines) class LibLogObj
+method lineBreak(nLines) class SysLibLog
   
   local cText    := ""
   default nLines := 0
@@ -203,7 +203,7 @@ Define se deve exibir a empresa/filial
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setShowCompany(lShow) class LibLogObj
+method setShowCompany(lShow) class SysLibLog
   ::lShowCompany := lShow  
 return
 
@@ -215,7 +215,7 @@ Define se deve exibir o numero da thread
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setShowThreadId(lShow) class LibLogObj
+method setShowThreadId(lShow) class SysLibLog
   ::lShowThreadId := lShow  
 return
 
@@ -227,7 +227,7 @@ Define se deve salvar os logs na memoria
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setCache(lCache) class LibLogObj	
+method setCache(lCache) class SysLibLog	
   ::lCache := lCache
 return
 
@@ -239,7 +239,7 @@ Retorna os logs salvos em cache
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getCachedLogs() class LibLogObj	
+method getCachedLogs() class SysLibLog	
 return ::aLogs
 
 
@@ -250,6 +250,6 @@ Limpa os logs salvos em cache
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method clearCache() class LibLogObj	
+method clearCache() class SysLibLog	
   ::aLogs := {}
 return
