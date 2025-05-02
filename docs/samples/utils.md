@@ -1,14 +1,14 @@
 ## Exemplo de Utilidades Genéricas
 
-A classe [LibUtilsObj](#) possui uma grande quantidade de métodos úteis para o dia a dia 
-do desenvolvimento em Advpl. Essa classe agiliza bastante o processo de codificação, bem 
+A classe [SysLibUtils](#) possui uma grande quantidade de métodos úteis para o dia a dia
+do desenvolvimento em Advpl. Essa classe agiliza bastante o processo de codificação, bem
 como ajuda a construir códigos mais limpos e legíveis.
 
 ```cpp
 user function UtilsSample()
-  
+
   local oJson            := JsonObject():new()
-  local oUtils           := LibUtilsObj():newLibUtilsObj()
+  local oUtils           := SysLibUtils():new()
   local cToday           := oUtils:strAnyType(dDataBase, "DD/MM/AAAA")
   local cFloatNumber     := oUtils:strAnyType(123.45)
   local lIsNullVariable  := oUtils:isNull(oJson)
@@ -22,7 +22,7 @@ user function UtilsSample()
 return
 ```
 
-Nesse exemplo mostramos apenas alguns métodos que usamos com mais frequência. Não deixe de conferir a [documentação](#) 
+Nesse exemplo mostramos apenas alguns métodos que usamos com mais frequência. Não deixe de conferir a [documentação](#)
 dessa classe para explorar todos os recursos disponíveis.
 
 <br/>

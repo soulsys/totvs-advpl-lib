@@ -361,7 +361,7 @@ method getValue(cParamId, lMemory) class SysLibParamBox
   local oParam	   := nil
   local cMvPar	   := ""
   local lHasValues := (Len(::aValues) > 0) 
-  local oUtils     := LibUtilsObj():newLibUtilsObj()
+  local oUtils     := SysLibUtils():new()
   default lMemory  := .F.
   
   if !lHasValues

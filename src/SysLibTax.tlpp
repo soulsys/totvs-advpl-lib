@@ -1,53 +1,55 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
 #include "rwmake.ch"
 
 
-/*/{Protheus.doc} LibTaxObj
+/*/{Protheus.doc} SysLibTax
 
 Objeto para calculo de impostos
     
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibTaxObj
+class SysLibTax
 
-  data cCode
-  data cUnit
-  data lIsCustomer
-  data lIsSupplier
-  data cEntityType
-  data cInvoiceType
-  data nDocType
-  data cOperation
-  data cFreight
-  data aItems
+  public data cCode
+  public data cUnit
+  public data lIsCustomer
+  public data lIsSupplier
+  public data cEntityType
+  public data cInvoiceType
+  public data nDocType
+  public data cOperation
+  public data cFreight
+  public data aItems
   
-  method newLibTaxObj() constructor
+  public method new() constructor
   
-  method setCustomer()
-  method setSupplier()
-  method setEntityType()
-  method setInvoiceType()
-  method setDocType()
-  method setOperation()
-  method setFreight()
-  method addItem()
-  method clearItems()
-  method calculate()
-  method restore()
-  method getItemTaxesAsArray()
+  public method setCustomer()
+  public method setSupplier()
+  public method setEntityType()
+  public method setInvoiceType()
+  public method setDocType()
+  public method setOperation()
+  public method setFreight()
+  public method addItem()
+  public method clearItems()
+  public method calculate()
+  public method restore()
+  public method getItemTaxesAsArray()
   
 endClass
 
 
-/*/{Protheus.doc} newLibTaxObj
+/*/{Protheus.doc} new
 
 Construtor
     
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibTaxObj() class LibTaxObj
+method new() class SysLibTax
+
+  _Super:new()
   
   ::cCode 		    := ""
   ::cUnit 		    := ""
@@ -69,7 +71,7 @@ Define o cliente
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setCustomer(cCode, cUnit) class LibTaxObj
+method setCustomer(cCode, cUnit) class SysLibTax
   
   ::cCode 		  := cCode
   ::cUnit 		  := cUnit
@@ -85,7 +87,7 @@ Define o fornecedor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setSupplier(cCode, cUnit) class LibTaxObj
+method setSupplier(cCode, cUnit) class SysLibTax
   
   ::cCode 		  := cCode
   ::cUnit 		  := cUnit
@@ -101,7 +103,7 @@ Define o tipo da entidade
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setEntityType(cEntityType) class LibTaxObj
+method setEntityType(cEntityType) class SysLibTax
   ::cEntityType := cEntityType
 return
 
@@ -113,7 +115,7 @@ Define o tipo da NF
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setInvoiceType(cInvoiceType) class LibTaxObj
+method setInvoiceType(cInvoiceType) class SysLibTax
   ::cInvoiceType := cInvoiceType
 return
 
@@ -125,7 +127,7 @@ Define o tipo de documento (1=Entrada, 2=Saida)
 @author soulsys:victorhugo
 @since 13/12/2023
 /*/
-method setDocType(nDocType) class LibTaxObj
+method setDocType(nDocType) class SysLibTax
   ::nDocType := nDocType
 return
 
@@ -137,7 +139,7 @@ Define a Operacao (TES Inteligente)
 @author soulsys:victorhugo
 @since 13/12/2023
 /*/
-method setOperation(cOperation) class LibTaxObj
+method setOperation(cOperation) class SysLibTax
   ::cOperation := cOperation
 return
 
@@ -149,7 +151,7 @@ Define o tipo do Frete
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setFreight(cFreight) class LibTaxObj
+method setFreight(cFreight) class SysLibTax
   ::cFreight := cFreight
 return
 
@@ -161,7 +163,7 @@ Adiciona itens ao calculo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method addItem(cProduct, cTES, nQuantity, nPrice, nFreight, nDiscount, nExpenses) class LibTaxObj
+method addItem(cProduct, cTES, nQuantity, nPrice, nFreight, nDiscount, nExpenses) class SysLibTax
   
   local oItem       := JsonObject():new()
   default nFreight  := 0
@@ -201,7 +203,7 @@ Remove todos os itens
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method clearItems() class LibTaxObj
+method clearItems() class SysLibTax
   ::aItems := {}
 return
 
@@ -213,7 +215,7 @@ Processa o calculo dos impostos
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method calculate(lRestore) class LibTaxObj
+method calculate(lRestore) class SysLibTax
   
   local nI			   := 0	
   local oItem      := nil	
@@ -291,7 +293,7 @@ Restaura as funcoes fiscais
 @author soulsys:victorhugo
 @since 13/12/2023
 /*/
-method restore() class LibTaxObj
+method restore() class SysLibTax
   MaFisEnd()
   MaFisRestore()
 return
@@ -304,7 +306,7 @@ Retorna os impostos de um item em forma de array de objetos
 @author soulsys:victorhugo
 @since 28/12/2023
 /*/
-method getItemTaxesAsArray(oTaxItem) class LibTaxObj
+method getItemTaxesAsArray(oTaxItem) class SysLibTax
 
   local aTaxes := {}
 
@@ -397,7 +399,7 @@ static function initMaFis(oSelf)
   local cTpCompl    := nil
   local cCltdest  	:= nil
   local cLjtdest    := nil	
-  local oSql		    := LibSqlObj():newLibSqlObj()
+  local oSql		    := SysLibSql():new()
   
   if Empty(cTpCliFor)
     if (cCliFor == "C")

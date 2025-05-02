@@ -20,45 +20,45 @@ Objeto para manipulacao do Ambiente Protheus
 /*/
 class SysLibEnvironment from SysLibAdvpl	
   
-  data cCompany
-  data cBranch
-  data cNameCompany
-  data cNameBranch
-  data cUserName
-  data cUserPassword
-  data cTables
-  data cModule
-  data lCreateMainWindow
-  data lPreparedEnvironment
-  data aSave
+  public data cCompany
+  public data cBranch
+  public data cNameCompany
+  public data cNameBranch
+  public data cUserName
+  public data cUserPassword
+  public data cTables
+  public data cModule
+  public data lCreateMainWindow
+  public data lPreparedEnvironment
+  public data aSave
   
-  method new() constructor	
+  public method new() constructor	
   
-  method getCompany()
-  method setCompany()
-  method getBranch()
-  method setBranch()
-  method getNameCompany()
-  method getNameBranch()
-  method getUserName()
-  method setUserName()
-  method getUserPassword()
-  method setUserPassword()
-  method getTables()
-  method setTables()
-  method getModule()
-  method setModule()
-  method isCreateMainWindow()
-  method setCreateMainWindow()
+  public method getCompany()
+  public method setCompany()
+  public method getBranch()
+  public method setBranch()
+  public method getNameCompany()
+  public method getNameBranch()
+  public method getUserName()
+  public method setUserName()
+  public method getUserPassword()
+  public method setUserPassword()
+  public method getTables()
+  public method setTables()
+  public method getModule()
+  public method setModule()
+  public method isCreateMainWindow()
+  public method setCreateMainWindow()
   
-  method load()
-  method close()
-  method getCompanies()
-  method hasMainWindow()
-  method save()
-  method restore()
-  method inputCompanyScreen()
-  method adminLoginScreen()
+  public method load()
+  public method close()
+  public method getCompanies()
+  public method hasMainWindow()
+  public method save()
+  public method restore()
+  public method inputCompanyScreen()
+  public method adminLoginScreen()
   
 endClass
 
@@ -794,7 +794,7 @@ return lOk
 static function isAdminUser(cLogin, cPsw)
 
   local lOk    := .F.
-  local oUtils := LibUtilsObj():newLibUtilsObj()
+  local oUtils := SysLibUtils():new()
 
   cLogin := AllTrim(cLogin)
   cPsw   := AllTrim(cPsw)

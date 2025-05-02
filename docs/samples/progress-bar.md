@@ -1,14 +1,14 @@
 ## Exemplo de Manipulação de Barras de Progresso
 
-A classe [LibProgressBarObj](#) tem como objetivo facilitar a manipulação de barras de progresso.
+A classe [SysLibProgressBar](#) tem como objetivo facilitar a manipulação de barras de progresso.
 
 ```cpp
 /**
- * Teste da classe LibProgressBarObj com uma barra de progresso
+ * Teste da classe SysLibProgressBar com uma barra de progresso
  */
 user function TstPrgBar1()
 
-  local oBar := LibProgressBarObj():newLibProgressBarObj()
+  local oBar := SysLibProgressBar():new()
 
   oBar:setAction({|| runSimpleProcess(oBar) })
   oBar:start()
@@ -18,7 +18,7 @@ user function TstPrgBar1()
 return
 
 /**
- * Processamento usando a classe LibProgressBarObj com uma barra de progresso
+ * Processamento usando a classe SysLibProgressBar com uma barra de progresso
  */
 static function runSimpleProcess(oBar)
 
@@ -39,13 +39,13 @@ return .T.
 
 
 /**
- * Teste da classe LibProgressBarObj com duas barras de progresso
+ * Teste da classe SysLibProgressBar com duas barras de progresso
  */
 user function TstPrgBar2()
 
   local cText  := "Starting..."
-  local cTitle := "LibProgressBarObj - Two Bars"
-  local oBar   := LibProgressBarObj():newLibProgressBarObj()
+  local cTitle := "SysLibProgressBar - Two Bars"
+  local oBar   := SysLibProgressBar():new()
 
   oBar:setAction({|| runComplexProcess(oBar) }, cText, cTitle)
   oBar:setTwoBars(.T.)
@@ -56,7 +56,7 @@ user function TstPrgBar2()
 return
 
 /**
- * Processamento usando a classe LibProgressBarObj com duas barras de progresso
+ * Processamento usando a classe SysLibProgressBar com duas barras de progresso
  */
 static function runComplexProcess(oBar)
 
@@ -76,7 +76,7 @@ static function runComplexProcess(oBar)
 return
 
 /**
- * Exemplo de subprocesso para teste da classe LibProgressBarObj com duas barras de progresso
+ * Exemplo de subprocesso para teste da classe SysLibProgressBar com duas barras de progresso
  */
 static function runSubProcess(oBar)
 

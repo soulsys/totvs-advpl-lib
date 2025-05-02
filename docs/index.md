@@ -46,12 +46,12 @@ possa entender melhor nossa motivação para desenvolvimento desse projeto.
 - SysLibParamBox
 - SysLibParam
 - [SysLibPdf](classes/pdf)
-- LibSqlObj
-- LibTaxObj
-- LibUtilsObj
-- LibWsRestRequestObj
-- LibWsRestResponseObj
-- LibXmlObj
+- SysLibSql
+- SysLibTax
+- SysLibUtils
+- SysLibWsRestRequest
+- SysLibWsRestResponse
+- SysLibXml
 
 <br/>
 ***(documentação em desenvolvimento...)***

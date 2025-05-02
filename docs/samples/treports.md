@@ -1,6 +1,6 @@
 ## Exemplo de geração de relatórios desenvolvidos na plataforma TReports
 
-A classe [LibTReportsObj](#) tem como principal objetivo permitir a geração de relatórios TReports via API,
+A classe [SysLibTReports](#) tem como principal objetivo permitir a geração de relatórios TReports via API,
 possibilitando assim, a geração de tais relatórios através de pontos de entrada, user fuctions ou através de
 web services. Desta forma, contornamos a limitação padrão do Protheus, onde a impressão dos relatórios ocorre
 apenas por rotinas de menu.
@@ -19,7 +19,7 @@ O arquivo deverá conter a seguinte estrutura:
 
 ```cpp
 /**
- * Teste da classe LibTReportsObj para impressão de relatório
+ * Teste da classe SysLibTReports para impressão de relatório
  */
 user function TstTRep1()
 
@@ -27,7 +27,7 @@ user function TstTRep1()
   local cReportId := "ea987178-433d-4623-9085-bd919356529e"
   local oParams   := JsonObject():new()
   local oSetup    := JsonObject():new()
-  local oService  := LibTReportsObj():newLibTReportsObj()
+  local oService  := SysLibTReports():new()
 
   oParams["filial"]    := "01"
   oParams["numeroDe"]  := "000001"
@@ -47,7 +47,7 @@ individualmente:
 
 ```cpp
 /**
- * Teste da classe LibTReportsObj para geração e download do relatório
+ * Teste da classe SysLibTReports para geração e download do relatório
  */
 user function TstTRep2()
 
@@ -56,7 +56,7 @@ user function TstTRep2()
   local cReportId     := "ea987178-433d-4623-9085-bd919356529e"
   local oParams       := JsonObject():new()
   local oSetup        := JsonObject():new()
-  local oService      := LibTReportsObj():newLibTReportsObj()
+  local oService      := SysLibTReports():new()
 
   oParams["filial"]    := "01"
   oParams["numeroDe"]  := "000001"

@@ -712,7 +712,7 @@ Adiciona colunas no browse a partir de uma query SQL
 method addSqlColumns(cQuery, lFill, aSetField) class SysLibGrid
 
   local nI          := 0
-  local oSql 		    := LibSqlObj():newLibSqlObj()
+  local oSql 		    := SysLibSql():new()
   default lFill	    := .T.
   default aSetField := {}
 
@@ -733,7 +733,7 @@ method addSqlColumns(cQuery, lFill, aSetField) class SysLibGrid
 return
 
 /**
- * Cria as colunas a partir do objeto LibSqlObj
+ * Cria as colunas a partir do objeto SysLibSql
  */
 static function createSqlColumns(oGrid, oSql)
 
@@ -760,7 +760,7 @@ static function createSqlColumns(oGrid, oSql)
 return
 
 /**
- * Preenche as linhas do grid a partir de um objeto LibSqlObj
+ * Preenche as linhas do grid a partir de um objeto SysLibSql
  */
 static function fillLinesFromSql(oGrid, oSql)
 
@@ -1539,7 +1539,7 @@ static function validFilter(oGrid, cFilter, xColumns, aLine)
   local aCols		 := oGrid:getColumns()
   local cColumns := getFilterColumns(xColumns)
   local oCol		 := nil
-  local oUtils	 := LibUtilsObj():newLibUtilsObj()
+  local oUtils	 := SysLibUtils():new()
 
   cFilter := Upper(AllTrim(cFilter))
 

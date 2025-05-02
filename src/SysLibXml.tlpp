@@ -1,44 +1,47 @@
+#include "tlpp-core.th"
 #include "totvs.ch"
 
 
-/*/{Protheus.doc} LibXmlObj
+/*/{Protheus.doc} SysLibXml
 
 Objeto para manipulacao de arquivos XML
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibXmlObj from SysLibAdvpl
+class SysLibXml from SysLibAdvpl
 
-  data oXml
-  data cXml
-  data cError
+  public data oXml
+  public data cXml
+  public data cError
 
-  method newLibXmlObj() constructor
-  method setXml()  
-  method parse()
-  method text()
-  method node()
-  method list()
-  method nodeToString()
-  method exists()
-  method getError()
+  public method new() constructor
+
+  public method setXml()  
+  public method parse()
+  public method text()
+  public method node()
+  public method list()
+  public method nodeToString()
+  public method exists()
+  public method getError()
 
 endClass
 
 
-/*/{Protheus.doc} newLibXmlObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibXmlObj(cXml) class LibXmlObj
+method new(cXml) class SysLibXml
 
   default cXml := ""
 
   _Super:new()
+  
   ::setXml(cXml)
   
   ::cError := ""
@@ -53,7 +56,7 @@ Define a String ou Arquivo XML
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setXml(cXml) class LibXmlObj  	
+method setXml(cXml) class SysLibXml  	
   ::cXml := cXml  
 return
 
@@ -65,7 +68,7 @@ Realiza o parser do Xml
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method parse() class LibXmlObj
+method parse() class SysLibXml
 
   local lOk           := .F.
   local cError        := ""
@@ -128,7 +131,7 @@ Ex.: oXml:text("pedido:cabecalho:numero")
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method text(cNode, oParent) class LibXmlObj
+method text(cNode, oParent) class SysLibXml
 
   local xRet       := nil
   private oPrvtObj := nil
@@ -152,7 +155,7 @@ Ex.: oXml:node("pedido:cabecalho")
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method node(cNode, oParent) class LibXmlObj
+method node(cNode, oParent) class SysLibXml
 
   local oNode      := nil
   private oPrvtObj := nil
@@ -162,7 +165,7 @@ method node(cNode, oParent) class LibXmlObj
   cNode    := "oPrvtObj:_" + Replace(AllTrim(cNode), ":", ":_")
 
   if (Type(cNode) != "U")
-    oNode      := LibXmlObj():newLibXmlObj()        
+    oNode      := SysLibXml():new()        
     oNode:oXml := &cNode
   endIf
 
@@ -177,7 +180,7 @@ Ex.: oXml:list("pedido:itens:item")
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method list(cNode, oParent) class LibXmlObj
+method list(cNode, oParent) class SysLibXml
 
   local nI         := 0
   local aValues    := {}
@@ -200,7 +203,7 @@ method list(cNode, oParent) class LibXmlObj
   endIf
 
   for nI := 1 to Len(aValues)
-    oNode      := LibXmlObj():newLibXmlObj()        
+    oNode      := SysLibXml():new()        
     oNode:oXml := aValues[nI]
     aAdd(aNodes, oNode)
   next nI
@@ -216,7 +219,7 @@ Converte um no em string
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method nodeToString(oNode) class LibXmlObj
+method nodeToString(oNode) class SysLibXml
   
   local cStr := ""
 
@@ -234,7 +237,7 @@ Ex.: oXml:exists("pedido:cabecalho:numero")
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method exists(cNode, oParent) class LibXmlObj
+method exists(cNode, oParent) class SysLibXml
 
   local xNode := ::node(cNode, oParent)
   local xText := ::text(cNode, oParent)
@@ -249,5 +252,5 @@ Coleta o erro do ultimo parser
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getError() class LibXmlObj
+method getError() class SysLibXml
 return ::cError

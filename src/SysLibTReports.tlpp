@@ -1,43 +1,46 @@
+#include "tlpp-core.th"
 #include "totvs.ch"
 
 
-/*/{Protheus.doc} LibTReportsObj
+/*/{Protheus.doc} SysLibTReports
 
 Servico para interacao com API do TReports
     
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
-class LibTReportsObj from SysLibAdvpl
+class SysLibTReports from SysLibAdvpl
 
-  data cErrorMessage
-  data cAuthToken
-  data cTReportsUrl
-  data cProtheusWsUrl
-  data cUserName
-  data cPassword
+  public data cErrorMessage
+  public data cAuthToken
+  public data cTReportsUrl
+  public data cProtheusWsUrl
+  public data cUserName
+  public data cPassword
 
-  method newLibTReportsObj() constructor
+  public method new() constructor
 	
-  method getAuthToken()
-  method generateReport()
-  method downloadReport()
-  method getReport()
-  method getErrorMessage()
+  public method getAuthToken()
+  public method generateReport()
+  public method downloadReport()
+  public method getReport()
+  public method getErrorMessage()
   
 endClass
 
 
-/*/{Protheus.doc} newLibTReportsObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
-method newLibTReportsObj() class LibTReportsObj
+method new() class SysLibTReports
 
   local oConfig := getConfig()
+
+  _Super:new()
 
   ::cErrorMessage  := ""
   ::cTReportsUrl   := oConfig["treports_url"]
@@ -55,7 +58,7 @@ Obtem o token de autenticacao da API do TReports
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
-method getAuthToken() class LibTReportsObj
+method getAuthToken() class SysLibTReports
 
   local cPath      := "/api/oauth2/v1/token"
   local aHeaders   := {"Content-Type: application/json"}
@@ -99,7 +102,7 @@ Gera relatorio a partir do ID
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
-method generateReport(cReportId, oParams) class LibTReportsObj
+method generateReport(cReportId, oParams) class SysLibTReports
 
   local cBody         := ""
   local cGenerationId := ""
@@ -138,7 +141,7 @@ Baixa relatorio a partir do Generation ID
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
-method downloadReport(cGenerationId, oSetup) class LibTReportsObj
+method downloadReport(cGenerationId, oSetup) class SysLibTReports
 
   local cFormat   := ""
   local cFolder   := ""
@@ -149,7 +152,7 @@ method downloadReport(cGenerationId, oSetup) class LibTReportsObj
   local lOpenFile := .F.
   local oFile     := nil
   local oApi      := FwRest():new(::cTReportsUrl)
-  local oUtils    := LibUtilsObj():newLibUtilsObj()
+  local oUtils    := SysLibUtils():new()
   default oSetup  := JsonObject():new()
 
   cFormat   := oUtils:whenIsNull(oSetup["format"], "pdf")
@@ -206,7 +209,7 @@ Gera e baixa um relatorio TReports
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
-method getReport(cReportId, oParams, oSetup) class LibTReportsObj
+method getReport(cReportId, oParams, oSetup) class SysLibTReports
 
   local cGenerationId := ::generateReport(cReportId, oParams)
 
@@ -256,7 +259,7 @@ static function setApiErrorMessage(oSelf, oApi, cRequest, oResponse)
   local cLog      := ""
   local cFolder   := "\treports\logs\"
   local cFileName := "error_" + DtoS(Date()) + "_" + StrTran(Time(),":","") + ".log"
-  local oUtils    := LibUtilsObj():newLibUtilsObj()
+  local oUtils    := SysLibUtils():new()
 
   oSelf:cErrorMessage := ""
   
@@ -298,5 +301,5 @@ Retorna a ultima mensagem de erro
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
-method getErrorMessage() class LibTReportsObj
+method getErrorMessage() class SysLibTReports
 return ::cErrorMessage

@@ -1,34 +1,36 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
 #include "rwmake.ch"
 
 
-/*/{Protheus.doc} LibWsRestRequestObj
+/*/{Protheus.doc} SysLibWsRestRequest
 
 Objeto para manipulacao de requisicoes de webservices REST
     
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibWsRestRequestObj from SysLibAdvpl
+class SysLibWsRestRequest from SysLibAdvpl
 
-  data oRequest
+  public data oRequest
   
-  method newLibWsRestRequestObj() constructor
+  public method new() constructor
   
-  method getRoute()
-  method getBody()
+  public method getRoute()
+  public method getBody()
   
 endClass
 
 
-/*/{Protheus.doc} newLibWsRestRequestObj
+/*/{Protheus.doc} new
 
 Construtor
     
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibWsRestRequestObj(oRequest) class LibWsRestRequestObj
+method new(oRequest) class SysLibWsRestRequest
+
+  _Super:new()
   
   ::oRequest := oRequest
   
@@ -42,7 +44,7 @@ Retorna a rota de uma requisicao
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getRoute(oRequest) class LibWsRestRequestObj
+method getRoute(oRequest) class SysLibWsRestRequest
   
   local cRoute     := ""
   default oRequest := ::oRequest
@@ -61,7 +63,7 @@ Retorna o corpo de uma requisicao em formato JSON
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getBody(oRequest) class LibWsRestRequestObj
+method getBody(oRequest) class SysLibWsRestRequest
   
   local cContent   := ""
   local oBody      := JsonObject():new()	

@@ -44,7 +44,7 @@ Construtor
 /*/
 method new(cFile, lConsole, lWriteFile, lShowCompany, lShowThreadId) class SysLibLog	
   
-  ::new(cFile)
+  _Super:new(cFile)
   
   ::lConsole      := .F.
   ::lWriteFile    := .T.
@@ -161,7 +161,7 @@ static function libLog(oSelf, cSeverity, cMessage)
   cText := "[ " + cDateTime + " | " + cSeverity + " " + cThreadId + " " + cCompany + " ] " + cMessage
 
   if oSelf:lConsole
-    FwLogMsg(cSeverity, /*cTransactionId*/, "LibUtilsObj", /*cCategory*/, /*cStep*/, /*cMsgId*/, cText + CRLF, /*nMensure*/, /*nElapseTime*/, /*aMessage*/)
+    FwLogMsg(cSeverity, /*cTransactionId*/, "SysLibUtils", /*cCategory*/, /*cStep*/, /*cMsgId*/, cText + CRLF, /*nMensure*/, /*nElapseTime*/, /*aMessage*/)
   endIf
 
   if oSelf:lWriteFile

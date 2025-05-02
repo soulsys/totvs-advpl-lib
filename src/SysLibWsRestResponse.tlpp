@@ -1,38 +1,40 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
 #include "rwmake.ch"
 
 
-/*/{Protheus.doc} LibWsRestResponseObj
+/*/{Protheus.doc} SysLibWsRestResponse
 
 Objeto para manipulacao de retornos de webservices REST
     
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class LibWsRestResponseObj from SysLibAdvpl
+class SysLibWsRestResponse from SysLibAdvpl
 
-  data oRequest
+  public data oRequest
   
-  method newLibWsRestResponseObj() constructor
+  public method new() constructor
   
-  method badRequest()
-  method notFound()
-  method unauthorized()
-  method internalError()
-  method send()
-  method success()	
+  public method badRequest()
+  public method notFound()
+  public method unauthorized()
+  public method internalError()
+  public method send()
+  public method success()	
   
 endClass
 
 
-/*/{Protheus.doc} newLibWsRestResponseObj
+/*/{Protheus.doc} new
 
 Construtor
     
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibWsRestResponseObj(oRequest) class LibWsRestResponseObj
+method new(oRequest) class SysLibWsRestResponse
+
+  _Super:new()
   
   ::oRequest := oRequest
   
@@ -46,7 +48,7 @@ Retorno do erro BAD REQUEST
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method badRequest(cMessage) class LibWsRestResponseObj
+method badRequest(cMessage) class SysLibWsRestResponse
 
   default cMessage := "Bad request"
   
@@ -62,7 +64,7 @@ Retorno do erro NOT FOUND
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method notFound(cMessage) class LibWsRestResponseObj
+method notFound(cMessage) class SysLibWsRestResponse
   
   default cMessage := "Not found"
   
@@ -78,7 +80,7 @@ Retorno do erro UNAUTHORIZED
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method unauthorized(cMessage) class LibWsRestResponseObj
+method unauthorized(cMessage) class SysLibWsRestResponse
   
   default cMessage := "Unauthorized"
   
@@ -94,7 +96,7 @@ Retorno do erro INTERNAL ERROR
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method internalError(cMessage) class LibWsRestResponseObj
+method internalError(cMessage) class SysLibWsRestResponse
   
   default cMessage := "Internal error"
   
@@ -110,7 +112,7 @@ Retorno sem erros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method send(xData, cContentType) class LibWsRestResponseObj
+method send(xData, cContentType) class SysLibWsRestResponse
   
   local cResponse      := ""
   default xData		     := ""
@@ -135,7 +137,7 @@ Retorna uma mensagem de sucesso
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method success(cMessage) class LibWsRestResponseObj
+method success(cMessage) class SysLibWsRestResponse
 
   default cMessage := "Operation performed"
   

@@ -1,7 +1,7 @@
 ## Exemplo de Manipulação de Instruções SQL
 
-A classe [LibSqlObj](#) tem como principal objetivo permitir a escrita de códigos mais curtos e legíveis ao 
-manipular instruções SQL. Podemos considerar que manipular dados gravados no BD do ERP faz parte de 
+A classe [SysLibSql](#) tem como principal objetivo permitir a escrita de códigos mais curtos e legíveis ao
+manipular instruções SQL. Podemos considerar que manipular dados gravados no BD do ERP faz parte de
 praticamente qualquer customização, portanto, essa classe pode agilizar bastante o desenvolvimento.
 
 ```cpp
@@ -9,10 +9,10 @@ user function SqlSample()
 
   local cMsg   := ""
   local cQuery := ""
-  local oSql   := LibSqlObj():newLibSqlObj()
+  local oSql   := SysLibSql():new()
 
   cQuery := " SELECT E1_NUM [NUMBER], E1_VENCTO [DUE_DATE] "
-  cQuery += " FROM %SE1.SQLNAME% " 
+  cQuery += " FROM %SE1.SQLNAME% "
   cQuery += " WHERE %SE1.XFILIAL% AND E1_VENCTO < '" + DtoS(dDataBase) + "' AND "
   cQuery += "       E1_SALDO > 0 AND %SE1.NOTDEL% "
 
@@ -42,7 +42,7 @@ Caso queira fazer uma query simples em apenas uma tabela:
 user function SqlSample2()
 
   local cMsg := ""
-  local oSql := LibSqlObj():newLibSqlObj()
+  local oSql := SysLibSql():new()
 
   oSql:newTable("SB1", "B1_COD, B1_DESC", "%SB1.XFILIAL% AND B1_TIPO = 'ME'")
 
@@ -73,7 +73,7 @@ Se precisar obter um campo de uma tabela:
 ```cpp
 user function SqlSample3()
 
-  local oSql  := LibSqlObj():newLibSqlObj()
+  local oSql  := SysLibSql():new()
   local cName := oSql:getFieldValue("SA3", "A3_NOME", "%SA3.XFILIAL% AND A3_COD = 'V00001'")
 
   MsgInfo("O nome do vendedor é " + cName)
@@ -81,18 +81,18 @@ user function SqlSample3()
 return
 ```
 
-Também é possível incluir, alterar e remover registros através da *LibSqlObj*:
+Também é possível incluir, alterar e remover registros através da _SysLibSql_:
 
 ```cpp
 user function SqlSample4()
 
-  local oSql    := LibSqlObj():newLibSqlObj()
+  local oSql    := SysLibSql():new()
   local cAlias  := "SB1"
   local cFields := "B1_MSBLQL = '1', B1_ZZST = '0'"
   local cWhere  := "%SB1.XFILIAL% AND B1_COD = 'P00001'"
-  
+
   if !oSql:exists(cAlias, cWhere)
-    return MsgAlert("Produto não encontrado")    
+    return MsgAlert("Produto não encontrado")
   endIf
 
   if oSql:update(cAlias, cFields, cWhere)

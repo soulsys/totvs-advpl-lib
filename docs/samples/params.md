@@ -8,7 +8,7 @@ user function ParamsSample()
   local cMsg      := ""
   local oParam    := nil
   local oParamBox := SysLibParamBox():new("ParamBoxId")
-  local oUtils    := LibUtilsObj():newLibUtilsObj()
+  local oUtils    := SysLibUtils():new()
 
   oParamBox:setTitle("SysLibParamBox - Exemplo")
   oParamBox:setValidation({|| ApMsgYesNo("Confirma parâmetros ?")})

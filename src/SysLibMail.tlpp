@@ -617,7 +617,7 @@ Exibe as propriedades configuradas para o objeto
 method showProperties() class SysLibMail
   
   local cMsg   := ""	
-  local oUtils := LibUtilsObj():newLibUtilsObj()
+  local oUtils := SysLibUtils():new()
   
   cMsg := "Server: " + ::getServer() + CRLF
   cMsg += "Port: " + oUtils:strAnyType(::getPort()) + CRLF

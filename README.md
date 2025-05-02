@@ -29,12 +29,12 @@ user function SqlSample()
 return
 ```
 
-Utilizando a classe **_LibSqlObj_** podemos escrever a mesma funcionalidade dessa forma:
+Utilizando a classe **_SysLibSql_** podemos escrever a mesma funcionalidade dessa forma:
 
 ```xbase
 user function SqlSample()
 
-  local oSql         := LibSqlObj():newLibSqlObj()
+  local oSql         := SysLibSql():new()
   local cQuery       := ""
   local cDescription := ""
   local cCode        := "P0001"
@@ -56,7 +56,7 @@ Ou ainda desse jeito:
 ```xbase
 user function SqlSample()
 
-  local oSql         := LibSqlObj():newLibSqlObj()
+  local oSql         := SysLibSql():new()
   local cCode        := "P0001"
   local cDescription := oSql:getFieldValue("SB1", "B1_DESC", "%SB1.XFILIAL% AND B1_COD = '" + cCode + "'")
 

@@ -150,7 +150,7 @@ return
  */
 static function setPdfFile(oSelf)
   
-  local oUtils := LibUtilsObj():newLibUtilsObj()
+  local oUtils := SysLibUtils():new()
   
   oSelf:cFileName	:= FileNoExt(AllTrim(oSelf:cFileName))
   oSelf:cPdfFile  := oUtils:concatDirectory(@oSelf:cDirectory, oSelf:cFileName+".pdf")			

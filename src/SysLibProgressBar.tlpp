@@ -1,51 +1,52 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
 #include "rwmake.ch"
 
 #define DEFAULT_TITLE "Aguarde"
 #define DEFAULT_TEXT  "Processando..."
 
 
-/*/{Protheus.doc} LibProgressBarObj
+/*/{Protheus.doc} SysLibProgressBar
 
 Objeto para manipulacao de barras de progresso
 
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-class LibProgressBarObj from SysLibAdvpl
+class SysLibProgressBar from SysLibAdvpl
   
-  data oBar
+  public data oBar
 
-  data lTwoBars
-  data lHidden
+  public data lTwoBars
+  public data lHidden
   
-  data bAction
-  data cTitle
-  data cText
+  public data bAction
+  public data cTitle
+  public data cText
 
-  method newLibProgressBarObj() constructor
-  method setTwoBars()
-  method setHidden()
-  method setAction()  
-  method start()
-  method setSteps()
-  method increment()
-  method setFirstBarSteps()
-  method setSecondBarSteps()
-  method incrementFirstBar()
-  method incrementSecondBar()
+  public method new() constructor
+  
+  public method setTwoBars()
+  public method setHidden()
+  public method setAction()  
+  public method start()
+  public method setSteps()
+  public method increment()
+  public method setFirstBarSteps()
+  public method setSecondBarSteps()
+  public method incrementFirstBar()
+  public method incrementSecondBar()
 
 endClass
 
 
-/*/{Protheus.doc} newLibProgressBarObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method newLibProgressBarObj(bAction, cText, cTitle) class LibProgressBarObj
+method new(bAction, cText, cTitle) class SysLibProgressBar
   
   _Super:new()  
   
@@ -65,7 +66,7 @@ Define que o processamento sera controlado atraves de duas barras
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method setTwoBars(lTwoBars) class LibProgressBarObj  
+method setTwoBars(lTwoBars) class SysLibProgressBar  
   ::lTwoBars := lTwoBars
 return
 
@@ -77,7 +78,7 @@ Define que o processamento sera realizado sem interface visual
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method setHidden(lHidden) class LibProgressBarObj
+method setHidden(lHidden) class SysLibProgressBar
   ::lHidden := lHidden
 return
 
@@ -89,7 +90,7 @@ Define a acao a ser executada
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method setAction(bAction, cText, cTitle) class LibProgressBarObj
+method setAction(bAction, cText, cTitle) class SysLibProgressBar
     
   default cText  := DEFAULT_TEXT
   default cTitle := DEFAULT_TITLE
@@ -108,7 +109,7 @@ Inicia o processamento
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method start() class LibProgressBarObj
+method start() class SysLibProgressBar
 
   local lCanAbort := .F.
 
@@ -134,7 +135,7 @@ Define a quantidade de etapas do processamento
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method setSteps(nSteps) class LibProgressBarObj
+method setSteps(nSteps) class SysLibProgressBar
   ProcRegua(nSteps)
 return
 
@@ -146,7 +147,7 @@ Incrementa o progresso
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method increment(cText) class LibProgressBarObj  
+method increment(cText) class SysLibProgressBar  
   default cText := DEFAULT_TEXT
   IncProc(cText)
 return
@@ -159,7 +160,7 @@ Define a quantidade de etapas do processamento primeira da barra
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method setFirstBarSteps(nSteps) class LibProgressBarObj
+method setFirstBarSteps(nSteps) class SysLibProgressBar
   ::oBar:setRegua1(nSteps)
 return
 
@@ -171,7 +172,7 @@ Define a quantidade de etapas do processamento segunda da barra
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method setSecondBarSteps(nSteps) class LibProgressBarObj
+method setSecondBarSteps(nSteps) class SysLibProgressBar
   ::oBar:setRegua2(nSteps)
 return
 
@@ -183,7 +184,7 @@ Incrementa o progresso da primeira barra
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method incrementFirstBar(cText) class LibProgressBarObj  
+method incrementFirstBar(cText) class SysLibProgressBar  
   default cText := DEFAULT_TEXT
   ::oBar:incRegua1(cText)
 return
@@ -196,7 +197,7 @@ Incrementa o progresso da segunda barra
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method incrementSecondBar(cText) class LibProgressBarObj
+method incrementSecondBar(cText) class SysLibProgressBar
   default cText := DEFAULT_TEXT
   ::oBar:incRegua2(cText)
 return

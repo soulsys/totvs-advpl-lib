@@ -1,6 +1,6 @@
 ## Exemplo de Leitura de Arquivo XML
 
-O principal objetivo da classe [LibXmlObj](#) é facilitar a leitura de arquivos XML, permitindo a 
+O principal objetivo da classe [SysLibXml](#) é facilitar a leitura de arquivos XML, permitindo a
 criação de códigos menos suscetíveis a erros.
 
 ```cpp
@@ -10,12 +10,12 @@ user function XmlSample()
   local nTotal  := 0
   local aItems  := {}
   local cNumber := ""
-  local cFile   := "C:\temp\nfe.xml"  
+  local cFile   := "C:\temp\nfe.xml"
   local oItem   := nil
-  local oProd   := nil  
-  local oXml    := LibXmlObj():newLibXmlObj(cFile)
+  local oProd   := nil
+  local oXml    := SysLibXml():new(cFile)
 
-  if !oXml:parse()	
+  if !oXml:parse()
     return Alert(oXml:getError())
   endIf
 

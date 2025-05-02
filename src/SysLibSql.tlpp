@@ -1,85 +1,85 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
 #include "topconn.ch"
 
 
-/*/{Protheus.doc} LibSqlObj
+/*/{Protheus.doc} SysLibSql
  
 Objeto para manipulacao de instrucoes SQL
   
 @author soulsys:victorhugo
 @since 18/09/2021 
 /*/
-class LibSqlObj from SysLibAdvpl
+class SysLibSql from SysLibAdvpl
   
-  data cAlias 
-  data cLastQuery
-  data cLastError
-  data cDataBase	
-  data aReportCells
-  data aAreas
-  data nErpConnection
-  data nExternalConnection			
+  public data cAlias 
+  public data cLastQuery
+  public data cLastError
+  public data cDataBase	
+  public data aReportCells
+  public data aAreas
+  public data nErpConnection
+  public data nExternalConnection			
   
-  method newLibSqlObj() constructor
+  public method new() constructor
   
-  method newAlias()
-  method setDateFields()
-  method setField()
-  method getAlias()
-  method getLastQuery()
-  method getLastError()
-  method getStruct()
-  method aliasExists()
-  method newTable()
-  method close()
-  method count()
-  method hasRecords()
-  method skip()
-  method goTop()
-  method isEof()
-  method isNotEof()
-  method notIsEof()
-  method getValue()
-  method execute()
-  method update()	
-  method insert()
-  method insertInto()
-  method save()
-  method delete()
-  method exists()
-  method parseQuery()
-  method exportToCsv()
-  method showReport()
-  method setReportCellProperty()	
-  method saveQuery()
-  method getFieldValue()
-  method setErpConnection()
-  method setExternalConnection()
-  method hasExternalConnection()
-  method isNullExp()
-  method isSqlServer()
-  method isOracle() 
-  method getNextTableCode() 
-  method refreshTable()
-  method getInExp()
-  method debugQuery()
-  method getSx5Value()
-  method saveAreas()
-  method restoreAreas()
-  method dbSeek()
-  method json()
+  public method newAlias()
+  public method setDateFields()
+  public method setField()
+  public method getAlias()
+  public method getLastQuery()
+  public method getLastError()
+  public method getStruct()
+  public method aliasExists()
+  public method newTable()
+  public method close()
+  public method count()
+  public method hasRecords()
+  public method skip()
+  public method goTop()
+  public method isEof()
+  public method isNotEof()
+  public method notIsEof()
+  public method getValue()
+  public method execute()
+  public method update()	
+  public method insert()
+  public method insertInto()
+  public method save()
+  public method delete()
+  public method exists()
+  public method parseQuery()
+  public method exportToCsv()
+  public method showReport()
+  public method setReportCellProperty()	
+  public method saveQuery()
+  public method getFieldValue()
+  public method setErpConnection()
+  public method setExternalConnection()
+  public method hasExternalConnection()
+  public method isNullExp()
+  public method isSqlServer()
+  public method isOracle() 
+  public method getNextTableCode() 
+  public method refreshTable()
+  public method getInExp()
+  public method debugQuery()
+  public method getSx5Value()
+  public method saveAreas()
+  public method restoreAreas()
+  public method dbSeek()
+  public method json()
   
 endClass
 
 
-/*/{Protheus.doc} newLibSqlObj
+/*/{Protheus.doc} new
 
 Construtor do objeto
 
 @author soulsys:victorhugo
 @since 18/09/2021	
 /*/
-method newLibSqlObj() class LibSqlObj		
+method new() class SysLibSql		
   
   _Super:new()
   
@@ -100,7 +100,7 @@ Gera um novo alias a partir de uma consulta SQL
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newAlias(cQuery) class LibSqlObj			
+method newAlias(cQuery) class SysLibSql			
   
   if ::aliasExists()
     (::cAlias)->(dbCloseArea())
@@ -128,7 +128,7 @@ Define campos do alias como data
 @author soulsys:victorhugo
 @since 18/11/2021
 /*/
-method setDateFields(aFields) class LibSqlObj
+method setDateFields(aFields) class SysLibSql
   
   local nI := 0
 
@@ -146,7 +146,7 @@ Define o tipo de dado ou precisao, para um campo/coluna do alias. Metodo equival
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setField(cField, cType, nSize, nDecimals) class LibSqlObj
+method setField(cField, cType, nSize, nDecimals) class SysLibSql
   
   local cAlias		  := ::getAlias()
   default nSize 		:= 0
@@ -172,7 +172,7 @@ Retorna o alias do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getAlias() class LibSqlObj
+method getAlias() class SysLibSql
 return ::cAlias
 
 
@@ -183,7 +183,7 @@ Retorna a ultima query definida para o objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getLastQuery() class LibSqlObj
+method getLastQuery() class SysLibSql
 return ::cLastQuery
 
 
@@ -194,7 +194,7 @@ Retorna o ultimo erro do objeto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getLastError() class LibSqlObj
+method getLastError() class SysLibSql
 return ::cLastError
 
 
@@ -205,7 +205,7 @@ Retorna o array de estrutura do alias
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getStruct() class LibSqlObj
+method getStruct() class SysLibSql
 
   local aStruct := {}
   
@@ -222,7 +222,7 @@ Indica se o alias do objeto existe
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method aliasExists() class LibSqlObj
+method aliasExists() class SysLibSql
 return (Select(::cAlias) > 0)
 
 
@@ -233,7 +233,7 @@ Cria um novo alias para uma tabela. (ex.: oSql:newTable("SB1", "B1_FILIAL,B1_COD
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newTable(cTable, cFields, cWhere, cGroupBy, cOrderBy) class LibSqlObj
+method newTable(cTable, cFields, cWhere, cGroupBy, cOrderBy) class SysLibSql
   
   local cQuery 		 := ""
   default cGroupBy := ""
@@ -263,7 +263,7 @@ Fecha o alias aberto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method close() class LibSqlObj
+method close() class SysLibSql
   
   if ::aliasExists()
     (::cAlias)->(dbCloseArea())
@@ -283,7 +283,7 @@ Conta os registros do alias
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method count() class LibSqlObj
+method count() class SysLibSql
   
   local nRegs := 0
   local aArea := GetArea()
@@ -306,7 +306,7 @@ Verifica se existem registros para o alias
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method hasRecords() class LibSqlObj	
+method hasRecords() class SysLibSql	
 return (::count() > 0)
 
 
@@ -317,7 +317,7 @@ Avanca uma linha do alias
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method skip() class LibSqlObj
+method skip() class SysLibSql
   
   if ::aliasExists()
     (::cAlias)->(dbSkip())
@@ -333,7 +333,7 @@ Posiciona na primeira linha do alias
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method goTop() class LibSqlObj
+method goTop() class SysLibSql
   
   if ::aliasExists()
     (::cAlias)->(dbGoTop())
@@ -349,7 +349,7 @@ Indica se o alias esta em fim de arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isEof() class LibSqlObj
+method isEof() class SysLibSql
   
   local lIsEof := .T.
   
@@ -367,7 +367,7 @@ Indica se o alias NAO esta em fim de arquivo. Pode ser usado para lacos, por exe
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isNotEof() class LibSqlObj	
+method isNotEof() class SysLibSql	
 return !::isEof()
 
 
@@ -378,7 +378,7 @@ Indica se o alias NAO esta em fim de arquivo. Pode ser usado para lacos, por exe
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method notIsEof() class LibSqlObj	
+method notIsEof() class SysLibSql	
 return !::isEof()
 
 
@@ -389,7 +389,7 @@ Coleta o valor de um campo do registro posicionado. O valor do campo pode ser um
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getValue(cField) class LibSqlObj
+method getValue(cField) class SysLibSql
   
   local xValue := nil
   
@@ -407,7 +407,7 @@ Executa uma instrucao SQL
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method execute(cQuery, cRefreshAlias) class LibSqlObj
+method execute(cQuery, cRefreshAlias) class SysLibSql
   
   local lOk             := .F.
   default cRefreshAlias := ""
@@ -435,7 +435,7 @@ Executa update em uma tabela. (ex.: oSql:update("ZZ1", "ZZ1_ID = '', ZZ1_VALOR =
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method update(cTable, cFields, cWhere) class LibSqlObj
+method update(cTable, cFields, cWhere) class SysLibSql
   
   local cQuery := ""
   
@@ -453,7 +453,7 @@ Inclusao de um registro em uma tabela (ex.: oSql:insert("SB1", aDados))
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method insert(cTable, aData, nRecno) class LibSqlObj
+method insert(cTable, aData, nRecno) class SysLibSql
   
   local lOk 		 := .F.
   local nI  		 := 0
@@ -489,7 +489,7 @@ Inclusao de um registro em uma tabela em formato SQL
 @author soulsys:victorhugo
 @since 19/11/2021
 /*/	
-method insertInto(cTable, aData) class LibSqlObj
+method insertInto(cTable, aData) class SysLibSql
 
   local nI         := 0
   local cQuery     := ""
@@ -499,7 +499,7 @@ method insertInto(cTable, aData) class LibSqlObj
   local cValType   := ""
   local cFuncToken := "%FUNC%"
   local xValue     := nil
-  local oUtils     := LibUtilsObj():newLibUtilsObj()
+  local oUtils     := SysLibUtils():new()
 
   for nI := 1 to Len(aData)
 
@@ -543,7 +543,7 @@ Salva um registro
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method save(cTable, aData, nRecno) class LibSqlObj
+method save(cTable, aData, nRecno) class SysLibSql
 
   local lOk 		 := .F.
   local lCreate  := .T.
@@ -589,10 +589,10 @@ Deleta registros de uma tabela. (ex.: oSql:delete("ZZ1", "%ZZ1.XFILIAL% AND ZZ1_
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method delete(cTable, cWhere, lClear) class LibSqlObj
+method delete(cTable, cWhere, lClear) class SysLibSql
   
   local lOk	     := .F.
-  local oSql	   := LibSqlObj():newLibSqlObj()
+  local oSql	   := SysLibSql():new()
   default lClear := .F.
   
   if lClear
@@ -620,9 +620,9 @@ Verifica se existem registros ativos em uma tabela (ex.: oSql:exists("SB1", "B1_
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method exists(cTable, cWhere) class LibSqlObj
+method exists(cTable, cWhere) class SysLibSql
   
-  local oSql   := LibSqlObj():newLibSqlObj()
+  local oSql   := SysLibSql():new()
   local cQuery := "SELECT 1 FROM %"+cTable+".SQLNAME% WHERE "+cWhere+" AND %"+cTable+".NOTDEL% "	
   
   ::cLastQuery := cQuery
@@ -643,7 +643,7 @@ Realiza o parser de uma Query
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method parseQuery(cQuery) class LibSqlObj
+method parseQuery(cQuery) class SysLibSql
   
   local nI			   := 0
   local nPos			 := 0  
@@ -695,7 +695,7 @@ Exporta o conteudo do alias para um arquivo CSV
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/	
-method exportToCsv(cFile, lShowProgress, cDelimiter) class LibSqlObj
+method exportToCsv(cFile, lShowProgress, cDelimiter) class SysLibSql
   
   local nRecs			      := 0
   local nRecAtu		      := 0
@@ -795,11 +795,11 @@ Exibe o conteudo de uma consulta SQL atrav�s da classe TReport
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method showReport(cName, cTitle, cDescription) class LibSqlObj
+method showReport(cName, cTitle, cDescription) class SysLibSql
 
   local oReport		     := nil
   local cParams		     := "" 
-   default cName  		   := "LibSqlObj:showReport"
+   default cName  		   := "SysLibSql:showReport"
    default cTitle 		   := "impressao de Consulta SQL"
    default cDescription := cTitle
   
@@ -894,7 +894,7 @@ Define propriedades das celulas para geracao de relatorio de Consultas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setReportCellProperty(cId, cTitle, cPicture, nSize) class LibSqlObj
+method setReportCellProperty(cId, cTitle, cPicture, nSize) class SysLibSql
    
   local nScan := aScan(::aReportCells, {|x| x[1] == cId })
    
@@ -918,7 +918,7 @@ Salva uma query em arquivo texto
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method saveQuery(cFile, cQuery) class LibSqlObj
+method saveQuery(cFile, cQuery) class SysLibSql
   
   local lOk		   := .F.
   local oFile 	 := SysLibFile():new(cFile)
@@ -944,10 +944,10 @@ Coleta o valor de um campo em um Alias
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFieldValue(cAlias, cField, cWhere) class LibSqlObj
+method getFieldValue(cAlias, cField, cWhere) class SysLibSql
   
   local xValue := nil
-  local oSql   := LibSqlObj():newLibSqlObj()
+  local oSql   := SysLibSql():new()
   
   oSql:newTable(cAlias, cField, cWhere)
   
@@ -966,7 +966,7 @@ Define a conexao do Objeto com o Banco de Dados do Protheus
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setErpConnection() class LibSqlObj
+method setErpConnection() class SysLibSql
   
   if ::hasExternalConnection()
     TcUnlink(::nExternalConnection)
@@ -985,7 +985,7 @@ Define a conexao do Objeto com um Banco de Dados Externo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setExternalConnection(cDriver, cDataBase, cServer, nPort) class LibSqlObj
+method setExternalConnection(cDriver, cDataBase, cServer, nPort) class SysLibSql
   
   local lOk		    := .F.
   local cError	  := ""
@@ -1033,7 +1033,7 @@ Indica se existe conexao ativa com Banco de Dados Externo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method hasExternalConnection() class LibSqlObj
+method hasExternalConnection() class SysLibSql
 return (::nExternalConnection > 0)
 
 
@@ -1044,7 +1044,7 @@ static function setLastError(oSelf, cMethod, cError)
 
   local oLog := SysLibLog():new(nil, .T., .F.)
   
-  oSelf:cLastError := "[ LibSqlObj - ERRO - "+DtoC(Date())+" - "+Time()+" - "+AllTrim(cMethod)+"() ] "
+  oSelf:cLastError := "[ SysLibSql - ERRO - "+DtoC(Date())+" - "+Time()+" - "+AllTrim(cMethod)+"() ] "
   oSelf:cLastError += cError
   
   oLog:warn(oSelf:cLastError)
@@ -1059,7 +1059,7 @@ Retorna a expressao SQL para campos nulos
 @author soulsys:victorhugo
 @since 18/09/2021
  /*/
-method isNullExp(cField, cAlias, cDefaultValue) class LibSqlObj
+method isNullExp(cField, cAlias, cDefaultValue) class SysLibSql
   
   local cExp 				    := ""
   default cDefaultValue	:= "' '" 
@@ -1077,7 +1077,7 @@ Verifica se o Banco de Dados em uso eh o SQL Server
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isSqlServer() class LibSqlObj
+method isSqlServer() class SysLibSql
 return ("MSSQL" $ Upper(AllTrim(TcGetDB())))
 
 
@@ -1088,7 +1088,7 @@ Verifica se o Banco de Dados em uso eh o Oracle
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isOracle() class LibSqlObj
+method isOracle() class SysLibSql
 return ("ORACLE" $ Upper(AllTrim(TcGetDB())))
 
 
@@ -1099,7 +1099,7 @@ Coleta o proximo codigo Sequencial de um campo de uma Tabela
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getNextTableCode(cAlias, cField, cWhere) class LibSqlObj
+method getNextTableCode(cAlias, cField, cWhere) class SysLibSql
   
   local cQuery   	 	   := ""
   local cMaxCode 		   := ""
@@ -1107,7 +1107,7 @@ method getNextTableCode(cAlias, cField, cWhere) class LibSqlObj
   local cMacroLenField := "Len(" + AllTrim(cAlias) + "->" + AllTrim(cField) + ")"
   local nMaxCode 		   := 0
   local nLenField		   := &cMacroLenField
-  local oSql     		   := LibSqlObj():newLibSqlObj()
+  local oSql     		   := SysLibSql():new()
   default cWhere		   := "" 
   
   cQuery := " SELECT MAX("+cField+") MAXCODE FROM %"+cAlias+".SQLNAME% "
@@ -1145,7 +1145,7 @@ Atualiza uma tabela no DBAccess
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method refreshTable(cTable) class LibSqlObj	
+method refreshTable(cTable) class SysLibSql	
   TcRefresh(RetSqlName(cTable))
 return
 
@@ -1157,7 +1157,7 @@ Retorna a expressao IN a partir de um vetor de strings
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getInExp(aStrs) class LibSqlObj
+method getInExp(aStrs) class SysLibSql
   
   local nI     := 0
   local cInExp := ""
@@ -1183,7 +1183,7 @@ Exibe uma query no console
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method debugQuery(cQuery) class LibSqlObj
+method debugQuery(cQuery) class SysLibSql
 
   local oLog := SysLibLog():new(nil, .T., .F.)
   
@@ -1199,7 +1199,7 @@ Retorna um valor do SX5
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getSx5Value(cTable, cKey) class LibSqlObj
+method getSx5Value(cTable, cKey) class SysLibSql
 
   local cWhere := " %SX5.XFILIAL% AND X5_TABELA = '" + cTable + "' AND X5_CHAVE = '" + cKey + "' "
 
@@ -1213,12 +1213,12 @@ Salva a area de um ou mais Aliases
 @author soulsys:waldiresmerio
 @since 27/12/2022
 /*/
-method saveAreas(xAliases) class LibSqlObj
+method saveAreas(xAliases) class SysLibSql
 
   local nI       := 0
   local cAlias   := ""
   local aAliases := {}
-  local oUtils   := LibUtilsObj():newLibUtilsObj()
+  local oUtils   := SysLibUtils():new()
 
   if oUtils:isString(xAliases)
     aAdd(aAliases, xAliases)
@@ -1244,12 +1244,12 @@ Restaura a area de um ou mais Aliases
 @author soulsys:waldiresmerio
 @since 27/12/2022
 /*/
-method restoreAreas(xAliases) class LibSqlObj
+method restoreAreas(xAliases) class SysLibSql
 
   local nI         := 0
   local cAlias     := ""
   local cAliases   := ""
-  local oUtils     := LibUtilsObj():newLibUtilsObj()
+  local oUtils     := SysLibUtils():new()
   default xAliases := ""
   
   if oUtils:isArray(xAliases)
@@ -1283,15 +1283,15 @@ Posiciona em um registro de acordo com a chave informada
 @author soulsys:waldiresmerio
 @since 27/12/2022
 /*/
-method dbSeek(cAlias, xIndex, aKey) class LibSqlObj
+method dbSeek(cAlias, xIndex, aKey) class SysLibSql
 
   local nI        := 0
   local nOrder    := 0
   local cKey      := ""
   local cSearchBy := "ORDEM"
   local cIndex    := xIndex
-  local oUtils    := LibUtilsObj():newLibUtilsObj()
-  local oSql      := LibSqlObj():newLibSqlObj()
+  local oUtils    := SysLibUtils():new()
+  local oSql      := SysLibSql():new()
   
   if oUtils:isNumber(xIndex)
     cIndex := oUtils:strAnyType(xIndex - 1)
@@ -1335,7 +1335,7 @@ Executa uma query e converte o resultado para um array de objetos JSON
 @author soulsys:victorhugo
 @since 27/11/2024
 /*/
-method json(cQuery) class LibSqlObj	
+method json(cQuery) class SysLibSql	
 
   local nI := 0
   local cAlias := ""

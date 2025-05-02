@@ -24,6 +24,7 @@ class SysLibJwt
   public data cError
   
   public method new() constructor
+
   public method encode()
   public method decode()
   public method getError()
@@ -39,6 +40,8 @@ Construtor
 @since 18/09/2021
 /*/
 method new() class SysLibJwt
+
+  _Super:new()
 
   ::cError := ""
   

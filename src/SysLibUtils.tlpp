@@ -1,87 +1,87 @@
-#include "totvs.ch"
+#include "tlpp-core.th"
 #include "rwmake.ch"
 
 
-/*/{Protheus.doc} LibUtilsObj
+/*/{Protheus.doc} SysLibUtils
 
 Objeto com funcionalidades genericas
 
 @author soulsys:victorhugo
 @since 18/09/2021 
 /*/
-class LibUtilsObj from SysLibAdvpl
+class SysLibUtils from SysLibAdvpl
 
-  method newLibUtilsObj() constructor
+  public method new() constructor
   
-  method canDelete()
-  method checkAdvplCode()
-  method clearCgc()
-  method concatDirectory()
-  method consoleLog()
-  method debugMsg()
-  method endsWith()
-  method ensureDir()
-  method existVar()
-  method formatCgc()
-  method formatCurrency()
-  method formatDate()
-  method formatInteger()
-  method formatZipCode()
-  method fromJsDate()
-  method getAge()
-  method getCompanyName()
-  method getDefaultValue()
-  method getDirectoryContent()
-  method getErroAuto()
-  method getJsDate()
-  method getWhenMessage()
-  method getObjectProperty()
-  method getRemoteDirectory()
-  method getUserName() 
-  method hasOnlyNumbers()
-  method isCashPayment()
-  method isInJob()
-  method isNull()
-  method isNotNull()
-  method isJson()
-  method isBoolean()
-  method isString()
-  method isNumber()
-  method isArray()
-  method isOnServer()
-  method isWorkDay()
-  method msgRun()
-  method noAccent()
-  method onlyNumbers()
-  method padrSx3()
-  method parseDate()
-  method parseInt()
-  method parseFloat()
-  method removeDir()
-  method restAreas()
-  method saveAreas()
-  method scrollMessage()
-  method showArrayAuto()
-  method showHelp()
-  method startsWith()
-  method strAnyType()
-  method strToArray()		
-  method vetorToString()
-  method weekOfMonth()
-  method whenIsNotNumber()
-  method whenIsNull()
+  public method canDelete()
+  public method checkAdvplCode()
+  public method clearCgc()
+  public method concatDirectory()
+  public method consoleLog()
+  public method debugMsg()
+  public method endsWith()
+  public method ensureDir()
+  public method existVar()
+  public method formatCgc()
+  public method formatCurrency()
+  public method formatDate()
+  public method formatInteger()
+  public method formatZipCode()
+  public method fromJsDate()
+  public method getAge()
+  public method getCompanyName()
+  public method getDefaultValue()
+  public method getDirectoryContent()
+  public method getErroAuto()
+  public method getJsDate()
+  public method getWhenMessage()
+  public method getObjectProperty()
+  public method getRemoteDirectory()
+  public method getUserName() 
+  public method hasOnlyNumbers()
+  public method isCashPayment()
+  public method isInJob()
+  public method isNull()
+  public method isNotNull()
+  public method isJson()
+  public method isBoolean()
+  public method isString()
+  public method isNumber()
+  public method isArray()
+  public method isOnServer()
+  public method isWorkDay()
+  public method msgRun()
+  public method noAccent()
+  public method onlyNumbers()
+  public method padrSx3()
+  public method parseDate()
+  public method parseInt()
+  public method parseFloat()
+  public method removeDir()
+  public method restAreas()
+  public method saveAreas()
+  public method scrollMessage()
+  public method showArrayAuto()
+  public method showHelp()
+  public method startsWith()
+  public method strAnyType()
+  public method strToArray()		
+  public method vetorToString()
+  public method weekOfMonth()
+  public method whenIsNotNumber()
+  public method whenIsNull()
 
 endClass
 
 
-/*/{Protheus.doc} newLibUtilsObj
+/*/{Protheus.doc} new
 
 Construtor
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newLibUtilsObj() class LibUtilsObj
+method new() class SysLibUtils
   _Super:new()
 return
 
@@ -94,14 +94,14 @@ de tabelas relacionadas
 @author soulsys:victorhugo
 @since 20/08/2021
 /*/
-method canDelete(cId, aRelation, lShowMsg) class LibUtilsObj
+method canDelete(cId, aRelation, lShowMsg) class SysLibUtils
 
   local nI         := 0
   local lOk        := .T.
   local cMsg       := ""
   local cAlias     := ""
   local cField     := ""
-  local oSql       := LibSqlObj():newLibSqlObj()
+  local oSql       := SysLibSql():new()
   default lShowMsg := .T.
 
   for nI := 1 to Len(aRelation)
@@ -127,7 +127,7 @@ Validacao de expressoes Advpl
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method checkAdvplCode(cCode) class LibUtilsObj
+method checkAdvplCode(cCode) class SysLibUtils
 
   local lOk		  := .T.
   local bError 	:= ErrorBlock({ |oError| MsgBox(cCode+CRLF+CRLF+oError:Description, "expressao Invalida", "ALERT"), lOk := .F. })
@@ -147,7 +147,7 @@ Retorna um CNPJ/CPF sem formatacao
 @author soulsys:victorhugo
 @since 16/02/2022
 /*/
-method clearCgc(cCgc) class LibUtilsObj
+method clearCgc(cCgc) class SysLibUtils
 
   cCgc := AllTrim(cCgc)
 	cCgc := StrTran(cCgc, ".", "")
@@ -164,7 +164,7 @@ Concatena uma string com o diretorio de um arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method concatDirectory(cDirectory, cFile, cSlash) class LibUtilsObj
+method concatDirectory(cDirectory, cFile, cSlash) class SysLibUtils
 
   local cRet     := ""
   default cFile  := ""
@@ -196,7 +196,7 @@ Exibe um valor no console
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method consoleLog(xValue, lShowMsg, nSleep) class LibUtilsObj
+method consoleLog(xValue, lShowMsg, nSleep) class SysLibUtils
   
   local nI   	     := 0
   local cStr 	     := ""
@@ -236,7 +236,7 @@ Exibe uma mensagem de debug
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method debugMsg(cVar, xValue, lConsole, nSleep) class LibUtilsObj
+method debugMsg(cVar, xValue, lConsole, nSleep) class SysLibUtils
 
   local oLog       := nil
   local cMsg       := AllTrim(cVar) + " => " + ::strAnyType(xValue)
@@ -268,7 +268,7 @@ Verifica se uma string finaliza com um caracter
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method endsWith(cStr, cChr, lStrTrim) class LibUtilsObj
+method endsWith(cStr, cChr, lStrTrim) class SysLibUtils
 
   default lStrTrim := .T.
 
@@ -287,7 +287,7 @@ Cria o diretório caso não exista
 @author soulsys:victorhugo
 @since 06/06/2023
 /*/
-method ensureDir(cFolder) class LibUtilsObj
+method ensureDir(cFolder) class SysLibUtils
 
   local nI         := 0
   local cSubFolder := ""
@@ -314,7 +314,7 @@ Verifica se uma variavel existe
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method existVar(cVar) class LibUtilsObj
+method existVar(cVar) class SysLibUtils
 return (Type(cVar) != "U")
 
 
@@ -325,7 +325,7 @@ Formata CNPJ/CPF
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method formatCgc(cCgc) class LibUtilsObj
+method formatCgc(cCgc) class SysLibUtils
   
   local cPicture := "@R 99.999.999/9999-99"
 
@@ -349,7 +349,7 @@ Formata Valores Monetï¿½rios
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method formatCurrency(nValue) class LibUtilsObj	
+method formatCurrency(nValue) class SysLibUtils	
 return AllTrim(Transform(nValue, "@E 999,999,999.99"))
 
 
@@ -360,7 +360,7 @@ Formata Datas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method formatDate(dDate) class LibUtilsObj	
+method formatDate(dDate) class SysLibUtils	
 
   local nDay   := 0
   local nMonth := 0
@@ -384,7 +384,7 @@ Formata Valores Inteiros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method formatInteger(nValue) class LibUtilsObj	
+method formatInteger(nValue) class SysLibUtils	
 return AllTrim(Transform(nValue, "@E 999,999,999,999"))
 
 
@@ -395,7 +395,7 @@ Formata CEP
 @author soulsys:waldiresmerio
 @since 08/10/2021
 /*/
-method formatZipCode(cZipCode) class LibUtilsObj
+method formatZipCode(cZipCode) class SysLibUtils
   
   local cPicture := "@R 99999-999"
 
@@ -415,7 +415,7 @@ Converte uma Data JSON para Date
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method fromJsDate(cJsDate) class LibUtilsObj
+method fromJsDate(cJsDate) class SysLibUtils
 
   local cYear  := ""
   local cMonth := ""
@@ -447,7 +447,7 @@ Coleta Idade a partir de uma Data de Nascimento
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getAge(dBirth, dDateRef) class LibUtilsObj
+method getAge(dBirth, dDateRef) class SysLibUtils
   
   local nAge       := 0
   local nDay		   := Day(dBirth)
@@ -472,7 +472,7 @@ Coleta o Nome de uma Empresa/Filial
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getCompanyName(cCompany, cBranch) class LibUtilsObj
+method getCompanyName(cCompany, cBranch) class SysLibUtils
   
   local cName		   := "" 
   local aAreaSM0 	 := SM0->(GetArea())
@@ -495,7 +495,7 @@ Coleta o Valor padrao de acordo com o tipo de dados. Ex.: C="", N=0, D=CtoD(""),
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getDefaultValue(cValType) class LibUtilsObj
+method getDefaultValue(cValType) class SysLibUtils
 
   local xValue     := nil
   default cValType := ""
@@ -522,7 +522,7 @@ Retorna o conteudo de um diretorio
 @author soulsys:victorhugo
 @since 06/06/2023
 /*/
-method getDirectoryContent(cPath, cFilter, cProps) class LibUtilsObj
+method getDirectoryContent(cPath, cFilter, cProps) class SysLibUtils
 
   local nI        := 0
   local cContent  := ""
@@ -556,7 +556,7 @@ Coleta erros de rotinas automaticas a partir dos arquivos gerados no servidor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getErroAuto(lHtml) class LibUtilsObj
+method getErroAuto(lHtml) class SysLibUtils
 
   local cErroAuto := ""
   local cFile     := NomeAutoLog()
@@ -581,7 +581,7 @@ Retorna uma data no formato Javascript
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getJsDate(xDate, xDefDate) class LibUtilsObj
+method getJsDate(xDate, xDefDate) class SysLibUtils
 
   local dDate  := nil
   local cDate	 := ""
@@ -628,7 +628,7 @@ Coleta uma Mensagem sobre quando ocorreu uma Evento a partir de uma Data e Hora
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getWhenMessage(dDate, cTime, lEnglish) class LibUtilsObj
+method getWhenMessage(dDate, cTime, lEnglish) class SysLibUtils
   
   local nDays   	 := 0
   local cWhen	  	 := ""
@@ -657,7 +657,7 @@ Coleta propriedades de um objeto testando sua existï¿½ncia
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getObjectProperty(oObject, cProperty) class LibUtilsObj
+method getObjectProperty(oObject, cProperty) class SysLibUtils
   
   local xValue  := nil
   local cMacro  := ""
@@ -679,7 +679,7 @@ Coleta o diretorio do Smartclient
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getRemoteDirectory() class LibUtilsObj
+method getRemoteDirectory() class SysLibUtils
   
   local oIniFile := SysLibFile():new(GetRemoteIniName())
   
@@ -693,7 +693,7 @@ Retorna o nome de um usuario do Protheus
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getUserName(cUserId) class LibUtilsObj
+method getUserName(cUserId) class SysLibUtils
   
   local cName	    := "" 
   local aArea		  := GetArea()
@@ -720,7 +720,7 @@ Verifica se uma string possui apenas numeros
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method hasOnlyNumbers(cString) class LibUtilsObj
+method hasOnlyNumbers(cString) class SysLibUtils
 
   local nI		   	   := 0
   local cChr		   	 := ""
@@ -747,7 +747,7 @@ Verifica se uma condicao de pagamento eh a vista
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isCashPayment(cPayCond, nDays) class LibUtilsObj
+method isCashPayment(cPayCond, nDays) class SysLibUtils
     
   local lIsCashPayment := .F.
   local dFirstDate	   := CtoD("")
@@ -769,7 +769,7 @@ Verifica se esta executando em Job (sem interface de usuario)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isInJob() class LibUtilsObj
+method isInJob() class SysLibUtils
 return (Type("oMainWnd") <> "O")
 
 
@@ -780,7 +780,7 @@ Verifica se uma variavel eh nula (igual a nil)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isNull(xVar) class LibUtilsObj
+method isNull(xVar) class SysLibUtils
 return (ValType(xVar) == "U")
 
 
@@ -791,7 +791,7 @@ Verifica se uma variavel nao eh nula (diferente a nil)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isNotNull(xVar) class LibUtilsObj	
+method isNotNull(xVar) class SysLibUtils	
 return (ValType(xVar) != "U") 
 
 
@@ -802,7 +802,7 @@ Verifica se uma variavel eh um objeto Json
 @author soulsys:waldiresmerio
 @since 23/12/2022
 /*/
-method isJson(xVar) class LibUtilsObj
+method isJson(xVar) class SysLibUtils
 return (ValType(xVar) == "J")
 
 
@@ -813,7 +813,7 @@ Verifica se uma variavel eh do tipo booleano
 @author soulsys:waldiresmerio
 @since 23/12/2022
 /*/
-method isBoolean(xVar) class LibUtilsObj
+method isBoolean(xVar) class SysLibUtils
 return (ValType(xVar) == "L")
 
 
@@ -824,7 +824,7 @@ Verifica se uma variavel eh do tipo string
 @author soulsys:waldiresmerio
 @since 23/12/2022
 /*/
-method isString(xVar) class LibUtilsObj
+method isString(xVar) class SysLibUtils
 return (ValType(xVar) == "C")
 
 
@@ -835,7 +835,7 @@ Verifica se uma variavel eh do tipo número
 @author soulsys:waldiresmerio
 @since 23/12/2022
 /*/
-method isNumber(xVar) class LibUtilsObj
+method isNumber(xVar) class SysLibUtils
 return (ValType(xVar) == "N")
 
 
@@ -846,7 +846,7 @@ Verifica se uma variavel eh do tipo array
 @author soulsys:waldiresmerio
 @since 23/12/2022
 /*/
-method isArray(xVar) class LibUtilsObj
+method isArray(xVar) class SysLibUtils
 return (ValType(xVar) == "A")
 
 
@@ -857,7 +857,7 @@ Indica se um recurso esta no Servidor do Protheus (rootpath)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isOnServer(cSrc) class LibUtilsObj
+method isOnServer(cSrc) class SysLibUtils
   
   local lServer 		  := .F.
   local lWindowsLocal	:= .F.
@@ -881,7 +881,7 @@ Verifica se eh dia util em determinada data
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isWorkDay(dDate) class LibUtilsObj
+method isWorkDay(dDate) class SysLibUtils
 
   local lNextDay     := .T.
   local dNextWorkDay := DataValida(dDate, lNextDay)
@@ -896,7 +896,7 @@ Exibe um dialog de processamento
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method msgRun(bCodeBlock, cText, cTitle) class LibUtilsObj
+method msgRun(bCodeBlock, cText, cTitle) class SysLibUtils
   
   default cText  := "Processando..."
   default cTitle := "Aguarde"
@@ -913,7 +913,7 @@ Remove acentos ou caracteres especiais de uma string
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method noAccent(cString) class LibUtilsObj
+method noAccent(cString) class SysLibUtils
 
   Local cChar  := ""
   Local nX     := 0 
@@ -984,7 +984,7 @@ Retorna apenas os numeros de uma string
 @author soulsys:victorhugo
 @since 13/06/2022
 /*/
-method onlyNumbers(cStr) class LibUtilsObj
+method onlyNumbers(cStr) class SysLibUtils
 
   local nI       := 0
   local cChr     := ""
@@ -1010,7 +1010,7 @@ Coloca espacos a direita em uma String conforme um campo do SX3
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method padRSx3(cString, cField) class LibUtilsObj
+method padRSx3(cString, cField) class SysLibUtils
 
   local cAliasSX3 := GetNextAlias()
 
@@ -1040,9 +1040,9 @@ DD/MM/YYYY ou YYYY-MM-DD
 @author soulsys:victorhugo
 @since 16/02/2022
 /*/
-method parseDate(xDate) class LibUtilsObj
+method parseDate(xDate) class SysLibUtils
 
-  local oUtils := LibUtilsObj():newLibUtilsObj()
+  local oUtils := SysLibUtils():new()
 
   if Empty(xDate)
     return CtoD("")
@@ -1066,7 +1066,7 @@ Retorna um valor inteiro de uma string
 @author soulsys:victorhugo
 @since 16/02/2022
 /*/
-method parseInt(cStr) class LibUtilsObj
+method parseInt(cStr) class SysLibUtils
 
   if (ValType(cStr) == "N")
     return cStr
@@ -1088,7 +1088,7 @@ Retorna um valor decimal de uma string
 @author soulsys:waldiresmerio
 @since 10/05/2024
 /*/
-method parseFloat(cStr) class LibUtilsObj
+method parseFloat(cStr) class SysLibUtils
 
   if (ValType(cStr) == "N")
     return cStr
@@ -1110,7 +1110,7 @@ Remove um diretorio completamente (arquivos e subpastas)
 @author soulsys:victorhugo
 @since 06/06/2023
 /*/
-method removeDir(cFolder) class LibUtilsObj
+method removeDir(cFolder) class SysLibUtils
 
   local nI         := 0
   local aContent   := {}
@@ -1150,10 +1150,10 @@ Salva varias areas de aliases
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method saveAreas(aAreas) class LibUtilsObj
+method saveAreas(aAreas) class SysLibUtils
 
   local aSave  	 := {}
-  local oSql     := LibSqlObj():newLibSqlObj()
+  local oSql     := SysLibSql():new()
   default aAreas := {}
 
   oSql:saveAreas(aAreas)
@@ -1170,10 +1170,10 @@ Restaura varias areas de aliases
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method restAreas(aAreas) class LibUtilsObj
+method restAreas(aAreas) class SysLibUtils
 
   local nI 		   := 0
-  local oSql     := LibSqlObj():newLibSqlObj()
+  local oSql     := SysLibSql():new()
   default aAreas := {}
 
   for nI := 1 to Len(aAreas)
@@ -1190,7 +1190,7 @@ Exibe uma mensagem com barra de rolagem
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method scrollMessage(cText, cHeader, cTitle, aButtons) class LibUtilsObj
+method scrollMessage(cText, cHeader, cTitle, aButtons) class SysLibUtils
 
   default cText    := ""
   default cHeader	 := ""
@@ -1207,12 +1207,12 @@ Exibe o conteudo de um array de rotinas automaticas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method showArrayAuto(aExecAuto) class LibUtilsObj
+method showArrayAuto(aExecAuto) class SysLibUtils
 
   local nI     := 0
   local cStr   := ""
   local oLog   := SysLibLog():new()
-  local oUtils := LibUtilsObj():newLibUtilsObj()
+  local oUtils := SysLibUtils():new()
 
   for nI := 1 to Len(aExecAuto)
     cStr += aExecAuto[nI, 1] + ": "
@@ -1238,11 +1238,11 @@ Exibe um dialogo de help
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method showHelp(cTitle, cProblem, cSolution) class LibUtilsObj
+method showHelp(cTitle, cProblem, cSolution) class SysLibUtils
 
   local aProblem    := {}
   local aSolution   := {}
-  default cTitle    := "LibUtilsObj():showHelp()"
+  default cTitle    := "SysLibUtils():showHelp()"
   default cProblem  := ""
   default cSolution := ""
 
@@ -1276,7 +1276,7 @@ Verifica se uma string inicia com um caracter
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method startsWith(cStr, cChr, lStrTrim) class LibUtilsObj
+method startsWith(cStr, cChr, lStrTrim) class SysLibUtils
 
   default lStrTrim := .T.
 
@@ -1295,7 +1295,7 @@ Converte qualquer valor para String. Ex.: oUtils:strAnyType(dData, "DDMMAA"), oU
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method strAnyType(xValue, cPicture) class LibUtilsObj
+method strAnyType(xValue, cPicture) class SysLibUtils
 
   local cString 	 := ""
   local cType   	 := ValType(xValue)
@@ -1372,7 +1372,7 @@ Converte uma String para um array, considerando um tamanho maximo de caracteres
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method strToArray(cString, nMaxCol, lBlankLines) class LibUtilsObj
+method strToArray(cString, nMaxCol, lBlankLines) class SysLibUtils
   
   local nLin	    	  := 0			
   local aVetor    	  := {}
@@ -1401,7 +1401,7 @@ Converte um vetor para uma string
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method vetorToString(aVetor, cSeparator) class LibUtilsObj
+method vetorToString(aVetor, cSeparator) class SysLibUtils
   
   local nI		       := 0
   local cString	     := ""
@@ -1427,7 +1427,7 @@ Retorna o numero da semana do mes de determinada data
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method weekOfMonth(dDate) class LibUtilsObj
+method weekOfMonth(dDate) class SysLibUtils
 
   local aMonth		     := {}
   local nScan			     := 0
@@ -1471,7 +1471,7 @@ Retorna um valor quando dada variavel nao for numerica
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method whenIsNotNumber(xVar, xDefValue) class LibUtilsObj	
+method whenIsNotNumber(xVar, xDefValue) class SysLibUtils	
 return if ( ValType(xVar) != "N", xDefValue, xVar )
 
 
@@ -1482,5 +1482,5 @@ Retorna um valor quando dada variavel for nula (igual a nil)
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method whenIsNull(xVar, xDefValue) class LibUtilsObj	
+method whenIsNull(xVar, xDefValue) class SysLibUtils	
 return if ( ::isNull(xVar), xDefValue, xVar )
