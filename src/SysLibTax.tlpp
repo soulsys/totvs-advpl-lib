@@ -245,6 +245,8 @@ method calculate(lRestore) class SysLibTax
   oResult["cofinsBase"]  	    := MaFisRet(nil, "NF_BASECF2")
   oResult["cofinsValue"]      := MaFisRet(nil, "NF_VALCF2")  
   oResult["suframa"]          := MaFisRet(nil, "NF_DESCZF")
+  oResult["issBase"]  	      := MaFisRet(nil, "NF_BASEISS")
+  oResult["issValue"]         := MaFisRet(nil, "NF_VALISS")
   oResult["invoiceValue"]     := MaFisRet(nil, "NF_TOTAL")
   oResult["receivable"]       := MaFisRet(nil, "NF_BASEDUP")
 
@@ -273,6 +275,9 @@ method calculate(lRestore) class SysLibTax
     oItem["cofinsAliquot"]     := MaFisRet(nI, "IT_ALIQCF2") // % COFINS
     oItem["cofinsValue"]       := MaFisRet(nI, "IT_VALCF2")  // Valor COFINS
     oItem["suframa"]           := MaFisRet(nI, "IT_DESCZF")  // Valor SUFRAMA
+    oItem["issBase"]           := MaFisRet(nI, "IT_BASEISS") // Base ISS
+    oItem["issAliquot"]        := MaFisRet(nI, "IT_ALIQISS") // % ISS
+    oItem["issValue"]          := MaFisRet(nI, "IT_VALISS")  // Valor ISS
     oItem["invoiceValue"]      := MaFisRet(nI, "IT_TOTAL")   // Valor NF
     oItem["cfop"]              := MaFisRet(nI, "IT_CF")      // CFOP
     oItem["receivable"]        := MaFisRet(nI, "IT_BASEDUP") // Valor Titulo Receber
@@ -345,6 +350,10 @@ method getItemTaxesAsArray(oTaxItem) class SysLibTax
 
   if oTaxItem["suframa"] > 0
     addTaxData("SUFRAMA", "SUFRAMA", nil, nil, oTaxItem["suframa"], @aTaxes)
+  endIf
+
+  if oTaxItem["issValue"] > 0
+    addTaxData("ISS", "ISS", oTaxItem["issBase"], oTaxItem["issAliquot"], oTaxItem["issValue"], @aTaxes)
   endIf
   
 return aTaxes
