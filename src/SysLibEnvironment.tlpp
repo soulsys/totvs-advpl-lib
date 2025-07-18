@@ -377,7 +377,7 @@ return lOk
 static function createMainWindow(oEnv, cFunName)
   
   local cModName		:= oEnv:getModule()	
-  local bWindowInit	:= {|| __cInternet := nil, __Execute(cFunName, "xxxxxxxxxxxxxxxxxxxx", cFunName, cModName, cModName, 1, .T.)}		
+  local bWindowInit	:= {|| __cInternet := nil, __Execute(cFunName)}		
   public oMainWnd		:= nil
   public __cInternet	:= nil	
   
