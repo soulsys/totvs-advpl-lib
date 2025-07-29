@@ -1,15 +1,15 @@
 #include "tlpp-core.th"
-#include "totvs.ch" 
- 
+#include "totvs.ch"
+
 /*/{Protheus.doc} SysLibColumn
- 
+
 Colunas do objeto SysLibGrid
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class SysLibColumn from SysLibAdvpl	
-  
+class SysLibColumn from SysLibAdvpl
+
   public data cId
   public data cBmpId
   public data cTitle
@@ -21,7 +21,7 @@ class SysLibColumn from SysLibAdvpl
   public data cF3
   public data cComboBox
   public data cInitializer
-  public data lReadOnly	
+  public data lReadOnly
   public data cContext
   public data cBrowseInitializer
   public data cShowOnBrowse
@@ -29,9 +29,9 @@ class SysLibColumn from SysLibAdvpl
   public data lBmpColumn
   public data lSx3
   public data lRequired
-  
-  public method new() constructor	
-  
+
+  public method new() constructor
+
   public method getId()
   public method setId()
   public method getBmpId()
@@ -68,7 +68,7 @@ class SysLibColumn from SysLibAdvpl
   public method isRequired()
   public method setRequired()
   public method getEmptyValue()
-  
+
 endClass
 
 
@@ -79,17 +79,17 @@ Construtor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method new(cId, cTitle, cType, nSize, nDecimals, cPicture) class SysLibColumn	
-  
-  default cId			  := ""
-  default cTitle 		:= ""
-  default cType  		:= "C"
-  default nSize	 	  := 10
-  default nDecimals	:= 0
-  default cPicture	:= ""	
-  
+method new(cId, cTitle, cType, nSize, nDecimals, cPicture) class SysLibColumn
+
+  default cId := ""
+  default cTitle := ""
+  default cType := "C"
+  default nSize := 10
+  default nDecimals := 0
+  default cPicture := ""
+
   _Super:new()
-  
+
   ::cId := cId
 
   ::setBmpId("")
@@ -103,73 +103,73 @@ method new(cId, cTitle, cType, nSize, nDecimals, cPicture) class SysLibColumn
   ::setComboBox("")
   ::setInitializer("")
   ::setReadOnly(.F.)
-  ::setContext("V")    	
+  ::setContext("V")
   ::setBrowseInitializer("")
   ::setShowOnBrowse("S")
   ::setRequired(.F.)
-  
-  ::lMarkColumn	:= .F.
-  ::lBmpColumn 	:= .F.
-  ::lSx3			  := .F.
-  
+
+  ::lMarkColumn := .F.
+  ::lBmpColumn := .F.
+  ::lSx3 := .F.
+
   checkMarkBmp(@self)
   checkSx3(@self)
-  
-return	
+
+return
 
 /**
  * Verifica se a coluna eh um mark ou bitmap
  */
 static function checkMarkBmp(oCol)
-  
-  local cId 	:= Lower(AllTrim(oCol:getId()))
-  local lMark	:= (Left(cId, 5) == "@mark")
-  local lBmp	:= (Left(cId, 4) == "@bmp")
-  
+
+  local cId := Lower(AllTrim(oCol:getId()))
+  local lMark := (Left(cId, 5) == "@mark")
+  local lBmp := (Left(cId, 4) == "@bmp")
+
   if (lMark .or. lBmp)
     oCol:setId("CHECKBOL")
-    oCol:setBmpId(oCol:getTitle()) 
+    oCol:setBmpId(oCol:getTitle())
     oCol:setTitle("")
     oCol:setPicture("@BMP")
     oCol:setSize(10)
-    oCol:setType("C") 
+    oCol:setType("C")
     oCol:setContext("V")
     oCol:setBrowseInitializer(if(lMark, "mark", "legenda"))
     oCol:setShowOnBrowse("V")
     oCol:setReadOnly(.T.)
     oCol:lMarkColumn := lMark
-    oCol:lBmpColumn  := lBmp		
+    oCol:lBmpColumn := lBmp
   endIf
-  
+
 return
 
 /**
  * Verifica se o campo existe no SX3
  */
 static function checkSx3(oCol)
-  
-  local cId       := oCol:getId()
+
+  local cId := oCol:getId()
   local cAliasSX3 := GetNextAlias()
-  
+
   if (Empty(cId) .or. "@" $ cId)
     return
   endIf
 
-  OpenSXs(,,,,cEmpAnt,cAliasSX3,"SX3",,.F.)  
-      
+  OpenSXs(,,,,cEmpAnt,cAliasSX3,"SX3",,.F.)
+
   if Select(cAliasSX3) > 0
 
     dbSelectArea(cAliasSX3)
     (cAliasSX3)->(dbSetOrder(2))
-    
+
     if (cAliasSX3)->(dbSeek(cId))
       fillSx3Data(cAliasSX3, @oCol)
     endIf
-    
+
     (cAliasSX3)->(DbCloseArea())
 
   endIf
-  
+
 return
 
 /**
@@ -177,9 +177,9 @@ return
  */
 static function fillSx3Data(cAliasSX3, oCol)
 
-  local cValidation       := ""
+  local cValidation := ""
   local cSystemValidation := (cAliasSX3)->&("X3_VALID")
-  local cUserValidation   := (cAliasSX3)->&("X3_VLDUSER")
+  local cUserValidation := (cAliasSX3)->&("X3_VLDUSER")
 
   if !Empty(cSystemValidation)
     cValidation := "(" + cSystemValidation + ")"
@@ -201,7 +201,7 @@ static function fillSx3Data(cAliasSX3, oCol)
   oCol:setF3((cAliasSX3)->&("X3_F3"))
   oCol:setComboBox((cAliasSX3)->&("X3_CBOX"))
   oCol:setInitializer((cAliasSX3)->&("X3_RELACAO"))
-  oCol:setReadOnly((cAliasSX3)->&("X3_VISUAL") == "V")    
+  oCol:setReadOnly((cAliasSX3)->&("X3_VISUAL") == "V")
   oCol:setRequired(X3Obrigat((cAliasSX3)->&("X3_CAMPO")))
   oCol:lSx3 := .T.
 
@@ -211,7 +211,7 @@ return
 /*/{Protheus.doc} getId
 
 Coleta o ID da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -222,7 +222,7 @@ return ::cId
 /*/{Protheus.doc} setId
 
 Define o ID da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -236,7 +236,7 @@ return
 /*/{Protheus.doc} getBmpId
 
 Coleta o ID de Bitmap da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 
@@ -249,7 +249,7 @@ return ::cBmpId
 /*/{Protheus.doc} setBmpId
 
 Define o ID de Bitmap da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 
@@ -263,7 +263,7 @@ return
 /*/{Protheus.doc} getTile
 
 Coleta o titulo da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -274,7 +274,7 @@ return ::cTitle
 /*/{Protheus.doc} setTitle
 
 Define o titulo da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -286,18 +286,18 @@ return
 /*/{Protheus.doc} getType
 
 Coleta o Tipo da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getType() class SysLibColumn	
+method getType() class SysLibColumn
 return ::cType
 
 
 /*/{Protheus.doc} setType
 
 Define o Tipo da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -309,7 +309,7 @@ return
 /*/{Protheus.doc} getSize
 
 Coleta o Tamanho da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -320,7 +320,7 @@ return ::nSize
 /*/{Protheus.doc} setSize
 
 Define o Tamanho da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -332,10 +332,10 @@ return
 /*/{Protheus.doc} getPicture
 
 Coleta a Picture da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
-/*/	
+/*/
 method getPicture() class SysLibColumn
 return ::cPicture
 
@@ -343,7 +343,7 @@ return ::cPicture
 /*/{Protheus.doc} setPicture
 
 Define a Picture da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -355,7 +355,7 @@ return
 /*/{Protheus.doc} getDecimals
 
 Coleta os Decimais da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -366,22 +366,22 @@ return ::nDecimals
 /*/{Protheus.doc} setDecimals
 
 Define os Decimais da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method setDecimals(nDecimals) class SysLibColumn
   ::nDecimals := nDecimals
-return 
+return
 
 
 /*/{Protheus.doc} getValidation
 
 Coleta a validacao da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
-/*/	
+/*/
 method getValidation() class SysLibColumn
 return ::cValidation
 
@@ -389,7 +389,7 @@ return ::cValidation
 /*/{Protheus.doc} setValidation
 
 Define a validacao da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -401,7 +401,7 @@ return
 /*/{Protheus.doc} getF3
 
 Coleta a consulta F3 da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -412,7 +412,7 @@ return ::cF3
 /*/{Protheus.doc} setF3
 
 Define a Consulta F3 da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -424,7 +424,7 @@ return
 /*/{Protheus.doc} getComboBox
 
 Coleta o ComboBox da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -435,7 +435,7 @@ return ::cComboBox
 /*/{Protheus.doc} setComboBox
 
 Define o ComboBox da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -447,7 +447,7 @@ return
 /*/{Protheus.doc} getInitializer
 
 Coleta o Inicializador padrao da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -458,7 +458,7 @@ return ::cInitializer
 /*/{Protheus.doc} setInitializer
 
 Define o Inicializador padrao da coluna
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -470,7 +470,7 @@ return
 /*/{Protheus.doc} isReadOnly
 
 Indica se a coluna eh somente visualizacao
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -481,7 +481,7 @@ return ::lReadOnly
 /*/{Protheus.doc} setReadOnly
 
 Define se a coluna eh somente visualizacao
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -492,7 +492,7 @@ return
 /*/{Protheus.doc} getContext
 
 Coleta o contexto do campo ("R"=Real, "V"=Virtual)
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -503,7 +503,7 @@ return ::cContext
 /*/{Protheus.doc} setContext
 
 Define o contexto do campo ("R"=Real, "V"=Virtual)
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -515,7 +515,7 @@ return
 /*/{Protheus.doc} getBrowseInitializer
 
 Coleta o inicializador do browse
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -526,7 +526,7 @@ return ::cBrowseInitializer
 /*/{Protheus.doc} setBrowseInitializer
 
 Define o inicializador do browse
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -538,63 +538,63 @@ return
 /*/{Protheus.doc} getShowOnBrowse
 
 Indica se exibe a coluna em Browses ("S","N")
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getShowOnBrowse() class SysLibColumn 
+method getShowOnBrowse() class SysLibColumn
 return ::cShowOnBrowse
 
 
 /*/{Protheus.doc} setShowOnBrowse
 
 Define se exibe a coluna em Browses ("S"/"N")
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method setShowOnBrowse(cShowOnBrowse) class SysLibColumn
   ::cShowOnBrowse := cShowOnBrowse
 return
-  
+
 
 /*/{Protheus.doc} isMarkColumn
 
 Indica se � uma coluna de selecao de registros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isMarkColumn() class SysLibColumn	
+method isMarkColumn() class SysLibColumn
 return ::lMarkColumn
 
 
 /*/{Protheus.doc} isBmpColumn
 
 Indica se � uma coluna tipo bitmap
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isBmpColumn() class SysLibColumn	
-return ::lBmpColumn 
+method isBmpColumn() class SysLibColumn
+return ::lBmpColumn
 
 
 /*/{Protheus.doc} isSx3
 
 Indica se a coluna foi criada a partir do SX3
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method isSx3() class SysLibColumn	
-return ::lSx3 
+method isSx3() class SysLibColumn
+return ::lSx3
 
 
 /*/{Protheus.doc} isRequired
 
 Indica se � um campo de preenchimento obrigatorio
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -605,7 +605,7 @@ return ::lRequired
 /*/{Protheus.doc} setRequired
 
 Define se � um campo de preenchimento obrigatorio
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -617,28 +617,28 @@ return
 /*/{Protheus.doc} getEmptyValue
 
 Retorna um valor para uma coluna vazia
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method getEmptyValue() class SysLibColumn
-  
-  local xValue 	:= nil
-  local cType  	:= ::getType()
-  local nSize		:= ::getSize()
-  
+
+  local xValue := nil
+  local cType := ::getType()
+  local nSize := ::getSize()
+
   if ::isSx3()
     xValue := CriaVar(::getId(), .T.)
   else
     if (cType $ "C,M")
-      xValue := Space(nSize)	
+      xValue := Space(nSize)
     elseIf (cType == "N")
       xValue := 0
     elseIf (cType == "D")
       xValue := CtoD("")
     elseIf (cType == "L")
-      xValue := .F.			
+      xValue := .F.
     endIf
-  endIf		
-  
+  endIf
+
 return xValue

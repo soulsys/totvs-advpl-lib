@@ -2,29 +2,29 @@
 #include "totvs.ch"
 #include "rwmake.ch"
 
- 
+
 /*/{Protheus.doc} SysLibParamBox
- 
+
 Objeto para apresentacao de uma tela de parametros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class SysLibParamBox from SysLibAdvpl	
-  
+class SysLibParamBox from SysLibAdvpl
+
   public data cId
   public data cTitle
-  public data aParams	
+  public data aParams
   public data bValidation
   public data lCanSave
   public data lUserSave
-  public data lCentered 
+  public data lCentered
   public data cSomething
   public data aValues
-  public data aMvs 
-  
-  public method new() constructor	
-  
+  public data aMvs
+
+  public method new() constructor
+
   public method getId()
   public method setId()
   public method getTitle()
@@ -37,11 +37,11 @@ class SysLibParamBox from SysLibAdvpl
   public method isUserSave()
   public method setUserSave()
   public method isCentered()
-  public method setCentered()  
-  public method addParam()	
+  public method setCentered()
+  public method addParam()
   public method show()
   public method getValue()
-  
+
 endClass
 
 
@@ -52,31 +52,31 @@ Construtor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method new(cId, cTitle, bValidation) class SysLibParamBox	
-  
-  default cId 		    := ""
-  default cTitle		  := "SysLibParamBox"
-  default bValidation	:= {|| .T. }
-  
+method new(cId, cTitle, bValidation) class SysLibParamBox
+
+  default cId := ""
+  default cTitle := "SysLibParamBox"
+  default bValidation := {|| .T. }
+
   _Super:new()
-  
+
   ::aParams := {}
   ::aValues := {}
-  ::aMvs	  := {}
-  
+  ::aMvs := {}
+
   ::setId(cId)
   ::setTitle(cTitle)
   ::setValidation(bValidation)
   ::setCanSave(.T.)
   ::setUserSave(.T.)
   ::setCentered(.T.)
-    
-return	
+
+return
 
 /*/{Protheus.doc} getId
 
 Coleta o ID do objeto
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -87,7 +87,7 @@ return ::cId
 /*/{Protheus.doc} setId
 
 Define o ID do objeto
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -99,7 +99,7 @@ return
 /*/{Protheus.doc} getTitle
 
 Coleta o Titulo da tela de parametros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -110,7 +110,7 @@ return ::cTitle
 /*/{Protheus.doc} setTitle
 
 Define o Titulo da tela de parametros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -122,7 +122,7 @@ return
 /*/{Protheus.doc} getParams
 
 Coleta os parametros do objeto
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -133,7 +133,7 @@ return ::aParams
 /*/{Protheus.doc} getValidation
 
 Coleta a validacao ao clicar no botao OK da tela de parametros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -144,7 +144,7 @@ return ::bValidation
 /*/{Protheus.doc} setValidation
 
 Define o validacao ao clicar no botao OK da tela de parametros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -156,7 +156,7 @@ return
 /*/{Protheus.doc} isCanSave
 
 Indica se pode salvar as respostas dos parametros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -167,7 +167,7 @@ return ::lCanSave
 /*/{Protheus.doc} setCanSave
 
 Define se pode salvar as respostas dos parametros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -179,7 +179,7 @@ return
 /*/{Protheus.doc} isUserSave
 
 Indica se o usuario comum pode salvar as repostas dos parametros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -190,7 +190,7 @@ return ::lUserSave
 /*/{Protheus.doc} setUserSave
 
 Define se o usuario comum pode salvar as repostas dos parametros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -202,7 +202,7 @@ return
 /*/{Protheus.doc} isCentered
 
 Indica se exibe a tela de parametros centralizada
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 
@@ -215,7 +215,7 @@ return ::lCentered
 /*/{Protheus.doc} setCentered
 
 Define o Indica se exibe a tela de parametros centralizada
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 
@@ -229,19 +229,19 @@ return
 /*/{Protheus.doc} addParams
 
 Adiciona parametros tipo SysLibParam
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method addParam(oParam) class SysLibParamBox
-  
-  local nI	  	:= 0
-  local lExists	:= .F.
-  
+
+  local nI := 0
+  local lExists := .F.
+
   if (ValType(oParam) != "O")
     return
   endIf
-  
+
   for nI := 1 to Len(::aParams)
     if (::aParams[nI]:getId() == oParam:getId())
       ::aParams[nI] := oParam
@@ -249,68 +249,68 @@ method addParam(oParam) class SysLibParamBox
       exit
     endIf
   next nI
-  
+
   if !lExists
     aAdd(::aParams, oParam)
   endIf
-  
+
 return
 
 
 /*/{Protheus.doc} show
 
 Exibicao da tela de parametros. Nao afeta o conteudo das variaveis publicas MV_PARs.
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
-/*/	 
+/*/
 method show() class SysLibParamBox
-  
-  local lOk			    := .F.		
-  local aRet			  := {}
-  local aParamBox		:= {}
-  local cLoad			  := ::getId()
-  local lCanSave		:= ::isCanSave()
-  local lUserSave 	:= ::isUserSave()
-  local lCentered 	:= ::isCentered()	            
-  local bVldParams	:= ::getValidation()
-  private cCadastro	:= ::getTitle()
-  
+
+  local lOk := .F.
+  local aRet := {}
+  local aParamBox := {}
+  local cLoad := ::getId()
+  local lCanSave := ::isCanSave()
+  local lUserSave := ::isUserSave()
+  local lCentered := ::isCentered()
+  local bVldParams := ::getValidation()
+  private cCadastro := ::getTitle()
+
   if Empty(cLoad)
     MsgBox("Id do grupo de parametros nao definido", "SysLibParamBox", "ALERT")
     return
   endIf
-  
+
   saveMvs(@self:aMvs)
-  
+
   fillParamBoxArray(self, @aParamBox)
-  
+
   if ParamBox(aParamBox, "parametros", @aRet, bVldParams, nil, lCentered, nil, nil, nil, cLoad, lCanSave, lUserSave)
     lOk := .T.
     saveMvs(@self:aValues)
     restoreMvs(@self)
   endIf
-  
+
 return lOk
 
 /**
  * Salva as variaveis publicas de parametros em um vetor
  */
 static function saveMvs(aValues)
-  
-  local nI 	   := 0
+
+  local nI := 0
   local cMvPar := ""
-  
+
   aValues := {}
-  
-  for nI := 1 to 99	
-    cMvPar := "MV_PAR" + StrZero(nI,2)	
+
+  for nI := 1 to 99
+    cMvPar := "MV_PAR" + StrZero(nI,2)
     if (chkType(cMvPar) != "U")
       aAdd(aValues, &cMvPar)
     else
       aAdd(aValues, nil)
     endIf
-  next nI 
+  next nI
 
 return
 
@@ -318,111 +318,111 @@ return
  * Popula o array da funcao ParamBox
  */
 static function fillParamBoxArray(oParObj, aParamBox)
-  
-  local nI 		  := 0
-  local aParams	:= oParObj:getParams()
-  
+
+  local nI := 0
+  local aParams := oParObj:getParams()
+
   aParamBox := {}
-  
+
   for nI := 1 to Len(aParams)
     aAdd(aParamBox, aParams[nI]:toArray())
   next nI
-  
-return 
+
+return
 
 /**
  * Restaura as variaveis publicas de parametros
  */
 static function restoreMvs(oObj)
-  
-  local nI 	   := 0
+
+  local nI := 0
   local xValue := nil
-   
+
   for nI := 1 to Len(oObj:aMvs)
     cMvPar := "MV_PAR" + StrZero(nI,2)
     xValue := oObj:aMvs[nI]
     if (chkType(cMvPar) != "U" .or. ValType(xValue) != "U")
       &cMvPar := xValue
-    endIf	
+    endIf
   next nI
-  
+
 return
 
 /*/{Protheus.doc} getValue
 
 Coleta o valor de um parametro informado pelo usuario
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method getValue(cParamId, lMemory) class SysLibParamBox
-  
-  local nI		     := 0
-  local xValue 	   := nil
-  local oParam	   := nil
-  local cMvPar	   := ""
-  local lHasValues := (Len(::aValues) > 0) 
-  local oUtils     := SysLibUtils():new()
-  default lMemory  := .F.
-  
+
+  local nI := 0
+  local xValue := nil
+  local oParam := nil
+  local cMvPar := ""
+  local lHasValues := (Len(::aValues) > 0)
+  local oUtils := SysLibUtils():new()
+  default lMemory := .F.
+
   if !lHasValues
     lHasValues := loadLastValues(@self)
   endIf
-  
+
   for nI := 1 to Len(::aParams)
-    oParam := ::aParams[nI]	
+    oParam := ::aParams[nI]
     if (oParam:getId() == cParamId)
       if lMemory
         cMvPar := "MV_PAR"+StrZero(nI, 2)
         xValue := &cMvPar
       elseIf lHasValues
-        xValue := ::aValues[nI]			
+        xValue := ::aValues[nI]
         if (oParam:getType() $ "combo,radio")
           xValue := getComboValue(xValue, oParam)
-        endIf	
+        endIf
       else
         xValue := oUtils:getDefaultValue(oParam:getDataType())
-      endIf		
+      endIf
       exit
     endIf
-  next nI	
-  
+  next nI
+
 return xValue
 
 /**
  * Carrega as ultimas respostas do usuario
  */
 static function loadLastValues(oSelf)
-  
-  local oFile	    := nil
-  local xValue    := nil
-  local cLoad	    := oSelf:getId()
-  local cPrbFile  := ""
-  local cValType  := ""
+
+  local oFile := nil
+  local xValue := nil
+  local cLoad := oSelf:getId()
+  local cPrbFile := ""
+  local cValType := ""
   local cStrValue := ""
-  
+
   if Empty(cLoad)
     return .F.
   endIf
-  
+
   cPrbFile := "\profile\"+__cUserId+"_"+cLoad+".prb"
-  oFile    := SysLibFile():new(cPrbFile)
-  
+  oFile := SysLibFile():new(cPrbFile)
+
   if !oFile:exists()
     return .F.
   endIf
-  
+
   oSelf:aValues := {}
-  
+
   oFile:goTop()
   oFile:skipLine()
-  
+
   while oFile:notIsEof()
-    
-    xValue	  := nil
-    cValType  := oFile:readLine(1, 1)
-    cStrValue := oFile:readLine(2)		
-    
+
+    xValue := nil
+    cValType := oFile:readLine(1, 1)
+    cStrValue := oFile:readLine(2)
+
     if (cValType == "C")
       xValue := cStrValue
     elseIf (cValType == "N")
@@ -431,44 +431,44 @@ static function loadLastValues(oSelf)
       xValue := CtoD(cStrValue)
     elseIf (cValType == "L")
       xValue := if("F" $ cStrValue, .F., .T.)
-    endIf 
-    
+    endIf
+
     aAdd(oSelf:aValues, xValue)
-    
+
     oFile:skipLine()
   endDo
-  
+
   oFile:close()
-  
+
 return (Len(oSelf:aValues) > 0)
 
 /**
  * Coleta o valor de parametros tipo "combo"
  */
 static function getComboValue(xMvValue, oParam)
-  
-  local xValue	  := nil
-  local cDataType	:= oParam:getDataType()
-  local aValues	  := oParam:getValues()
-  
-  if (ValType(xMvValue) == "N") 
-    if (cDataType == "N") 
-      xValue := xMvValue	
+
+  local xValue := nil
+  local cDataType := oParam:getDataType()
+  local aValues := oParam:getValues()
+
+  if (ValType(xMvValue) == "N")
+    if (cDataType == "N")
+      xValue := xMvValue
     else
-      xValue := aValues[xMvValue]		
-    endIf		
-  elseIf (ValType(xMvValue) == "C") 
+      xValue := aValues[xMvValue]
+    endIf
+  elseIf (ValType(xMvValue) == "C")
     if (cDataType == "N")
       xValue := aScan(aValues, xMvValue)
     else
       xValue := xMvValue
-    endIf		
+    endIf
   endIf
-  
+
   if (ValType(xValue) == "C")
     xValue := AllTrim(xValue)
   endIf
-  
+
 return xValue
 
 /**

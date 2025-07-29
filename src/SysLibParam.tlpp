@@ -1,16 +1,16 @@
 #include "tlpp-core.th"
 #include "totvs.ch"
 
- 
+
 /*/{Protheus.doc} SysLibParam
- 
+
 Objeto que representa uma parametro da classe SysLibParamBox
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class SysLibParam from SysLibAdvpl	
-  
+class SysLibParam from SysLibAdvpl
+
   public data cId
   public data cType
   public data cDataType
@@ -30,10 +30,10 @@ class SysLibParam from SysLibAdvpl
   public data cFilterAlias
   public data cFilterWhen
   public data nHeight
-  public data lBold			
-  
-  public method new() constructor	
-  
+  public data lBold
+
+  public method new() constructor
+
   public method getId()
   public method setId()
   public method getType()
@@ -61,7 +61,7 @@ class SysLibParam from SysLibAdvpl
   public method getValues()
   public method setValues()
   public method getFileTypes()
-  public method setFileTypes()	
+  public method setFileTypes()
   public method getFileStartDirectory()
   public method setFileStartDirectory()
   public method getFileParams()
@@ -71,11 +71,11 @@ class SysLibParam from SysLibAdvpl
   public method getFilterWhen()
   public method setFilterWhen()
   public method getHeight()
-  public method setHeight()	
+  public method setHeight()
   public method isBold()
-  public method setBold()  
+  public method setBold()
   public method toArray()
-  
+
 endClass
 
 
@@ -86,31 +86,31 @@ Construtor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method new(cId, cType, cDescription, cDataType, nWidth, nSize) class SysLibParam	
-  
-  default cId 			   := ""
-  default cType 			 := "get"
+method new(cId, cType, cDescription, cDataType, nWidth, nSize) class SysLibParam
+
+  default cId := ""
+  default cType := "get"
   default cDescription := ""
-  default cDataType		 := getDefDataType(cType)
-  default nWidth			 := 10
-  default nSize			   := 10
-  
+  default cDataType := getDefDataType(cType)
+  default nWidth := 10
+  default nSize := 10
+
   _Super:new()
-  
+
   if (cDataType == "D")
     nWidth := 60
-    nSize  := 8
+    nSize := 8
   endIf
-  
+
   ::setId(cId)
   ::setType(cType)
   ::setDescription(cDescription)
   ::setDataType(cDataType)
-  ::setWidth(nWidth)	
+  ::setWidth(nWidth)
   ::setSize(nSize)
   ::setInitializer(getDefInitializer(cType, cDataType, nSize))
   ::setPicture("")
-  ::setValidation("") 
+  ::setValidation("")
   ::setF3("")
   ::setWhen("")
   ::setRequired(.F.)
@@ -122,43 +122,43 @@ method new(cId, cType, cDescription, cDataType, nWidth, nSize) class SysLibParam
   ::setFilterWhen("")
   ::setHeight(10)
   ::setBold(.F.)
-          
-return	
+
+return
 
 /**
  * Coleta o tipo de dados padrao de acordo com o tipo de parametro
  */
 static function getDefDataType(cType)
-  
+
   local cDataType := ""
-  
+
   cType := Lower(AllTrim(cType))
-  
+
   if (cType $ "combo,radio")
     cDataType := "N"
   elseIf (cType == "checkbox")
     cDataType := "L"
   else
-    cDataType := "C"		
+    cDataType := "C"
   endIf
-  
+
 return cDataType
 
 /**
  * Coleta o inicializador padrao de acordo com o tipo de parametro e o tipo de dados
  */
 static function getDefInitializer(cType, cDataType, nSize)
-  
+
   local xDefInit := nil
-  
+
   cType := Lower(AllTrim(cType))
-  
+
   if (cDataType == "N")
     if (cType $ "combo,radio")
       xDefInit := 1
     else
       xDefInit := 0
-    endIf	
+    endIf
   elseIf (cDataType == "D")
     xDefInit := CtoD("")
   elseIf (cDataType == "L")
@@ -166,17 +166,17 @@ static function getDefInitializer(cType, cDataType, nSize)
   else
     if (cType != "get")
       nSize := 500
-    endIf		 
+    endIf
     xDefInit := Space(nSize)
-  endIf 
-  
+  endIf
+
 return xDefInit
 
 
 /*/{Protheus.doc} getId
 
 Coleta o Id do parametro
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -187,7 +187,7 @@ return ::cId
 /*/{Protheus.doc} setId
 
 Define o Id do parametro
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -199,7 +199,7 @@ return
 /*/{Protheus.doc} getType
 
 Coleta o Tipo do parametro. Valores aceitos: "get","combo","radio","checkbox","file","filter","password","say","range","memo" e "user_filter"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -210,7 +210,7 @@ return ::cType
 /*/{Protheus.doc} setType
 
 Define o Tipo do parametro
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -222,7 +222,7 @@ return
 /*/{Protheus.doc} getDataType
 
 Coleta o Tipo de dados do parametro
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -233,7 +233,7 @@ return ::cDataType
 /*/{Protheus.doc} setDataType
 
 Define o Tipo de dados do parametro
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -245,7 +245,7 @@ return
 /*/{Protheus.doc} getDescription
 
 Coleta a descricao do parametro
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -256,7 +256,7 @@ return ::cDescription
 /*/{Protheus.doc} setDescription
 
 Define a descricao do parametro
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -268,7 +268,7 @@ return
 /*/{Protheus.doc} getInitializer
 
 Coleta o Inicializador padrao
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -279,7 +279,7 @@ return ::cInitializer
 /*/{Protheus.doc} setInitializer
 
 Define o Inicializador padrao
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -291,7 +291,7 @@ return
 /*/{Protheus.doc} getPicture
 
 Coleta a Picture
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -302,7 +302,7 @@ return ::cPicture
 /*/{Protheus.doc} setPicture
 
 Define a Picture
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -314,7 +314,7 @@ return
 /*/{Protheus.doc} getValidation
 
 Coleta a validacao
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -325,7 +325,7 @@ return ::cValidation
 /*/{Protheus.doc} setValidation
 
 Define a validacao
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -337,7 +337,7 @@ return
 /*/{Protheus.doc} getF3
 
 Coleta a Consulta F3
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -348,7 +348,7 @@ return ::cF3
 /*/{Protheus.doc} setF3
 
 Define a Consulta F3
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -360,7 +360,7 @@ return
 /*/{Protheus.doc} getWhen
 
 Coleta a validacao When
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -371,7 +371,7 @@ return ::cWhen
 /*/{Protheus.doc} setWhen
 
 Define a validacao When
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -383,7 +383,7 @@ return
 /*/{Protheus.doc} getWidth
 
 Coleta a Largura do parametro
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -394,7 +394,7 @@ return ::nWidth
 /*/{Protheus.doc} setWidth
 
 Define o Largura do parametro
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -406,7 +406,7 @@ return
 /*/{Protheus.doc} getSize
 
 Coleta o Tamanho de parametros tipo "get"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -417,7 +417,7 @@ return ::nSize
 /*/{Protheus.doc} setSize
 
 Define o Tamanho de parametros tipo "get"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -429,7 +429,7 @@ return
 /*/{Protheus.doc} isRequired
 
 Indica se parametro eh obrigatorio
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -440,7 +440,7 @@ return ::lRequired
 /*/{Protheus.doc} setRequired
 
 Define se parametro eh obrigatorio
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -452,7 +452,7 @@ return
 /*/{Protheus.doc} getValues
 
 Coleta Valores para parametros tipo Combo ou Radio
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -463,7 +463,7 @@ return ::aValues
 /*/{Protheus.doc} setValues
 
 Define o Valores para parametros tipo Combo ou Radio
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -475,7 +475,7 @@ return
 /*/{Protheus.doc} getFileTypes
 
 Coleta os Tipos de arquivos para parametros tipo "file"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -486,7 +486,7 @@ return ::cFileTypes
 /*/{Protheus.doc} setFileTypes
 
 Define os Tipos de arquivos para parametros tipo "file"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -498,7 +498,7 @@ return
 /*/{Protheus.doc} getFileStartDirectory
 
 Coleta o diretorio inicial para parametros tipo "file"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -509,7 +509,7 @@ return ::cFileStartDirectory
 /*/{Protheus.doc} setFileStartDirectory
 
 Define o diretorio inicial para parametros tipo "file"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -521,7 +521,7 @@ return
 /*/{Protheus.doc} getFileParams
 
 Coleta os Parametros de objetos tipo "file"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -532,7 +532,7 @@ return ::nFileParams
 /*/{Protheus.doc} setFileParams
 
 Define os Parametros de objetos tipo "file"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -544,7 +544,7 @@ return
 /*/{Protheus.doc} getFilterAlias
 
 Coleta o Alias para parametros tipo "filter"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -555,7 +555,7 @@ return ::cFilterAlias
 /*/{Protheus.doc} setFilterAlias
 
 Define o Alias para parametros tipo "filter"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -567,7 +567,7 @@ return
 /*/{Protheus.doc} getFilterWhen
 
 Coleta a validacao When de parametros tipo "filter"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -578,7 +578,7 @@ return ::cFilterWhen
 /*/{Protheus.doc} setFilterWhen
 
 Define a validacao When de parametros tipo "filter"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -590,7 +590,7 @@ return
 /*/{Protheus.doc} getHeight
 
 Coleta a Altura de parametros tipo "say"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -601,7 +601,7 @@ return ::nHeight
 /*/{Protheus.doc} setHeight
 
 Define a Altura de parametros tipo "say"
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -613,7 +613,7 @@ return
 /*/{Protheus.doc} isBold
 
 Indica se o parametro tipo "say" sera exibido em negrito
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -624,7 +624,7 @@ return ::lBold
 /*/{Protheus.doc} setBold
 
 Define se o parametro tipo "say" sera exibido em negrito
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
@@ -636,23 +636,23 @@ return
 /*/{Protheus.doc} toArray
 
 Converte o parametro em Array para a funcao ParamBox
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method toArray() class SysLibParam
-  
-  local aArray	:= {}
-  local cType		:= Lower(AllTrim(::getType()))
-  
+
+  local aArray := {}
+  local cType := Lower(AllTrim(::getType()))
+
   if (cType == "get")
     aArray := {1, ::getDescription(), ::getInitializer(), ::getPicture(), ::getValidation(), ::getF3(), ::getWhen(), ::getWidth(), ::isRequired()}
-  elseIf (cType == "combo") 
+  elseIf (cType == "combo")
     aArray := {2, ::getDescription(), ::getInitializer(), ::getValues(), ::getWidth(), ::getValidation(), ::isRequired()}
   elseIf (cType == "radio")
     aArray := {3, ::getDescription(), ::getInitializer(), ::getValues(), ::getWidth(), ::getValidation(), ::isRequired(), ::getWhen()}
   elseIf (cType == "checkbox")
-    aArray :=	 {4, ::getDescription(), ::getInitializer(), nil, ::getWidth(), ::getValidation(), ::isRequired()}
+    aArray := {4, ::getDescription(), ::getInitializer(), nil, ::getWidth(), ::getValidation(), ::isRequired()}
   elseIf (cType == "file")
     aArray := {6, ::getDescription(), ::getInitializer(), ::getPicture(), ::getValidation(), ::getWhen(), ::getWidth(), ::isRequired(), ::getFileTypes(), ::getFileStartDirectory(), ::getFileParams()}
   elseIf (cType == "filter")
@@ -668,5 +668,5 @@ method toArray() class SysLibParam
   elseIf (cType == "user_filter")
     aArray := {12, ::getDescription(), ::getFilterAlias(), ::getInitializer(), ::getWhen()}
   endIf
-  
+
 return aArray

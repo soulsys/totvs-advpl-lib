@@ -2,70 +2,70 @@
 #include "totvs.ch"
 
 /*/{Protheus.doc} SysLibMail
- 
+
 Objeto para controle de envio de e-mail
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
-/*/   
+/*/
 class SysLibMail from SysLibAdvpl
 
   public data cServer
-  public data nPort 		
-  public data cAccount	    
-  public data cPassword	
-  public data cError 		
-  public data cFrom 			
-  public data lAuthenticate	
-  public data lConnected 	
-  public data lSSL 			
+  public data nPort
+  public data cAccount
+  public data cPassword
+  public data cError
+  public data cFrom
+  public data lAuthenticate
+  public data lConnected
+  public data lSSL
   public data lTLS
-  public data lImap 			
-  public data nTimeOut	
-  public data cHtmlLayout 		
-  public data oMailManager	
-  public data oMailMsg 
-  public data oWfHtml 		
-  public data nLastError	
-  
+  public data lImap
+  public data nTimeOut
+  public data cHtmlLayout
+  public data oMailManager
+  public data oMailMsg
+  public data oWfHtml
+  public data nLastError
+
   public method new() constructor
-  
-  public method getServer()		
+
+  public method getServer()
   public method setServer()
-  public method getPort()		
-  public method setPort()		
-  public method getAccount()	
-  public method setAccount()	
-  public method getPassword()	
-  public method setPassword()	
-  public method getError()		
-  public method setError()		
-  public method getFrom()		
-  public method setFrom()		
+  public method getPort()
+  public method setPort()
+  public method getAccount()
+  public method setAccount()
+  public method getPassword()
+  public method setPassword()
+  public method getError()
+  public method setError()
+  public method getFrom()
+  public method setFrom()
   public method isAuthenticate()
-  public method setAuthenticate() 
-  public method isConnected()	 
-  public method setConnected()	
-  public method isSSL()		
-  public method setSSL()		
-  public method isTLS()		
+  public method setAuthenticate()
+  public method isConnected()
+  public method setConnected()
+  public method isSSL()
+  public method setSSL()
+  public method isTLS()
   public method setTLS()
-  public method isImap()		
-  public method setImap()		
-  public method getTimeOut()	
+  public method isImap()
+  public method setImap()
+  public method getTimeOut()
   public method setTimeOut()
   public method getHtmlLayout()
-  public method setHtmlLayout()	
-    
-  public method connect()					
-  public method send()						
-  public method disconnect()				
-  public method attachFile()				
-  public method setConfirmRead()	
+  public method setHtmlLayout()
+
+  public method connect()
+  public method send()
+  public method disconnect()
+  public method attachFile()
+  public method setConfirmRead()
   public method setHtmlValue()
-  public method addHtmlTableValue()		
-  public method showProperties()			
-  
+  public method addHtmlTableValue()
+  public method showProperties()
+
 endClass
 
 
@@ -77,21 +77,21 @@ Construtor
 @since 18/09/2021
 /*/
 method new(cServer, cAccount, cPassword, cFrom, lAuthenticate, lSSL, lTLS, nTimeOut, cHtml) class SysLibMail
-  
-  default cServer 		  := GetMV("MV_RELSERV")
-  default cAccount    	:= GetMV("MV_RELACNT") 
-  default cPassword		  := GetMV("MV_RELPSW")
-  default cFrom			    := GetMV("MV_RELFROM") 
+
+  default cServer := GetMV("MV_RELSERV")
+  default cAccount := GetMV("MV_RELACNT")
+  default cPassword := GetMV("MV_RELPSW")
+  default cFrom := GetMV("MV_RELFROM")
   default lAuthenticate := GetMV("MV_RELAUTH")
-  default lSSL			    := GetMV("MV_RELSSL")
-  default lTLS			    := GetMV("MV_RELTLS") 
-  default nTimeOut		  := GetMV("MV_RELTIME") 	
-  default cHtml			    := ""
-  
+  default lSSL := GetMV("MV_RELSSL")
+  default lTLS := GetMV("MV_RELTLS")
+  default nTimeOut := GetMV("MV_RELTIME")
+  default cHtml := ""
+
   _Super:new()
-  
+
   ::setPort(25)
-  ::setServer(cServer) 	
+  ::setServer(cServer)
   ::setAccount(cAccount)
   ::setPassword(cPassword)
   ::setFrom(cFrom)
@@ -100,19 +100,19 @@ method new(cServer, cAccount, cPassword, cFrom, lAuthenticate, lSSL, lTLS, nTime
   ::setTLS(lTLS)
   ::setImap(.F.)
   ::setTimeOut(nTimeOut)
-  ::setConnected(.F.)	
+  ::setConnected(.F.)
   ::setError("")
   ::setHtmlLayout(cHtml)
-  
+
   ::oMailManager := TMailManager():new()
-      
+
   ::oMailMsg := TMailMessage():new()
-  ::oMailMsg:clear() 
-  
+  ::oMailMsg:clear()
+
   if File(cHtml)
     ::oWfHtml := TWfHtml():new(cHtml)
-  endIf	
-                         
+  endIf
+
 return
 
 
@@ -135,18 +135,18 @@ Define o Servidor
 @since 18/09/2021
 /*/
 method setServer(cServer) class SysLibMail
-  
+
   local cStrPort := ""
-  
+
   ::cServer := cServer
-  
+
   if (":" $ cServer)
-    cStrPort   := SubStr(cServer, At(":", cServer))
-    ::cServer  := StrTran(cServer, cStrPort, "")
-    ::nPort    := Val(StrTran(cStrPort, ":", ""))
+    cStrPort := SubStr(cServer, At(":", cServer))
+    ::cServer := StrTran(cServer, cStrPort, "")
+    ::nPort := Val(StrTran(cStrPort, ":", ""))
   endIf
-  
-return 
+
+return
 
 
 /*/{Protheus.doc} getPort
@@ -169,7 +169,7 @@ Define a porta do servidor
 /*/
 method setPort(nPort) class SysLibMail
   ::nPort := nPort
-return 
+return
 
 
 /*/{Protheus.doc} getAccount
@@ -192,7 +192,7 @@ Define a conta de e-mail
 /*/
 method setAccount(cAccount) class SysLibMail
   ::cAccount := cAccount
-return 
+return
 
 
 /*/{Protheus.doc} getPassword
@@ -215,7 +215,7 @@ Define a Senha de Usuario
 /*/
 method setPassword(cPassword) class SysLibMail
   ::cPassword := cPassword
-return      
+return
 
 
 /*/{Protheus.doc} getError
@@ -262,7 +262,7 @@ Define o Remetente do Email
 method setFrom(cFrom) class SysLibMail
   ::cFrom := cFrom
 return
-                        
+
 
 /*/{Protheus.doc} isAuthenticate
 
@@ -284,7 +284,7 @@ Define se o Servidor requer autenticacao
 /*/
 method setAuthenticate(lAuthenticate) class SysLibMail
   ::lAuthenticate := lAuthenticate
-return 
+return
 
 
 /*/{Protheus.doc} isConnected
@@ -409,7 +409,7 @@ Coleta o arquivo HTML de Layout
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getHtmlLayout() class SysLibMail	
+method getHtmlLayout() class SysLibMail
 return ::cHtmlLayout
 
 
@@ -421,14 +421,14 @@ Define o arquivo HTML de Layout
 @since 18/09/2021
 /*/
 method setHtmlLayout(cHtml) class SysLibMail
-  
+
   local lOk := File(cHtml)
-  
+
   if lOk
     ::cHtmlLayout := cHtml
-    ::oWfHtml 	  := TWfHtml():new(cHtml)		
+    ::oWfHtml := TWfHtml():new(cHtml)
   endIf
-  
+
 return lOk
 
 
@@ -443,22 +443,22 @@ method connect() class SysLibMail
 
   ::oMailManager:setUseSSL(::isSSL())
   ::oMailManager:setUseTLS(::isTLS())
-  ::oMailManager:setSmtpTimeOut(::getTimeOut())	
-  
+  ::oMailManager:setSmtpTimeOut(::getTimeOut())
+
   if ::lImap
     ::oMailManager:init(::getServer(), "", ::getAccount(), ::getPassword(), ::getPort())
     ::nLastError := ::oMailManager:imapConnect()
   else
     ::oMailManager:init("", ::getServer(), ::getAccount(), ::getPassword(), 0, ::getPort())
     ::nLastError := ::oMailManager:smtpConnect()
-  endIf	
-  
+  endIf
+
   if (::nLastError == 0)
-    ::setConnected(.T.)	
+    ::setConnected(.T.)
   else
     setErrorMessage(self, "Falha ao conectar ao Servidor de Email")
   endIf
-                         
+
 return ::isConnected()
 
 
@@ -470,54 +470,54 @@ Envia o e-mail
 @since 18/09/2021
 /*/
 method send(cTo, cSubject, cBody, cAttachment, cCC, cBCC) class SysLibMail
-                                                                                   
-  local lSendOk 	    := .F.
-  local lAuthOk		    := .T.	
-  local cHtml		 	    := ::getHtmlLayout()
-  local lHtml			    := (!Empty(cHtml) .and. File(cHtml))
-  default cBody		    := ""		
-  default cAttachment	:= ""
-  default cCC			    := ""
-  default cBCC		    := ""
-  
+
+  local lSendOk := .F.
+  local lAuthOk := .T.
+  local cHtml := ::getHtmlLayout()
+  local lHtml := (!Empty(cHtml) .and. File(cHtml))
+  default cBody := ""
+  default cAttachment := ""
+  default cCC := ""
+  default cBCC := ""
+
   if !::isConnected()
     if !::connect()
-      return .F.		
-    endIf	
+      return .F.
+    endIf
   endIf
-  
+
   if ::isAuthenticate()
     ::nLastError := ::oMailManager:smtpAuth(::getAccount(), ::getPassword())
     lAuthOk := (::nLastError == 0)
-  endIf	
-  
+  endIf
+
   if lAuthOk
     if lHtml
       cBody := ::oWfHtml:htmlCode()
     endIf
-    ::oMailMsg:cFrom 	:= ::getFrom()	
-    ::oMailMsg:cTo 		:= cTo		
-    ::oMailMsg:cSubject	:= cSubject	
-    ::oMailMsg:cBody 	:= cBody
+    ::oMailMsg:cFrom := ::getFrom()
+    ::oMailMsg:cTo := cTo
+    ::oMailMsg:cSubject := cSubject
+    ::oMailMsg:cBody := cBody
     if !Empty(cCC)
       ::oMailMsg:cCC := cCC
     endIf
     if !Empty(cBCC)
       ::oMailMsg:cBCC := cBCC
-    endIf		
+    endIf
     ::attachFile(cAttachment)
     ::nLastError := ::oMailMsg:send(::oMailManager)
     lSendOk := (::nLastError == 0)
   endIf
-  
+
   if !lSendOk
-    setErrorMessage(self, "Falha ao Enviar o Email") 
-  endIf     
-  
-  if ::isConnected()
-    ::disconnect()	
+    setErrorMessage(self, "Falha ao Enviar o Email")
   endIf
-      
+
+  if ::isConnected()
+    ::disconnect()
+  endIf
+
 return lSendOk
 
 
@@ -529,27 +529,27 @@ Desconecta do Servidor de E-mail
 @since 18/09/2021
 /*/
 method disconnect() class SysLibMail
-  
+
   local lDisconnectOk := .F.
-    
-    if ::isConnected()				
-      ::nLastError := ::oMailManager:smtpDisconnect() 
+
+    if ::isConnected()
+      ::nLastError := ::oMailManager:smtpDisconnect()
     if !(lDisconnectOk := (::nLastError == 0))
       setErrorMessage(self, "Falha ao desconectar do Servidor de Email")
-    endIf		
+    endIf
   endIf
-      
+
 return lDisconnectOk
 
 /**
  * Define as Mensagens de Erro
  */
-static function setErrorMessage(oSysLibMail, cActionMessage) 
-  
+static function setErrorMessage(oSysLibMail, cActionMessage)
+
   local cErrorMsg := oSysLibMail:oMailManager:getErrorString(oSysLibMail:nLastError)
-      
+
   oSysLibMail:setError(cActionMessage+CRLF+CRLF+cErrorMsg)
-    
+
 return
 
 
@@ -561,13 +561,13 @@ Anexa arquivos a Mensagem
 @since 18/09/2021
 /*/
 method attachFile(cFile) class SysLibMail
-  
+
   local lOk := .F.
-  
+
   if File(cFile)
-    lOk := !(::oMailMsg:attachFile(cFile) < 0) 
+    lOk := !(::oMailMsg:attachFile(cFile) < 0)
   endIf
-  
+
 return lOk
 
 
@@ -578,8 +578,8 @@ Define se solicita confirmacao de leitura das mensagens enviadas
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setConfirmRead(lConfirm) class SysLibMail	
-  ::oMailMsg:setConfirmRead(lConfirm)	
+method setConfirmRead(lConfirm) class SysLibMail
+  ::oMailMsg:setConfirmRead(lConfirm)
 return
 
 
@@ -590,8 +590,8 @@ Define valores para o Html
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setHtmlValue(cVar, xValue) class SysLibMail	
-  ::oWfHtml:valByName(cVar, xValue)	
+method setHtmlValue(cVar, xValue) class SysLibMail
+  ::oWfHtml:valByName(cVar, xValue)
 return
 
 
@@ -603,33 +603,33 @@ Define valores para tabelas do Html
 @since 18/09/2021
 /*/
 method addHtmlTableValue(cVar, xValue) class SysLibMail
-  aAdd((::oWfHtml:valByName(cVar)), xValue)	
+  aAdd((::oWfHtml:valByName(cVar)), xValue)
 return
 
 
 /*/{Protheus.doc} showProperties
 
 Exibe as propriedades configuradas para o objeto
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method showProperties() class SysLibMail
-  
-  local cMsg   := ""	
+
+  local cMsg := ""
   local oUtils := SysLibUtils():new()
-  
+
   cMsg := "Server: " + ::getServer() + CRLF
   cMsg += "Port: " + oUtils:strAnyType(::getPort()) + CRLF
   cMsg += "Account: " + ::getAccount() + CRLF
   cMsg += "Password: " + ::getPassword() + CRLF
   cMsg += "From: " + ::getFrom() + CRLF
-  cMsg += "Authenticate: " + oUtils:strAnyType(::isAuthenticate()) + CRLF	
+  cMsg += "Authenticate: " + oUtils:strAnyType(::isAuthenticate()) + CRLF
   cMsg += "SSL: " + oUtils:strAnyType(::isSSL()) + CRLF
   cMsg += "TLS: " + oUtils:strAnyType(::isTLS()) + CRLF
   cMsg += "TimeOut: " + oUtils:strAnyType(::getTimeOut()) + CRLF
   cMsg += "Protocol: " + if (::lImap, "IMAP", "SMTP")
-  
-  MsgInfo(cMsg)	
+
+  MsgInfo(cMsg)
 
 return

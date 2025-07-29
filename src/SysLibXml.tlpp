@@ -17,7 +17,7 @@ class SysLibXml from SysLibAdvpl
 
   public method new() constructor
 
-  public method setXml()  
+  public method setXml()
   public method parse()
   public method text()
   public method node()
@@ -41,9 +41,9 @@ method new(cXml) class SysLibXml
   default cXml := ""
 
   _Super:new()
-  
+
   ::setXml(cXml)
-  
+
   ::cError := ""
 
 return
@@ -56,8 +56,8 @@ Define a String ou Arquivo XML
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setXml(cXml) class SysLibXml  	
-  ::cXml := cXml  
+method setXml(cXml) class SysLibXml
+  ::cXml := cXml
 return
 
 
@@ -70,11 +70,11 @@ Realiza o parser do Xml
 /*/
 method parse() class SysLibXml
 
-  local lOk           := .F.
-  local cError        := ""
-  local cWarning      := ""
+  local lOk := .F.
+  local cError := ""
+  local cWarning := ""
   local cFileOnServer := ""
-  local cXml          := EncodeUTF8(NoAcento(::cXml))
+  local cXml := EncodeUTF8(NoAcento(::cXml))
 
   if Empty(cXml)
     ::cError := "XML undefined"
@@ -85,15 +85,15 @@ method parse() class SysLibXml
     cFileOnServer := copyFileToServer(cXml)
     if Empty(cFileOnServer)
       ::cError := "Failed to copy file to server"
-      return .F.      
+      return .F.
     endIf
     ::oXml := XmlParserFile(cFileOnServer, "_", @cError, @cWarning)
   else
     ::oXml := XmlParser(cXml, "_", @cError, @cWarning)
   endIf
 
-  ::cError := ""  
-  lOk      := (ValType(::oXml) == "O")
+  ::cError := ""
+  lOk := (ValType(::oXml) == "O")
 
   if !lOk
     ::cError := "[ERROR] " + cError
@@ -113,10 +113,10 @@ return lOk
  */
 static function copyFileToServer(cXml)
 
-  local oFile         := SysLibFile():new(cXml)
+  local oFile := SysLibFile():new(cXml)
   local cFileOnServer := "/system/" + oFile:getFileName()
 
-  if !oFile:copy(cFileOnServer)    
+  if !oFile:copy(cFileOnServer)
     cFileOnServer := ""
   endIf
 
@@ -133,12 +133,12 @@ Ex.: oXml:text("pedido:cabecalho:numero")
 /*/
 method text(cNode, oParent) class SysLibXml
 
-  local xRet       := nil
+  local xRet := nil
   private oPrvtObj := nil
-  default oParent  := ::oXml
+  default oParent := ::oXml
 
   oPrvtObj := oParent
-  cNode    := "oPrvtObj:_" + Replace(AllTrim(cNode), ":", ":_") + ":text"
+  cNode := "oPrvtObj:_" + Replace(AllTrim(cNode), ":", ":_") + ":text"
 
   if (Type(cNode) != "U")
     xRet := &cNode
@@ -157,15 +157,15 @@ Ex.: oXml:node("pedido:cabecalho")
 /*/
 method node(cNode, oParent) class SysLibXml
 
-  local oNode      := nil
+  local oNode := nil
   private oPrvtObj := nil
-  default oParent  := ::oXml
+  default oParent := ::oXml
 
   oPrvtObj := oParent
-  cNode    := "oPrvtObj:_" + Replace(AllTrim(cNode), ":", ":_")
+  cNode := "oPrvtObj:_" + Replace(AllTrim(cNode), ":", ":_")
 
   if (Type(cNode) != "U")
-    oNode      := SysLibXml():new()        
+    oNode := SysLibXml():new()
     oNode:oXml := &cNode
   endIf
 
@@ -182,34 +182,34 @@ Ex.: oXml:list("pedido:itens:item")
 /*/
 method list(cNode, oParent) class SysLibXml
 
-  local nI         := 0
-  local aValues    := {}
-  local aNodes     := {}
-  local oNode      := nil
+  local nI := 0
+  local aValues := {}
+  local aNodes := {}
+  local oNode := nil
   private oPrvtObj := nil
-  default oParent  := ::oXml
+  default oParent := ::oXml
 
   oPrvtObj := oParent
-  cNode    := "oPrvtObj:_" + Replace(AllTrim(cNode), ":", ":_")
+  cNode := "oPrvtObj:_" + Replace(AllTrim(cNode), ":", ":_")
 
   if (Type(cNode) == "U")
     return {}
   endIf
 
-  aValues := &cNode    
+  aValues := &cNode
 
   if (ValType(aValues) != "A")
     aValues := { aValues }
   endIf
 
   for nI := 1 to Len(aValues)
-    oNode      := SysLibXml():new()        
+    oNode := SysLibXml():new()
     oNode:oXml := aValues[nI]
     aAdd(aNodes, oNode)
   next nI
 
 return aNodes
-  
+
 
 
 /*/{Protheus.doc} nodeToString
@@ -220,7 +220,7 @@ Converte um no em string
 @since 18/09/2021
 /*/
 method nodeToString(oNode) class SysLibXml
-  
+
   local cStr := ""
 
   cStr := XMLSaveStr(oNode, .F.)
@@ -233,7 +233,7 @@ return cStr
 
 Verifica se um no existe
 Ex.: oXml:exists("pedido:cabecalho:numero")
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/

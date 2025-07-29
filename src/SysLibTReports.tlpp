@@ -5,7 +5,7 @@
 /*/{Protheus.doc} SysLibTReports
 
 Servico para interacao com API do TReports
-    
+
 @author soulsys:waldiresmerio
 @since 10/04/2023
 /*/
@@ -19,13 +19,13 @@ class SysLibTReports from SysLibAdvpl
   public data cPassword
 
   public method new() constructor
-	
+
   public method getAuthToken()
   public method generateReport()
   public method downloadReport()
   public method getReport()
   public method getErrorMessage()
-  
+
 endClass
 
 
@@ -42,11 +42,11 @@ method new() class SysLibTReports
 
   _Super:new()
 
-  ::cErrorMessage  := ""
-  ::cTReportsUrl   := oConfig["treports_url"]
+  ::cErrorMessage := ""
+  ::cTReportsUrl := oConfig["treports_url"]
   ::cProtheusWsUrl := oConfig["protheus_ws_url"]
-  ::cUserName      := oConfig["user_name"]
-  ::cPassword      := oConfig["password"]
+  ::cUserName := oConfig["user_name"]
+  ::cPassword := oConfig["password"]
 
 return self
 
@@ -60,10 +60,10 @@ Obtem o token de autenticacao da API do TReports
 /*/
 method getAuthToken() class SysLibTReports
 
-  local cPath      := "/api/oauth2/v1/token"
-  local aHeaders   := {"Content-Type: application/json"}
-  local oApi       := FwRest():new(::cProtheusWsUrl)
-  local oResponse  := nil
+  local cPath := "/api/oauth2/v1/token"
+  local aHeaders := {"Content-Type: application/json"}
+  local oApi := FwRest():new(::cProtheusWsUrl)
+  local oResponse := nil
 
   if !Empty(::cAuthToken)
     return ::cAuthToken
@@ -71,7 +71,7 @@ method getAuthToken() class SysLibTReports
 
   If (!Empty(::cUserName) .and. !Empty(::cPassword))
     cPath += "?grant_type=password&username=" + ::cUserName + "&password=" + ::cPassword
-  else 
+  else
     ::cErrorMessage := "Arquivo config.json configurado incorretamente"
     return ""
   endIf
@@ -87,7 +87,7 @@ method getAuthToken() class SysLibTReports
   oResponse := getResponse(oApi)
 
   ::cAuthToken := oResponse["access_token"]
-  
+
   if Empty(::cAuthToken)
     setApiErrorMessage(@self, oApi, cPath, oResponse)
   endIf
@@ -104,12 +104,12 @@ Gera relatorio a partir do ID
 /*/
 method generateReport(cReportId, oParams) class SysLibTReports
 
-  local cBody         := ""
+  local cBody := ""
   local cGenerationId := ""
-  local cPath         := "/resources/" + cReportId + "/generate"
-  local aHeaders      := {}
-  local oApi          := FwRest():new(::cTReportsUrl)
-  default oParams     := JsonObject():new()
+  local cPath := "/resources/" + cReportId + "/generate"
+  local aHeaders := {}
+  local oApi := FwRest():new(::cTReportsUrl)
+  default oParams := JsonObject():new()
 
   if Empty(::cAuthToken)
     ::cAuthToken := self:getAuthToken()
@@ -123,7 +123,7 @@ method generateReport(cReportId, oParams) class SysLibTReports
   oApi:setPath(cPath)
   oApi:setPostParams(cBody)
   oApi:setChkStatus(.F.)
-  
+
   if !oApi:post(aHeaders)
     setApiErrorMessage(@self, oApi, cPath)
     return ""
@@ -143,20 +143,20 @@ Baixa relatorio a partir do Generation ID
 /*/
 method downloadReport(cGenerationId, oSetup) class SysLibTReports
 
-  local cFormat   := ""
-  local cFolder   := ""
-  local cFile     := ""
-  local cPath     := ""
-  local aHeaders  := {}
-  local lIsUnix   := (GetRemoteType() == 2)
+  local cFormat := ""
+  local cFolder := ""
+  local cFile := ""
+  local cPath := ""
+  local aHeaders := {}
+  local lIsUnix := (GetRemoteType() == 2)
   local lOpenFile := .F.
-  local oFile     := nil
-  local oApi      := FwRest():new(::cTReportsUrl)
-  local oUtils    := SysLibUtils():new()
-  default oSetup  := JsonObject():new()
+  local oFile := nil
+  local oApi := FwRest():new(::cTReportsUrl)
+  local oUtils := SysLibUtils():new()
+  default oSetup := JsonObject():new()
 
-  cFormat   := oUtils:whenIsNull(oSetup["format"], "pdf")
-  cFolder   := oUtils:whenIsNull(oSetup["folder"], GetTempPath())
+  cFormat := oUtils:whenIsNull(oSetup["format"], "pdf")
+  cFolder := oUtils:whenIsNull(oSetup["folder"], GetTempPath())
   lOpenFile := oUtils:whenIsNull(oSetup["openFile"], .T.)
 
   if !(Right(AllTrim(cFolder), 1) $ "\/")
@@ -170,7 +170,7 @@ method downloadReport(cGenerationId, oSetup) class SysLibTReports
   cFile := cFolder + cGenerationId + "." + cFormat
 
   cPath := "/generated/" + cGenerationId + "/" + cFormat
-  
+
   if Empty(::cAuthToken)
     ::cAuthToken := self:getAuthToken()
   endIf
@@ -180,7 +180,7 @@ method downloadReport(cGenerationId, oSetup) class SysLibTReports
 
   oApi:setPath(cPath)
   oApi:setChkStatus(.F.)
-  
+
   if !oApi:get(aHeaders)
     setApiErrorMessage(@self, oApi, cPath)
     return .F.
@@ -194,7 +194,7 @@ method downloadReport(cGenerationId, oSetup) class SysLibTReports
   else
     ::cErrorMessage := "O arquivo não foi criado (Erro: " + oUtils:strAnyType(oFile:error()) + ")"
   endIf
-  
+
   if lOpenFile .and. !IsBlind()
     QA_OpenArq(cFile)
   endIf
@@ -225,9 +225,9 @@ return ::downloadReport(cGenerationId, oSetup)
 static function getConfig()
 
   local cConfig := ""
-  local cFile   := "\treports\config.json"
+  local cFile := "\treports\config.json"
   local oConfig := JsonObject():new()
-  local oFile   := FwFileReader():new(cFile)
+  local oFile := FwFileReader():new(cFile)
 
   if oFile:open()
     cConfig := oFile:fullRead()
@@ -243,9 +243,9 @@ return oConfig
  * Retorna o resultado de uma requisição
  */
 static function getResponse(oApi)
-  
+
   local oResponse := JsonObject():new()
-  local cResult   := oApi:getResult()  
+  local cResult := oApi:getResult()
 
   oResponse:fromJson(cResult)
 
@@ -256,17 +256,17 @@ return oResponse
  */
 static function setApiErrorMessage(oSelf, oApi, cRequest, oResponse)
 
-  local cLog      := ""
-  local cFolder   := "\treports\logs\"
+  local cLog := ""
+  local cFolder := "\treports\logs\"
   local cFileName := "error_" + DtoS(Date()) + "_" + StrTran(Time(),":","") + ".log"
-  local oUtils    := SysLibUtils():new()
+  local oUtils := SysLibUtils():new()
 
   oSelf:cErrorMessage := ""
-  
+
   if oUtils:isNotNull(oApi)
     oSelf:cErrorMessage := oApi:getLastError() + CRLF + oApi:getResult()
   endIf
-  
+
   cLog := "Error Message: " + oSelf:cErrorMessage
 
   if !Empty(cRequest)
@@ -275,14 +275,14 @@ static function setApiErrorMessage(oSelf, oApi, cRequest, oResponse)
   endIf
 
   if oUtils:isNotNull(oResponse)
-  
+
     cLog += CRLF + CRLF
     cLog += "Response: " + oResponse:toJson()
-    
+
     if Empty(oSelf:cErrorMessage)
       oSelf:cErrorMessage := oResponse:toJson()
     endIf
-  
+
   endIf
 
   if !ExistDir(cFolder)

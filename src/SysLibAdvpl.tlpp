@@ -1,19 +1,19 @@
 #include "tlpp-core.th"
 #include "totvs.ch"
 
- 
+
 /*/{Protheus.doc} SysLibAdvpl
- 
+
 Objeto pai de todos os objetos da LibAdvpl
-  
+
 @author soulsys:victorhugo
-@since 18/09/2021 
+@since 18/09/2021
 /*/
 class SysLibAdvpl
-  
+
   public method new() constructor
   public method isInJob()
-  
+
 endClass
 
 
@@ -25,13 +25,13 @@ Construtor
 @since 18/09/2021
 /*/
 method new() class SysLibAdvpl
-return	
+return
 
 
 /*/{Protheus.doc} isInJob
 
 Indica se o Protheus esta sendo executado em Job (sem interface visual)
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/

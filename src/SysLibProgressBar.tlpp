@@ -3,7 +3,7 @@
 #include "rwmake.ch"
 
 #define DEFAULT_TITLE "Aguarde"
-#define DEFAULT_TEXT  "Processando..."
+#define DEFAULT_TEXT "Processando..."
 
 
 /*/{Protheus.doc} SysLibProgressBar
@@ -14,21 +14,21 @@ Objeto para manipulacao de barras de progresso
 @since 23/05/2023
 /*/
 class SysLibProgressBar from SysLibAdvpl
-  
+
   public data oBar
 
   public data lTwoBars
   public data lHidden
-  
+
   public data bAction
   public data cTitle
   public data cText
 
   public method new() constructor
-  
+
   public method setTwoBars()
   public method setHidden()
-  public method setAction()  
+  public method setAction()
   public method start()
   public method setSteps()
   public method increment()
@@ -48,12 +48,12 @@ Construtor
 @since 23/05/2023
 /*/
 method new(bAction, cText, cTitle) class SysLibProgressBar
-  
-  _Super:new()  
-  
-  ::oBar     := nil
+
+  _Super:new()
+
+  ::oBar := nil
   ::lTwoBars := .F.
-  ::lHidden  := IsBlind()
+  ::lHidden := IsBlind()
 
   ::setAction(bAction, cText, cTitle)
 
@@ -67,7 +67,7 @@ Define que o processamento sera controlado atraves de duas barras
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method setTwoBars(lTwoBars) class SysLibProgressBar  
+method setTwoBars(lTwoBars) class SysLibProgressBar
   ::lTwoBars := lTwoBars
 return
 
@@ -92,13 +92,13 @@ Define a acao a ser executada
 @since 23/05/2023
 /*/
 method setAction(bAction, cText, cTitle) class SysLibProgressBar
-    
-  default cText  := DEFAULT_TEXT
+
+  default cText := DEFAULT_TEXT
   default cTitle := DEFAULT_TITLE
 
   ::bAction := bAction
-  ::cTitle  := cTitle
-  ::cText   := cText
+  ::cTitle := cTitle
+  ::cText := cText
 
 return
 
@@ -124,7 +124,7 @@ method start() class SysLibProgressBar
     ::oBar:activate()
   else
     Processa(::bAction, ::cTitle, ::cText, lCanAbort)
-  endIf  
+  endIf
 
 return
 
@@ -148,7 +148,7 @@ Incrementa o progresso
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method increment(cText) class SysLibProgressBar  
+method increment(cText) class SysLibProgressBar
   default cText := DEFAULT_TEXT
   IncProc(cText)
 return
@@ -185,7 +185,7 @@ Incrementa o progresso da primeira barra
 @author soulsys:victorhugo
 @since 23/05/2023
 /*/
-method incrementFirstBar(cText) class SysLibProgressBar  
+method incrementFirstBar(cText) class SysLibProgressBar
   default cText := DEFAULT_TEXT
   ::oBar:incRegua1(cText)
 return

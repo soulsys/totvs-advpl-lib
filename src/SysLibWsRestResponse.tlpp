@@ -6,53 +6,53 @@
 /*/{Protheus.doc} SysLibWsRestResponse
 
 Objeto para manipulacao de retornos de webservices REST
-    
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 class SysLibWsRestResponse from SysLibAdvpl
 
   public data oRequest
-  
+
   public method new() constructor
-  
+
   public method badRequest()
   public method notFound()
   public method unauthorized()
   public method internalError()
   public method send()
-  public method success()	
-  
+  public method success()
+
 endClass
 
 
 /*/{Protheus.doc} new
 
 Construtor
-    
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method new(oRequest) class SysLibWsRestResponse
 
   _Super:new()
-  
+
   ::oRequest := oRequest
-  
+
 return self
 
 
 /*/{Protheus.doc} badRequest
 
 Retorno do erro BAD REQUEST
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method badRequest(cMessage) class SysLibWsRestResponse
 
   default cMessage := "Bad request"
-  
+
   SetRestFault(400, EncodeUTF8(cMessage))
 
 return
@@ -61,14 +61,14 @@ return
 /*/{Protheus.doc} notFound
 
 Retorno do erro NOT FOUND
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method notFound(cMessage) class SysLibWsRestResponse
-  
+
   default cMessage := "Not found"
-  
+
   SetRestFault(404, EncodeUTF8(cMessage))
 
 return
@@ -77,14 +77,14 @@ return
 /*/{Protheus.doc} unauthorized
 
 Retorno do erro UNAUTHORIZED
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method unauthorized(cMessage) class SysLibWsRestResponse
-  
+
   default cMessage := "Unauthorized"
-  
+
   SetRestFault(401, EncodeUTF8(cMessage))
 
 return
@@ -93,14 +93,14 @@ return
 /*/{Protheus.doc} internalError
 
 Retorno do erro INTERNAL ERROR
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method internalError(cMessage) class SysLibWsRestResponse
-  
+
   default cMessage := "Internal error"
-  
+
   SetRestFault(500, EncodeUTF8(cMessage))
 
 return
@@ -109,23 +109,23 @@ return
 /*/{Protheus.doc} response
 
 Retorno sem erros
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method send(xData, cContentType) class SysLibWsRestResponse
-  
-  local cResponse      := ""
-  default xData		     := ""
+
+  local cResponse := ""
+  default xData := ""
   default cContentType := "application/json"
 
   if (ValType(xData) == "J")
     cResponse := xData:toJson()
   else
-    cResponse := xData  
+    cResponse := xData
   endIf
 
-  ::oRequest:setContentType(cContentType)	
+  ::oRequest:setContentType(cContentType)
   ::oRequest:setResponse(EncodeUTF8(cResponse))
 
 return
@@ -134,14 +134,14 @@ return
 /*/{Protheus.doc} success
 
 Retorna uma mensagem de sucesso
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method success(cMessage) class SysLibWsRestResponse
 
   default cMessage := "Operation performed"
-  
+
   ::send('{ "success": true, "message": "' + cMessage + '" }')
 
 return

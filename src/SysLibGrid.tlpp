@@ -3,28 +3,28 @@
 #include "tcbrowse.ch"
 #include "rwmake.ch"
 
-#define HEADER_TITLE		  1 
-#define HEADER_FIELD		  2
-#define HEADER_PICTURE	  3
-#define HEADER_SIZE			  4
-#define HEADER_DECIMALS	  5
-#define HEADER_VALID		  6
-#define HEADER_USED			  7 
-#define HEADER_TYPE			  8
-#define HEADER_F3			    9
-#define HEADER_CONTEXT	  10
-#define HEADER_CBOX			  11
-#define HEADER_RELATION	  12
-#define HEADER_INIBRW		  13
-#define HEADER_BROWSE		  14
-#define HEADER_VISUAL		  15
-#define HEADER_COLUMNS	  15
+#define HEADER_TITLE 1
+#define HEADER_FIELD 2
+#define HEADER_PICTURE 3
+#define HEADER_SIZE 4
+#define HEADER_DECIMALS 5
+#define HEADER_VALID 6
+#define HEADER_USED 7
+#define HEADER_TYPE 8
+#define HEADER_F3 9
+#define HEADER_CONTEXT 10
+#define HEADER_CBOX 11
+#define HEADER_RELATION 12
+#define HEADER_INIBRW 13
+#define HEADER_BROWSE 14
+#define HEADER_VISUAL 15
+#define HEADER_COLUMNS 15
 
-#define BMP_MARK			  "LBOK"
-#define BMP_UNMARK			"LBNO"
+#define BMP_MARK "LBOK"
+#define BMP_UNMARK "LBNO"
 
-#define DEFAULT_LINE_POS	if(::isCreated(), ::oGrid:nAt, Len(::aLines))
-#define DELETED_COL_POS		if(Len(::aColumns) > 0, Len(::aColumns)+1, 0)
+#define DEFAULT_LINE_POS if(::isCreated(), ::oGrid:nAt, Len(::aLines))
+#define DELETED_COL_POS if(Len(::aColumns) > 0, Len(::aColumns)+1, 0)
 
 
 /*/{Protheus.doc} SysLibGrid
@@ -59,7 +59,7 @@ class SysLibGrid from SysLibAdvpl
   public data aUpdateFields
   public data cMarkImage
   public data cUnMarkImage
-  
+
   public method new() constructor
 
   public method getCol()
@@ -95,8 +95,8 @@ class SysLibGrid from SysLibAdvpl
   public method setFiltered()
   public method isFreeze()
   public method setFreeze()
-  public method isCreated()	  
-  public method getUpdateFields()	
+  public method isCreated()
+  public method getUpdateFields()
   public method setUpdateFields()
   public method setMarkImage()
   public method getMarkImage()
@@ -145,19 +145,19 @@ Construtor
 /*/
 method new(nCol, nRow, nWidth, nHeight, oWnd) class SysLibGrid
 
-  default nCol 	  := 0
-  default nRow 	  := 0
-  default nWidth	:= 0
-  default nHeight	:= 0
-  default oWnd	  := oMainWnd
+  default nCol := 0
+  default nRow := 0
+  default nWidth := 0
+  default nHeight := 0
+  default oWnd := oMainWnd
 
   _Super:new()
 
-  ::aColumns	:= {}
-  ::aLines	  := {}
-  ::aOldLines	:= {}
-  ::oGrid		  := nil
-  ::lCreated	:= .F.
+  ::aColumns := {}
+  ::aLines := {}
+  ::aOldLines := {}
+  ::oGrid := nil
+  ::lCreated := .F.
 
   ::setCol(nCol)
   ::setRow(nRow)
@@ -173,7 +173,7 @@ method new(nCol, nRow, nWidth, nHeight, oWnd) class SysLibGrid
   ::setDeleteValidation("AllwaysTrue()")
   ::setMarkOne(.F.)
   ::setFiltered(.F.)
-  ::setFreeze(.F.)	
+  ::setFreeze(.F.)
   ::setUpdateFields()
   ::setMarkImage(BMP_MARK)
   ::setUnMarkImage(BMP_UNMARK)
@@ -600,13 +600,13 @@ Define Array com os Campos que podem ser Alterados na Grid, quando Grid com opca
 method setUpdateFields(aUpdateFields) class SysLibGrid
 
   default aUpdateFields := Nil
-  
+
   ::aUpdateFields := aUpdateFields
-  
+
   setPropertyReadOnly(self)
 
 return
-      
+
 
 /*/{Protheus.doc} getMarkImage
 
@@ -617,7 +617,7 @@ Recupera o Nome do Recurso de Imagem para representacao da Coluna Mark Marcada
 /*/
 method getMarkImage() class SysLibGrid
 return (::cMarkImage)
-             
+
 
 /*/{Protheus.doc} setMarkImage
 
@@ -627,7 +627,7 @@ Define o Nome do Recurso de Imagem para representacao da Coluna Mark Marcada
 @since 18/09/2021
 /*/
 method setMarkImage(cMarkImage) class SysLibGrid
-  default cMarkImage := BMP_MARK 
+  default cMarkImage := BMP_MARK
   ::cMarkImage := cMarkImage
 return
 
@@ -695,7 +695,7 @@ method addColumn(xColumn) class SysLibGrid
   else
     oCol := xColumn
   endIf
-  
+
   setPropertyReadOnly(self,oCol)
 
   aAdd(::aColumns, oCol)
@@ -712,9 +712,9 @@ Adiciona colunas no browse a partir de uma query SQL
 /*/
 method addSqlColumns(cQuery, lFill, aSetField) class SysLibGrid
 
-  local nI          := 0
-  local oSql 		    := SysLibSql():new()
-  default lFill	    := .T.
+  local nI := 0
+  local oSql := SysLibSql():new()
+  default lFill := .T.
   default aSetField := {}
 
   oSql:newAlias(cQuery)
@@ -738,18 +738,18 @@ return
  */
 static function createSqlColumns(oGrid, oSql)
 
-  local nI		  := 0
-  local nSize  	:= 0
-  local cField	:= ""
-  local cType		:= ""
-  local oCol		:= nil
-  local aStruct	:= oSql:getStruct()
+  local nI := 0
+  local nSize := 0
+  local cField := ""
+  local cType := ""
+  local oCol := nil
+  local aStruct := oSql:getStruct()
 
   for nI := 1 to Len(aStruct)
-    cField	:= aStruct[nI,1]
-    cType	:= aStruct[nI,2]
-    nSize	:= aStruct[nI,3]
-    oCol 	:= SysLibColumn():new(cField)
+    cField := aStruct[nI,1]
+    cType := aStruct[nI,2]
+    nSize := aStruct[nI,3]
+    oCol := SysLibColumn():new(cField)
     if !oCol:isSx3()
       oCol:setTitle(Capital(cField))
       oCol:setType(cType)
@@ -765,9 +765,9 @@ return
  */
 static function fillLinesFromSql(oGrid, oSql)
 
-  local cField  := ""
+  local cField := ""
   local aStruct := oSql:getStruct()
-  local nI      := 0
+  local nI := 0
 
   while !oSql:isEof()
     oGrid:newLine()
@@ -812,7 +812,7 @@ Adiciona uma coluna de sele��o de registros
 /*/
 method addMarkColumn(bOnMark, bOnMarkAll) class SysLibGrid
 
-  default bOnMark 	 := {|| Sleep(0) }
+  default bOnMark := {|| Sleep(0) }
   default bOnMarkAll := {|| Sleep(0) }
 
   ::setOnMark(bOnMark)
@@ -829,10 +829,10 @@ return
  */
 static function checkMarkColumn(oGrid)
 
-  local nI		   := 0
+  local nI := 0
   local oMarkCol := nil
   local aNewCols := {}
-  local aCols 	 := oGrid:getColumns()
+  local aCols := oGrid:getColumns()
 
   for nI := 1 to Len(aCols)
     if (aCols[nI]:isMarkColumn())
@@ -880,7 +880,7 @@ Coleta a posicao de uma coluna
 /*/
 method getColumnPosition(cId) class SysLibGrid
 
-  local nI 	 := 0
+  local nI := 0
   local nPos := 0
 
   for nI := 1 to Len(::aColumns)
@@ -902,9 +902,9 @@ Coleta a posicao de uma coluna tipo marcacao
 /*/
 method getMarkColumnPosition() class SysLibGrid
 
-  local nI 	  := 0
-  local nPos 	:= 0
-  local aCols	:= ::getColumns()
+  local nI := 0
+  local nPos := 0
+  local aCols := ::getColumns()
 
   for nI := 1 to Len(aCols)
     if aCols[nI]:isMarkColumn()
@@ -925,9 +925,9 @@ Adiciona uma nova linha no browse
 /*/
 method newLine() class SysLibGrid
 
-  local nCols 	:= Len(::aColumns)
-  local nPosDel	:= (nCols + 1)
-  local nI      := 1
+  local nCols := Len(::aColumns)
+  local nPosDel := (nCols + 1)
+  local nI := 1
 
   if (nCols == 0)
     return
@@ -941,8 +941,8 @@ method newLine() class SysLibGrid
   next nI
 
   if (ValType(::oGrid) == "O")
-    ::oGrid:nAt 	:= Len(::aLines)
-    ::oGrid:aCols	:= ::aLines
+    ::oGrid:nAt := Len(::aLines)
+    ::oGrid:aCols := ::aLines
   endIf
 
 return
@@ -957,9 +957,9 @@ Remove linhas do grid
 /*/
 method removeLine(nLine) class SysLibGrid
 
-  local nI 		    := 0
-  local aNewLines	:= {}
-  default nLine	  := DEFAULT_LINE_POS
+  local nI := 0
+  local aNewLines := {}
+  default nLine := DEFAULT_LINE_POS
 
   for nI := 1 to Len(::aLines)
     if (nI != nLine)
@@ -970,8 +970,8 @@ method removeLine(nLine) class SysLibGrid
   ::aLines := aNewLines
 
   if (ValType(::oGrid) == "O")
-    ::oGrid:aCols	:= ::aLines
-  endIf	
+    ::oGrid:aCols := ::aLines
+  endIf
 
   ::refresh()
 
@@ -987,16 +987,16 @@ Define valores para as linhas do browse
 /*/
 method setValue(cId, xValue, nLine) class SysLibGrid
 
-  local nColPos	:= ::getColumnPosition(cId)
-  default nLine	:= DEFAULT_LINE_POS
+  local nColPos := ::getColumnPosition(cId)
+  default nLine := DEFAULT_LINE_POS
 
   if (nColPos > 0 .and. nLine > 0 .and. Len(::aLines) >= nLine)
     ::aLines[nLine,nColPos] := xValue
   endIf
 
-  if (ValType(::oGrid) == "O")    
-    ::oGrid:aCols	:= ::aLines
-  endIf  
+  if (ValType(::oGrid) == "O")
+    ::oGrid:aCols := ::aLines
+  endIf
 
 return
 
@@ -1010,11 +1010,11 @@ Coleta valores das linhas do browse
 /*/
 method getValue(cId, nLine, lOldValue) class SysLibGrid
 
-  local xValue 	 	  := nil
-  local cMemVar 	  := "M->"+cId
-  local nColPos		  := ::getColumnPosition(cId)
-  default nLine		  := DEFAULT_LINE_POS
-  default lOldValue	:= .F.  
+  local xValue := nil
+  local cMemVar := "M->"+cId
+  local nColPos := ::getColumnPosition(cId)
+  default nLine := DEFAULT_LINE_POS
+  default lOldValue := .F.
 
   if (nColPos > 0 .and. nLine > 0)
     if (!lOldValue .and. Type(cMemVar) != "U" .and. nLine == DEFAULT_LINE_POS)
@@ -1036,19 +1036,19 @@ Cria o objeto de grid. Deve ser invocado apos a criacao das colunas e linhas.
 /*/
 method create() class SysLibGrid
 
-  local nI			      := 0
-  local nFreeze		    := if(::isFreeze(), 1, 0)
-  local nMax			    := 999
-  local nOpc			    := ::getAccessMode()
-  local cLinOk		    := ::getLinesValidation()
-  local cDelOk		    := ::getDeleteValidation()
-  local cTudoOk		    := "AllwaysTrue()"
-  local cFieldOk		  := "AllwaysTrue()"
-  local cIniCpos		  := nil
-  local cSuperDel		  := nil
-  local oCol			    := nil
-  local aHeader		    := {}
-  local lHasMarkCol 	:= .F.
+  local nI := 0
+  local nFreeze := if(::isFreeze(), 1, 0)
+  local nMax := 999
+  local nOpc := ::getAccessMode()
+  local cLinOk := ::getLinesValidation()
+  local cDelOk := ::getDeleteValidation()
+  local cTudoOk := "AllwaysTrue()"
+  local cFieldOk := "AllwaysTrue()"
+  local cIniCpos := nil
+  local cSuperDel := nil
+  local oCol := nil
+  local aHeader := {}
+  local lHasMarkCol := .F.
 
   // Para inibir erros malucos da GetDados :(
   public A := .T.
@@ -1056,7 +1056,7 @@ method create() class SysLibGrid
   public N := .T.
 
   for nI := 1 to Len(::aColumns)
-    oCol	:= ::aColumns[nI]
+    oCol := ::aColumns[nI]
     fillHeader(@aHeader, oCol)
     if oCol:isMarkColumn()
       lHasMarkCol := .T.
@@ -1070,7 +1070,7 @@ method create() class SysLibGrid
     ::newLine()
   endIf
 
-  ::oGrid  := MsNewGetDados():new(::nRow, ::nCol, ::nHeight, ::nWidth, nOpc, cLinOk, cTudoOk, cIniCpos, ::aUpdateFields, nFreeze, nMax, cFieldOk, cSuperDel, cDelOk, ::oWnd, aHeader, aClone(::aLines))
+  ::oGrid := MsNewGetDados():new(::nRow, ::nCol, ::nHeight, ::nWidth, nOpc, cLinOk, cTudoOk, cIniCpos, ::aUpdateFields, nFreeze, nMax, cFieldOk, cSuperDel, cDelOk, ::oWnd, aHeader, aClone(::aLines))
   ::aLines := ::oGrid:aCols
 
   ::oGrid:bChange := ::getOnChange()
@@ -1110,11 +1110,11 @@ return
  */
 static function onDoubleClick(oObj)
 
-  local oGrid 	 := oObj:oGrid
-  local nI		   := 0
-  local nAt		   := oGrid:nAt
+  local oGrid := oObj:oGrid
+  local nI := 0
+  local nAt := oGrid:nAt
   local nColMark := oObj:getMarkColumnPosition()
-  local bOnMark	 := oObj:getOnMark()
+  local bOnMark := oObj:getOnMark()
 
   if (oObj:length() == 0) .or. (Len(oObj:oGrid:aCols) == 0)
     return
@@ -1128,7 +1128,7 @@ static function onDoubleClick(oObj)
 
   oGrid:editCell()
   oGrid:aCols[nAt,nColMark] := if(oGrid:aCols[nAt,nColMark] == oObj:getMarkImage(), oObj:getUnMarkImage(), oObj:getMarkImage())
-  
+
   Eval(bOnMark)
 
   oObj:refresh()
@@ -1144,49 +1144,49 @@ Valida os campos obrigatorios
 /*/
 method chkRequiredFields() class SysLibGrid
 
-   local lOk			      := .T.
-  local nI 			      := 0
-  local nLine			    := ::oGrid:nAt
-  local aLines 		    := ::oGrid:aCols
-  local aCols			    := ::getColumns()
-  local lReadOnly		  := ::isReadOnly()
-  local nPosCol		    := 0
-  local nPosDel		    := Len(aCols)+1
-  local xEmptyValue 	:= nil
-  local cEmptyFields	:= ""
-    
+   local lOk := .T.
+  local nI := 0
+  local nLine := ::oGrid:nAt
+  local aLines := ::oGrid:aCols
+  local aCols := ::getColumns()
+  local lReadOnly := ::isReadOnly()
+  local nPosCol := 0
+  local nPosDel := Len(aCols)+1
+  local xEmptyValue := nil
+  local cEmptyFields := ""
+
   if (Len(aLines) == 0)
     return .T.
   endIf
-                     
-   if !lReadOnly    
-       
-    if Len(aLines) >= nLine .And. aLines[nLine,nPosDel]
-      return .T.
-    endif
-    
-    for nI := 1 to Len(aCols)
-      if !aCols[nI]:isRequired()
-        loop
-      endIf
-      xEmptyValue := aCols[nI]:getEmptyValue()
-      nPosCol	   := ::getColumnPosition(aCols[nI]:getId())
-      if (aLines[nLine,nPosCol] == xEmptyValue)
-        if !Empty(cEmptyFields)
-          cEmptyFields += ", "
-        endIf
-        cEmptyFields += aCols[nI]:getTitle()
-      endIf
-    next nI
-  
-    if !Empty(cEmptyFields)
-      lOk := .F.
-      MsgBox("Campos obrigatorios nao preenchidos: "+CRLF+CRLF+cEmptyFields, "Atencao", "ALERT")
-    endIf
+
+   if !lReadOnly
+
+     if Len(aLines) >= nLine .And. aLines[nLine,nPosDel]
+       return .T.
+     endif
+
+     for nI := 1 to Len(aCols)
+       if !aCols[nI]:isRequired()
+         loop
+       endIf
+       xEmptyValue := aCols[nI]:getEmptyValue()
+       nPosCol := ::getColumnPosition(aCols[nI]:getId())
+       if (aLines[nLine,nPosCol] == xEmptyValue)
+         if !Empty(cEmptyFields)
+           cEmptyFields += ", "
+         endIf
+         cEmptyFields += aCols[nI]:getTitle()
+       endIf
+     next nI
+
+     if !Empty(cEmptyFields)
+       lOk := .F.
+       MsgBox("Campos obrigatorios nao preenchidos: "+CRLF+CRLF+cEmptyFields, "Atencao", "ALERT")
+     endIf
 
    endif
-   
-return lOk 
+
+return lOk
 
 /**
  * Preenche o aHeader
@@ -1194,26 +1194,26 @@ return lOk
 static function fillHeader(aHeader, oCol)
 
   aAdd(aHeader, Array(HEADER_COLUMNS))
-  aTail(aHeader)[HEADER_FIELD] 	:= oCol:getId()
-  aTail(aHeader)[HEADER_TITLE] 	:= oCol:getTitle()
-  aTail(aHeader)[HEADER_PICTURE] 	:= oCol:getPicture()
-  aTail(aHeader)[HEADER_SIZE] 	:= oCol:getSize()
-  aTail(aHeader)[HEADER_TYPE] 	:= oCol:getType()
-  aTail(aHeader)[HEADER_VISUAL] 	:= if(oCol:isReadOnly(), "V", "A")
+  aTail(aHeader)[HEADER_FIELD] := oCol:getId()
+  aTail(aHeader)[HEADER_TITLE] := oCol:getTitle()
+  aTail(aHeader)[HEADER_PICTURE] := oCol:getPicture()
+  aTail(aHeader)[HEADER_SIZE] := oCol:getSize()
+  aTail(aHeader)[HEADER_TYPE] := oCol:getType()
+  aTail(aHeader)[HEADER_VISUAL] := if(oCol:isReadOnly(), "V", "A")
 
   if (oCol:isMarkColumn() .or. oCol:isBmpColumn())
     aTail(aHeader)[HEADER_VISUAL] := "S"
   endIf
 
-  aTail(aHeader)[HEADER_DECIMALS]	:= oCol:getDecimals()
-  aTail(aHeader)[HEADER_VALID]	:= oCol:getValidation()
-  aTail(aHeader)[HEADER_F3]		:= oCol:getF3()
-  aTail(aHeader)[HEADER_CBOX]		:= oCol:getComboBox()
-  aTail(aHeader)[HEADER_RELATION]	:= oCol:getInitializer()
-  aTail(aHeader)[HEADER_CONTEXT]	:= oCol:getContext()
-  aTail(aHeader)[HEADER_INIBRW]	:= oCol:getBrowseInitializer()
-  aTail(aHeader)[HEADER_BROWSE]	:= oCol:getShowOnBrowse()
-  aTail(aHeader)[HEADER_USED]		:= ""
+  aTail(aHeader)[HEADER_DECIMALS] := oCol:getDecimals()
+  aTail(aHeader)[HEADER_VALID] := oCol:getValidation()
+  aTail(aHeader)[HEADER_F3] := oCol:getF3()
+  aTail(aHeader)[HEADER_CBOX] := oCol:getComboBox()
+  aTail(aHeader)[HEADER_RELATION] := oCol:getInitializer()
+  aTail(aHeader)[HEADER_CONTEXT] := oCol:getContext()
+  aTail(aHeader)[HEADER_INIBRW] := oCol:getBrowseInitializer()
+  aTail(aHeader)[HEADER_BROWSE] := oCol:getShowOnBrowse()
+  aTail(aHeader)[HEADER_USED] := ""
 
 return
 
@@ -1227,10 +1227,10 @@ Seleciona todos os registros do grid caso exista a coluna de marcacao
 /*/
 method markAll() class SysLibGrid
 
-  local nI 		   := 0
-  local nMarks	 := 0
+  local nI := 0
+  local nMarks := 0
   local nPosMark := 0
-  local lMark		 := .F.
+  local lMark := .F.
 
   if !::hasMarkColumn()
     return
@@ -1251,8 +1251,8 @@ method markAll() class SysLibGrid
   next nI
 
   if (ValType(::oGrid) == "O")
-    ::oGrid:aCols	:= ::aLines
-  endIf	
+    ::oGrid:aCols := ::aLines
+  endIf
 
   Eval(::bOnMarkAll)
 
@@ -1270,7 +1270,7 @@ Verifica se existe uma coluna de marcacao no grid
 /*/
 method hasMarkColumn() class SysLibGrid
 
-  local nPosMark			 := ::getMarkColumnPosition()
+  local nPosMark := ::getMarkColumnPosition()
   local lHasMarkColumn := (nPosMark > 0)
 
 return lHasMarkColumn
@@ -1285,9 +1285,9 @@ Define se a linha do grid esta marcada
 /*/
 method setMarkedLine(lMark, nLine) class SysLibGrid
 
-  local nPosMark	:= ::getMarkColumnPosition()
-  local cBmp	 	  := if(lMark, ::getMarkImage(), ::getUnMarkImage())
-  default nLine 	:= DEFAULT_LINE_POS
+  local nPosMark := ::getMarkColumnPosition()
+  local cBmp := if(lMark, ::getMarkImage(), ::getUnMarkImage())
+  default nLine := DEFAULT_LINE_POS
 
   if (nPosMark > 0 .and. nLine > 0 .and. nLine <= Len(::aLines))
     ::aLines[nLine,nPosMark] := cBmp
@@ -1306,7 +1306,7 @@ Verifica se a linha do grid esta marcada
 method isMarkedLine(nLine) class SysLibGrid
 
   local lIsMarked := .F.
-  default nLine   := DEFAULT_LINE_POS
+  default nLine := DEFAULT_LINE_POS
 
   if !::hasMarkColumn()
     return .F.
@@ -1320,28 +1320,28 @@ return lIsMarked
 /*/{Protheus.doc} hasMarkedLines
 
 Verifica se existe ao menos uma linha selecionada no grid
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method hasMarkedLines(lDeleted) class SysLibGrid
-  
-  local nLine			      := 0
+
+  local nLine := 0
   local lHasMarkedLines := .F.
-  default lDeleted	    := .F.
-  
+  default lDeleted := .F.
+
   for nLine := 1 to ::length()
     if ::isMarkedLine(nLine)
-      lHasMarkedLines := .T.	
+      lHasMarkedLines := .T.
       if ::isDeletedLine(nLine) .and. !lDeleted
         lHasMarkedLines := .F.
       endIf
-    endIf 
+    endIf
     if lHasMarkedLines
       exit
     endIf
   next nLine
-  
+
 return lHasMarkedLines
 
 
@@ -1354,8 +1354,8 @@ Define uma linha como deletada
 /*/
 method setDeletedLine(lDeleted, nLine) class SysLibGrid
 
-  local nPosDel	:= DELETED_COL_POS
-  default nLine	:= DEFAULT_LINE_POS
+  local nPosDel := DELETED_COL_POS
+  default nLine := DEFAULT_LINE_POS
 
   if (nPosDel > 0 .and. Len(::aLines) > 0)
     ::aLines[nLine,nPosDel] := lDeleted
@@ -1373,9 +1373,9 @@ Indica se a linha esta deletada
 /*/
 method isDeletedLine(nLine) class SysLibGrid
 
-  local nPosDel	 := DELETED_COL_POS
+  local nPosDel := DELETED_COL_POS
   local lDeleted := .F.
-  default nLine	 := DEFAULT_LINE_POS
+  default nLine := DEFAULT_LINE_POS
 
   if (nPosDel > 0 .and. Len(::aLines) > 0)
     lDeleted := ::aLines[nLine,nPosDel]
@@ -1401,24 +1401,24 @@ return (!::isDeletedLine(nLine) .and. !lineHasEmptyRequiredFields(self, nLine))
  * Verifica se uma linha possui campos obrigatorios nao preenchidos
  */
 static function lineHasEmptyRequiredFields(oSelf, nLine)
-  
-  local nI       := 0
-  local cId      := ""
-  local oCol     := nil
-  local xValue   := nil
+
+  local nI := 0
+  local cId := ""
+  local oCol := nil
+  local xValue := nil
   local aColumns := oSelf:getColumns()
 
   for nI := 1 to Len(aColumns)
-    
-    oCol   := aColumns[nI]
-    cId    := oCol:getId()
+
+    oCol := aColumns[nI]
+    cId := oCol:getId()
     xValue := oSelf:getValue(cId, nLine)
 
     if oCol:isRequired() .and. Empty(xValue)
       return .T.
     endIf
 
-  next nI  
+  next nI
 
 return .F.
 
@@ -1432,9 +1432,9 @@ Define o valor de um bitmap do grid
 /*/
 method setBmpValue(cId, cBmp, nLine) class SysLibGrid
 
-  local nI		  := 0
-  local nPosBmp	:= 0
-  default nLine	:= DEFAULT_LINE_POS
+  local nI := 0
+  local nPosBmp := 0
+  default nLine := DEFAULT_LINE_POS
 
   for nI := 1 to Len(::aColumns)
     if (::aColumns[nI]:isBmpColumn() .and. ::aColumns[nI]:getBmpId() == cId)
@@ -1461,7 +1461,7 @@ method refresh(lForce) class SysLibGrid
 
   default lForce := .F.
 
-  if (ValType(::oGrid) == "O")	    
+  if (ValType(::oGrid) == "O")
     if lForce
       ::aLines := ::oGrid:aCols
     endIf
@@ -1494,10 +1494,10 @@ Filtra o grid. Permitido somente se o grid for somente leitura ( oGrid:setReadOn
 /*/
 method filter(cFilter, xColumns) class SysLibGrid
 
-  local nI		 	       := 0
-  local aLines		     := {}
+  local nI := 0
+  local aLines := {}
   local aFilteredLines := {}
-  default xColumns 	   := ""
+  default xColumns := ""
 
   if !::isReadOnly()
     MsgBox("Nao e possivel filtrar um SysLibGrid editavel", "Atencao", "ALERT")
@@ -1521,8 +1521,8 @@ method filter(cFilter, xColumns) class SysLibGrid
     endIf
   next nI
 
-  ::aLines 	  	:= aClone(aFilteredLines)
-  ::oGrid:aCols 	:= ::aLines
+  ::aLines := aClone(aFilteredLines)
+  ::oGrid:aCols := ::aLines
 
   ::setFiltered(.T.)
   ::refresh()
@@ -1534,18 +1534,18 @@ return
  */
 static function validFilter(oGrid, cFilter, xColumns, aLine)
 
-  local nI		   := 0
-  local cColId	 := ""
-  local cValue	 := ""
-  local aCols		 := oGrid:getColumns()
+  local nI := 0
+  local cColId := ""
+  local cValue := ""
+  local aCols := oGrid:getColumns()
   local cColumns := getFilterColumns(xColumns)
-  local oCol		 := nil
-  local oUtils	 := SysLibUtils():new()
+  local oCol := nil
+  local oUtils := SysLibUtils():new()
 
   cFilter := Upper(AllTrim(cFilter))
 
   for nI := 1 to Len(aCols)
-    oCol   := aCols[nI]
+    oCol := aCols[nI]
     cColId := oCol:getId()
     if !(oCol:isMarkColumn() .or. oCol:isBmpColumn()) .and. !Empty(cColumns) .and. !(cColId $ cColumns)
       loop
@@ -1563,7 +1563,7 @@ return .F.
  */
 static function getFilterColumns(xColumns)
 
-  local nI	 := 0
+  local nI := 0
   local cRet := ""
 
   if Empty(xColumns)
@@ -1595,9 +1595,9 @@ method clearFilter() class SysLibGrid
     return
   endIf
 
-  ::aLines 		  := aClone(::aOldLines)
+  ::aLines := aClone(::aOldLines)
   ::oGrid:aCols := ::aLines
-  ::aOldLines 	:= {}
+  ::aOldLines := {}
 
   ::setFiltered(.F.)
   ::refresh()
@@ -1621,16 +1621,16 @@ method getCursorLine() class SysLibGrid
   endIf
 
 return nLine
-                
-/*    
+
+/*
   Atualiza a Propriedade ReadOnly das colunas conforme o Atributos aUpdateFields
 */
 static function setPropertyReadOnly(oObj,oCol)
-  
-  local nField	:= 0  
-  local cField	:= ""
-  default oCol	:= Nil
-  
+
+  local nField := 0
+  local cField := ""
+  default oCol := Nil
+
   If ValType(oObj:aUpdateFields) == "A" .And. Len(oObj:aUpdateFields) > 0
     If ValType(oCol) == "O"
       cField := oCol:getId()
@@ -1639,37 +1639,37 @@ static function setPropertyReadOnly(oObj,oCol)
       Endif
     ElseIf oCol == Nil
       For nField:= 1 To Len(oObj:aUpdateFields)
-        cField 	:= oObj:aUpdateFields[nField]
+        cField := oObj:aUpdateFields[nField]
         oObj:getColumn(cField):setReadOnly(.F.)
       Next nField
     Endif
   Endif
 
 return
-        
+
 /*
   Verifica se o Campo faz parte dos campos editaveis
 */
 static function isUpdateField(oObj,cField)
-  
-  local nField := 0                
-  local lRet	 := .F.
-  
+
+  local nField := 0
+  local lRet := .F.
+
   For nField:= 1 to Len(oObj:aUpdateFields)
     If Upper(AllTrim(oObj:aUpdateFields[nField])) == Upper(AllTrim(cField))
       lRet := .T.
     Endif
   Next nField
-  
+
 return (lRet)
-                                   
+
 /*
   Atualiza o Array aUpdateFields de acordo com o Campo informado
 */
 static function addUpdateField(oObj,cID)
 
   local nPos := 0
-  
+
   nPos := aScan( oObj:aUpdateFields , {|Record| Upper(AllTrim(Record)) == Upper(AllTrim(cID)) } )
   If nPos == 0
     If ValType(oObj:aUpdateFields) <> "A"
@@ -1677,5 +1677,5 @@ static function addUpdateField(oObj,cID)
     Endif
     aAdd( oObj:aUpdateFields , cID )
   Endif
-  
+
 return

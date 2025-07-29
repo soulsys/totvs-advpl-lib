@@ -3,32 +3,32 @@
 #include "fileio.ch"
 #include "rwmake.ch"
 
-#define CHECK_FILE_MSG	"Verifique se o arquivo existe ou se esta sendo usado."		
- 
- 
+#define CHECK_FILE_MSG "Verifique se o arquivo existe ou se esta sendo usado."
+
+
 /*/{Protheus.doc} SysLibFile
- 
+
 Objeto para manipulacao de Arquivos
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 class SysLibFile from SysLibAdvpl
-  
+
   public data cFile
   public data lOpen
   public data aLines
-  
+
   public method new() constructor
-  
+
   public method getFile()
   public method setFile()
   public method isOpen()
-  public method getLines()  
-  public method createFile()		
+  public method getLines()
+  public method createFile()
   public method writeLine()
   public method readLine()
-  public method saveLines()	
+  public method saveLines()
   public method isEof()
   public method notIsEof()
   public method skipLine()
@@ -44,7 +44,7 @@ class SysLibFile from SysLibAdvpl
   public method getFileMegabytes()
   public method getDirectory()
   public method readContent()
-  
+
 endClass
 
 
@@ -56,17 +56,17 @@ Construtor
 @since 18/09/2021
 /*/
 method new(cFile) class SysLibFile
-  
+
   default cFile := ""
-  
+
   _Super:new()
-  
+
   ::setFile(cFile)
 
-  ::lOpen := .F.	
+  ::lOpen := .F.
   ::aLines:= {}
-  
-return	
+
+return
 
 
 /*/{Protheus.doc} getFile
@@ -117,28 +117,28 @@ return ::aLines
 /*/{Protheus.doc} createFile
 
 Cria o Arquivo
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method createFile() class SysLibFile
-  
-  local cFile		:= ::getFile()
+
+  local cFile := ::getFile()
   local nHandle := -1
-  
+
   if !File(cFile)
     nHandle := createFile(cFile)
-  endIf	
-  
+  endIf
+
 return (nHandle != -1)
 
 /**
  * Cria o arquivo sem alterar o nome
  */
 static function createFile(cFile)
-  
+
   local lChangeCase := .F.
-  
+
 return FCreate(cFile, nil, nil, lChangeCase)
 
 
@@ -150,19 +150,19 @@ Gravacao de linhas no arquivo
 @since 18/09/2021
 /*/
 method writeLine(cText) class SysLibFile
-  
-  local nHandle := 0                        
-  local lWrite	:= .T.
-  local cFile		:= ::getFile()
-  default cText := ""	                    
-  
+
+  local nHandle := 0
+  local lWrite := .T.
+  local cFile := ::getFile()
+  default cText := ""
+
   if !File(cFile)
     nHandle := createFile(cFile)
   else
     nHandle := FOpen(cFile, FO_READWRITE)
     FSeek(nHandle, 0, 2)
   Endif
-  
+
   if (nHandle == -1)
     lWrite := .F.
   else
@@ -171,69 +171,69 @@ method writeLine(cText) class SysLibFile
       lWrite := .F.
     endIf
   endIf
-      
+
   FClose(nHandle)
-  
+
   if !lWrite
     MsgBox("Falha na gravacao do arquivo "+cFile, "Erro", "STOP")
   endIf
-  
+
 return lWrite
 
 
 /*/{Protheus.doc} readLine
 
-Leitura de linhas do arquivo. 
+Leitura de linhas do arquivo.
 Esse metodo trabalha como a funcao SubString(), possibilitando a leitura da linha toda ou de apenas uma parte.
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method readLine(nCol, nChrs) class SysLibFile
-  
-  local cLine  := ""	
+
+  local cLine := ""
   default nCol := 0
   default nChrs:= 0
-  
+
   if !::open()
     return ""
   endIf
-  
+
   cLine := FT_FreadLn()
-  
+
   if (nCol > 0)
     if (nChrs == 0)
       nChrs := Len(cLine)
     endIf
-    cLine := SubStr(cLine, nCol, nChrs)		
-  endIf	
-  
+    cLine := SubStr(cLine, nCol, nChrs)
+  endIf
+
 return cLine
 
 
 /*/{Protheus.doc} saveLines
 
-Salva todas as linhas do arquivo em um array. 
+Salva todas as linhas do arquivo em um array.
 Para coletar as linhas utilize o metodo getLines().
 
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method saveLines() class SysLibFile
-  
+
   ::aLines := {}
-  
+
   if ::open()
     ::goTop()
     while !::isEof()
-      aAdd(::aLines, ::readLine())	
+      aAdd(::aLines, ::readLine())
       ::skipLine()
     endDo
     ::goTop()
-  endIf	
-  
+  endIf
+
 return
-  
+
 
 /*/{Protheus.doc} isEof
 
@@ -243,13 +243,13 @@ Indica se esta no final do arquivo
 @since 18/09/2021
 /*/
 method isEof() class SysLibFile
-  
+
   local lEof := .F.
-  
-  if ::isOpen() 
+
+  if ::isOpen()
     lEof := FT_Feof()
   endIf
-  
+
 return lEof
 
 
@@ -260,7 +260,7 @@ Indica se nao esta no final do arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method notIsEof() class SysLibFile		
+method notIsEof() class SysLibFile
 return !::isEof()
 
 
@@ -272,13 +272,13 @@ Avanca uma linha
 @since 18/09/2021
 /*/
 method skipLine() class SysLibFile
-  
+
   if !::open()
     return .F.
   endIf
-  
+
   FT_Fskip()
-  
+
 return .T.
 
 
@@ -289,14 +289,14 @@ Posiciona na primeira linha do arquivo
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method goTop() class SysLibFile		
-  
+method goTop() class SysLibFile
+
   if !::open()
     return .F.
   endIf
-  
+
   FT_FgoTop()
-      
+
 return .T.
 
 
@@ -308,18 +308,18 @@ Abre o arquivo
 @since 18/09/2021
 /*/
 method open() class SysLibFile
-  
+
   local cFile := ::getFile()
-  
+
   if !::isOpen()
     if (FT_Fuse(cFile) == -1)
-      MsgBox("nao foi possivel abrir o arquivo "+cFile+"."+CRLF+CHECK_FILE_MSG, "Erro", "STOP")			
+      MsgBox("nao foi possivel abrir o arquivo "+cFile+"."+CRLF+CHECK_FILE_MSG, "Erro", "STOP")
     else
       ::lOpen := .T.
-      ::goTop()			
+      ::goTop()
     endIf
   endIf
-  
+
 return ::isOpen()
 
 
@@ -331,12 +331,12 @@ Fecha o arquivo
 @since 18/09/2021
 /*/
 method close() class SysLibFile
-  
+
   if ::isOpen()
     FT_Fuse()
     ::lOpen := .F.
   endIf
-  
+
 return
 
 
@@ -348,14 +348,14 @@ Apaga o arquivo
 @since 18/09/2021
 /*/
 method delete() class SysLibFile
-  
-  local lOk	:= .T.
-  local cFile := ::getFile()	
-  
+
+  local lOk := .T.
+  local cFile := ::getFile()
+
   if (FErase(cFile) == -1)
-    lOk := .F.		
+    lOk := .F.
   endIf
-  
+
 return lOk
 
 
@@ -367,18 +367,18 @@ Realiza a copia o arquivo
 @since 18/09/2021
 /*/
 method copy(cNewFile) class SysLibFile
-  
-  local nI  := 0
+
+  local nI := 0
   local lOk := .F.
-  
+
   if !::exists()
     return .F.
   endIf
-  
+
   __CopyFile(::getFile(), cNewFile)
 
   for nI := 1 to 5
-    if File(cNewFile)		
+    if File(cNewFile)
       lOk := .T.
       exit
     endIf
@@ -396,9 +396,9 @@ Retorna a quantidade total de linhas do arquivo
 @since 18/09/2021
 /*/
 method countLines() class SysLibFile
-  
+
   local nLines := 0
-  
+
   if ::open()
     ::goTop()
     while !::isEof()
@@ -407,7 +407,7 @@ method countLines() class SysLibFile
     endDo
     ::goTop()
   endIf
-    
+
 return nLines
 
 
@@ -419,15 +419,15 @@ Retorna o nome do arquivo sem o diretorio
 @since 18/09/2021
 /*/
 method getFileName(lExtens, cBar) class SysLibFile
-  
-  local nI		    := 0
-  local cChr  	  := ""
-  local cAux  	  := ""
-  local cName 	  := ""
-  local cFile 	  := AllTrim(Lower(::getFile()))
+
+  local nI := 0
+  local cChr := ""
+  local cAux := ""
+  local cName := ""
+  local cFile := AllTrim(Lower(::getFile()))
   default lExtens := .T.
-  default cBar  	:= if ( "/" $ cFile , "/", "\" )
-  
+  default cBar := if ( "/" $ cFile , "/", "\" )
+
   for nI := Len(cFile) to 1 step -1
     cChr := SubStr(cFile, nI, 1)
     if (cChr != cBar)
@@ -436,15 +436,15 @@ method getFileName(lExtens, cBar) class SysLibFile
       exit
     endIf
   next nI
-  
+
   for nI := Len(cAux) to 1 step -1
     cName += SubStr(cAux, nI, 1)
   next nI
-  
+
   if !lExtens
     cName := FileNoExt(cName)
   endif
-  
+
 return cName
 
 
@@ -456,45 +456,45 @@ Verifica se o arquivo existe
 @since 18/09/2021
 /*/
 method exists() class SysLibFile
-    
+
 return File(::getFile())
 
 
 /*/{Protheus.doc} getFileSize
 
 Coleta o tamanho do arquivo em bytes
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method getFileSize() class SysLibFile
-  
-  local nSize	  := 0
-  local cFile	  := ::getFile()
+
+  local nSize := 0
+  local cFile := ::getFile()
   local oReader := FwFileReader():new(cFile)
-  
+
   if oReader:open()
     nSize := oReader:getFileSize()
   endIf
-  
+
   oReader:close()
-  
+
 return nSize
 
 
 /*/{Protheus.doc} getFileMegabytes
 
 Retorna o tamanho do arquivo em megabytes
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method getFileMegabytes() class SysLibFile
-  
+
   local nMegabytes := 0
-  local nConv      := 1024	
-  local nBytes     := ::getFileSize()
-  
+  local nConv := 1024
+  local nBytes := ::getFileSize()
+
   if (nBytes >= nConv)
     nMegabytes := ((nBytes / nConv) / nConv)
   endIf
@@ -505,38 +505,38 @@ return nMegabytes
 /*/{Protheus.doc} getDirectory
 
 Retorna o diretorio do arquivo
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method getDirectory() class SysLibFile
-  
+
   local cFile := AllTrim(Lower(::getFile()))
   local cName := AllTrim(Lower(::getFileName()))
-  
+
 return StrTran(cFile, cName, "")
 
 
 /*/{Protheus.doc} readContent
 
 Retorna todo o conteudo do arquivo em uma string
-  
+
 @author soulsys:victorhugo
 @since 05/06/2023
 /*/
 method readContent() class SysLibFile
-  
+
   local cContent := ""
-  local oReader  := FwFileReader():new(::getFile())
+  local oReader := FwFileReader():new(::getFile())
 
   if !oReader:open()
     return ""
   endIf
-  
+
   while oReader:hasLine()
     cContent += oReader:getLine()
   endDo
-  
+
   oReader:close()
 
 return cContent

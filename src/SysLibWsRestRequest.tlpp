@@ -6,68 +6,68 @@
 /*/{Protheus.doc} SysLibWsRestRequest
 
 Objeto para manipulacao de requisicoes de webservices REST
-    
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 class SysLibWsRestRequest from SysLibAdvpl
 
   public data oRequest
-  
+
   public method new() constructor
-  
+
   public method getRoute()
   public method getBody()
-  
+
 endClass
 
 
 /*/{Protheus.doc} new
 
 Construtor
-    
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method new(oRequest) class SysLibWsRestRequest
 
   _Super:new()
-  
+
   ::oRequest := oRequest
-  
+
 return self
 
 
 /*/{Protheus.doc} getRoute
 
 Retorna a rota de uma requisicao
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method getRoute(oRequest) class SysLibWsRestRequest
-  
-  local cRoute     := ""
+
+  local cRoute := ""
   default oRequest := ::oRequest
 
   if (Len(oRequest:aURLParms) > 0)
     cRoute := oRequest:aURLParms[1]
   endIf
 
-return AllTrim(Lower(cRoute))	
+return AllTrim(Lower(cRoute))
 
 
 /*/{Protheus.doc} getBody
 
 Retorna o corpo de uma requisicao em formato JSON
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method getBody(oRequest) class SysLibWsRestRequest
-  
-  local cContent   := ""
-  local oBody      := JsonObject():new()	
+
+  local cContent := ""
+  local oBody := JsonObject():new()
   default oRequest := ::oRequest
 
   cContent := oRequest:getContent()

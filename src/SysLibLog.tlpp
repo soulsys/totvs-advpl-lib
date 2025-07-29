@@ -1,15 +1,15 @@
 #include "tlpp-core.th"
 #include "totvs.ch"
 
- 
+
 /*/{Protheus.doc} SysLibLog
- 
+
 Objeto para controle de Log
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-class SysLibLog from SysLibFile	
+class SysLibLog from SysLibFile
 
   public data lConsole
   public data lWriteFile
@@ -17,22 +17,22 @@ class SysLibLog from SysLibFile
   public data lShowThreadId
   public data lCache
   public data aLogs
-  
-  public method new() constructor	
-  
+
+  public method new() constructor
+
   public method setConsole()
-  public method setWriteFile()  
+  public method setWriteFile()
   public method info()
   public method warn()
   public method error()
   public method debug()
-  public method lineBreak()  
+  public method lineBreak()
   public method setShowCompany()
   public method setShowThreadId()
   public method setCache()
   public method getCachedLogs()
   public method clearCache()
-  
+
 endClass
 
 
@@ -43,16 +43,16 @@ Construtor
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method new(cFile, lConsole, lWriteFile, lShowCompany, lShowThreadId) class SysLibLog	
-  
+method new(cFile, lConsole, lWriteFile, lShowCompany, lShowThreadId) class SysLibLog
+
   _Super:new(cFile)
-  
-  ::lConsole      := .F.
-  ::lWriteFile    := .T.
-  ::lShowCompany  := .F.
+
+  ::lConsole := .F.
+  ::lWriteFile := .T.
+  ::lShowCompany := .F.
   ::lShowThreadId := .F.
-  ::lCache        := .F.
-  ::aLogs         := {}
+  ::lCache := .F.
+  ::aLogs := {}
 
   if (ValType(lConsole) == "L")
     ::lConsole := lConsole
@@ -69,18 +69,18 @@ method new(cFile, lConsole, lWriteFile, lShowCompany, lShowThreadId) class SysLi
   if (ValType(lShowThreadId) == "L")
     ::lShowThreadId := lShowThreadId
   endIf
-    
+
 return
 
 
 /*/{Protheus.doc} setConsole
 
 Define se deve exibir os logs no console
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setConsole(lConsole) class SysLibLog	
+method setConsole(lConsole) class SysLibLog
   ::lConsole := lConsole
 return
 
@@ -88,11 +88,11 @@ return
 /*/{Protheus.doc} setWriteFile
 
 Define se deve gravar o log em disco
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setWriteFile(lWriteFile) class SysLibLog	
+method setWriteFile(lWriteFile) class SysLibLog
   ::lWriteFile := lWriteFile
 return
 
@@ -100,44 +100,44 @@ return
 /*/{Protheus.doc} info
 
 Grava uma mensagem de informacao no arquivo de log
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method info(cMessage) class SysLibLog	
+method info(cMessage) class SysLibLog
 return libLog(self, "INFO", cMessage)
 
-  
+
 /*/{Protheus.doc} warn
 
 Grava uma mensagem de alerta no arquivo de log
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method warn(cMessage) class SysLibLog	
+method warn(cMessage) class SysLibLog
 return libLog(self, "WARN", cMessage)
 
 
 /*/{Protheus.doc} error
 
 Grava uma mensagem de erro no arquivo de log
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method error(cMessage) class SysLibLog	
+method error(cMessage) class SysLibLog
 return libLog(self, "ERROR", cMessage)
 
 
 /*/{Protheus.doc} debug
 
 Grava uma mensagem de debug no arquivo de log
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method debug(cMessage) class SysLibLog	
+method debug(cMessage) class SysLibLog
 return libLog(self, "DEBUG", cMessage)
 
 /**
@@ -145,11 +145,11 @@ return libLog(self, "DEBUG", cMessage)
  */
 static function libLog(oSelf, cSeverity, cMessage)
 
-  local lOk       := .T.
-  local cText     := "" 
-  local cCompany  := ""
-  local cThreadId := ""  
-  local cDateTime := DtoC(Date()) + " " + Time()	
+  local lOk := .T.
+  local cText := ""
+  local cCompany := ""
+  local cThreadId := ""
+  local cDateTime := DtoC(Date()) + " " + Time()
 
   if oSelf:lShowCompany .and. (Type("cEmpAnt") == "C")
     cCompany := " | COMPANY: " + AllTrim(cEmpAnt) + "/" + AllTrim(cFilAnt)
@@ -158,7 +158,7 @@ static function libLog(oSelf, cSeverity, cMessage)
   if oSelf:lShowThreadId
     cThreadId := " | THREAD: " + AllTrim(Str(ThreadId()))
   endIf
-  
+
   cText := "[ " + cDateTime + " | " + cSeverity + " " + cThreadId + " " + cCompany + " ] " + cMessage
 
   if oSelf:lConsole
@@ -179,56 +179,56 @@ return lOk
 /*/{Protheus.doc} lineBreak
 
 Grava quebras de linha
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method lineBreak(nLines) class SysLibLog
-  
-  local cText    := ""
+
+  local cText := ""
   default nLines := 0
-  
+
   if (nLines > 0)
     cText := Replicate(CRLF, (nLines - 1))
-  endIf		
-  
-  ::writeLine(cText)	
-  
+  endIf
+
+  ::writeLine(cText)
+
 return
 
 
 /*/{Protheus.doc} setShowCompany
 
 Define se deve exibir a empresa/filial
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method setShowCompany(lShow) class SysLibLog
-  ::lShowCompany := lShow  
+  ::lShowCompany := lShow
 return
 
 
 /*/{Protheus.doc} setShowThreadId
 
 Define se deve exibir o numero da thread
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
 method setShowThreadId(lShow) class SysLibLog
-  ::lShowThreadId := lShow  
+  ::lShowThreadId := lShow
 return
 
 
 /*/{Protheus.doc} setCache
 
 Define se deve salvar os logs na memoria
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method setCache(lCache) class SysLibLog	
+method setCache(lCache) class SysLibLog
   ::lCache := lCache
 return
 
@@ -236,21 +236,21 @@ return
 /*/{Protheus.doc} getCachedLogs
 
 Retorna os logs salvos em cache
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getCachedLogs() class SysLibLog	
+method getCachedLogs() class SysLibLog
 return ::aLogs
 
 
 /*/{Protheus.doc} clearCache
 
 Limpa os logs salvos em cache
-  
+
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method clearCache() class SysLibLog	
+method clearCache() class SysLibLog
   ::aLogs := {}
 return
