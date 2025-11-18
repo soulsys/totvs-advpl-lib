@@ -652,7 +652,7 @@ method toArray() class SysLibParam
   elseIf (cType == "radio")
     aArray := {3, ::getDescription(), ::getInitializer(), ::getValues(), ::getWidth(), ::getValidation(), ::isRequired(), ::getWhen()}
   elseIf (cType == "checkbox")
-    aArray := {4, ::getDescription(), ::getInitializer(), nil, ::getWidth(), ::getValidation(), ::isRequired()}
+    aArray :=	 {4, ::getDescription(), ::getInitializer(), "", ::getWidth(), ::getValidation(), ::isRequired()}
   elseIf (cType == "file")
     aArray := {6, ::getDescription(), ::getInitializer(), ::getPicture(), ::getValidation(), ::getWhen(), ::getWidth(), ::isRequired(), ::getFileTypes(), ::getFileStartDirectory(), ::getFileParams()}
   elseIf (cType == "filter")
