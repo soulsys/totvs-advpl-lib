@@ -149,11 +149,13 @@ return
 static function checkSx3(oCol)
 
   local cId := oCol:getId()
-  local cAliasSX3 := GetNextAlias()
+  local cAliasSX3 := ""
 
-  if (Empty(cId) .or. "@" $ cId)
+  if (Empty(cId) .or. "@" $ cId) .or. !("_" $ cId)
     return
   endIf
+
+  cAliasSX3 := GetNextAlias()
 
   OpenSXs(,,,,cEmpAnt,cAliasSX3,"SX3",,.F.)
 
@@ -166,7 +168,7 @@ static function checkSx3(oCol)
       fillSx3Data(cAliasSX3, @oCol)
     endIf
 
-    (cAliasSX3)->(DbCloseArea())
+    (cAliasSX3)->(dbCloseArea())
 
   endIf
 
