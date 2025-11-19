@@ -41,12 +41,8 @@ class SysLibParamBox from SysLibAdvpl
   public method addParam()
   public method show()
   public method getValue()
-<<<<<<< HEAD
-
-=======
   public method getJsonParams()
   
->>>>>>> 41c5ca9 (adding getJsonParams to parambox obj)
 endClass
 
 
