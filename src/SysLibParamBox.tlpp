@@ -41,7 +41,12 @@ class SysLibParamBox from SysLibAdvpl
   public method addParam()
   public method show()
   public method getValue()
+<<<<<<< HEAD
 
+=======
+  public method getJsonParams()
+  
+>>>>>>> 41c5ca9 (adding getJsonParams to parambox obj)
 endClass
 
 
@@ -476,3 +481,26 @@ return xValue
 */
 static function chkType(cVar)
 return Type(cVar)
+
+
+/*/{Protheus.doc} getJsonParams
+
+Retorna os parametros em um objeto JSON
+  
+@author soulsys:victorhugo
+@since 19/11/2025
+/*/
+method getJsonParams() class SysLibParamBox
+
+  local nI := 0
+  local cId := ""
+  local oParam := nil
+  local oJson := JsonObject():new()
+  
+  for nI := 1 to Len(::aParams)
+    oParam := ::aParams[nI]	
+    cId := oParam:getId()
+    oJson[cId] := ::getValue(cId)
+  next nI  
+
+return oJson
