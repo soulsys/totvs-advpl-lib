@@ -981,12 +981,14 @@ Coleta o valor de um campo em um Alias
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method getFieldValue(cAlias, cField, cWhere) class SysLibSql
+method getFieldValue(cAlias, cField, cWhere, oParams) class SysLibSql
 
   local xValue := nil
+  local cGroupBy := nil
+  local cOrderBy := nil
   local oSql := SysLibSql():new()
 
-  oSql:newTable(cAlias, cField, cWhere)
+  oSql:newTable(cAlias, cField, cWhere, cGroupBy, cOrderBy, oParams)
 
   xValue := oSql:getValue(cField)
 
