@@ -101,7 +101,7 @@ Gera um novo alias a partir de uma consulta SQL
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newAlias(cQuery) class SysLibSql
+method newAlias(cQuery, oParams) class SysLibSql
 
   if ::aliasExists()
     (::cAlias)->(dbCloseArea())
@@ -115,7 +115,7 @@ method newAlias(cQuery) class SysLibSql
   endDo
 
   ::cLastQuery := cQuery
-  cQuery := ::parseQuery(cQuery)
+  cQuery := ::parseQuery(cQuery, oParams)
 
   TCQUERY cQuery NEW ALIAS &::cAlias
 
@@ -234,7 +234,7 @@ Cria um novo alias para uma tabela. (ex.: oSql:newTable("SB1", "B1_FILIAL,B1_COD
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method newTable(cTable, cFields, cWhere, cGroupBy, cOrderBy) class SysLibSql
+method newTable(cTable, cFields, cWhere, cGroupBy, cOrderBy, oParams) class SysLibSql
 
   local cQuery := ""
   default cGroupBy := ""
@@ -253,7 +253,7 @@ method newTable(cTable, cFields, cWhere, cGroupBy, cOrderBy) class SysLibSql
 
   ::cLastQuery := cQuery
 
-  ::newAlias(cQuery)
+  ::newAlias(cQuery, oParams)
 
 return
 
@@ -644,7 +644,7 @@ Realiza o parser de uma Query
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method parseQuery(cQuery) class SysLibSql
+method parseQuery(cQuery, oParams) class SysLibSql
 
   local nI := 0
   local nPos := 0
@@ -685,6 +685,42 @@ method parseQuery(cQuery) class SysLibSql
     endDo
 
   next nI
+
+  cQuery := parseParams(cQuery, oParams)
+
+return cQuery
+
+static function parseParams(cQuery, oParams)
+
+  local nI := 0
+  local nPos := 0
+  local xValue := nil
+  local cChr := ""  
+  local cPrefix := "p:"
+  local oUtils := SysLibUtils():new()
+
+  if oUtils:isNull(oParams)
+    return cQuery
+  endIf
+
+  while ((nPos := At(cPrefix, cQuery)) > 0)
+
+    cProp := ""
+
+    for nI := nPos + 2 to Len(cQuery)
+      cChr := SubStr(cQuery, nI, 1)
+      if (cChr == "'" .or. cChr == " ")
+        exit
+      else
+        cProp += cChr
+      endIf
+    next nI
+
+    xValue := oParams[cProp]
+    xValue := oUtils:strAnyType(xValue, "AAAAMMDD")
+    cQuery := StrTran(cQuery, cPrefix + cProp, xValue)
+
+  endDo  
 
 return cQuery
 
@@ -1336,7 +1372,7 @@ Executa uma query e converte o resultado para um array de objetos JSON
 @author soulsys:victorhugo
 @since 27/11/2024
 /*/
-method json(cQuery) class SysLibSql
+method json(cQuery, oParams) class SysLibSql
 
   local nI := 0
   local cAlias := ""
@@ -1347,7 +1383,7 @@ method json(cQuery) class SysLibSql
   local oRecord := nil
 
   if !::aliasExists()
-    ::newAlias(cQuery)
+    ::newAlias(cQuery, oParams)
     lClose := .T.
   endIf
 
