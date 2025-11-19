@@ -710,14 +710,21 @@ Adiciona colunas no browse a partir de uma query SQL
 @author soulsys:victorhugo
 @since 18/09/2021
 /*/
-method addSqlColumns(cQuery, lFill, aSetField) class SysLibGrid
+method addSqlColumns(xSql, lFill, aSetField) class SysLibGrid
 
   local nI := 0
-  local oSql := SysLibSql():new()
+  local lClose := .F.
+  local oSql := nil
   default lFill := .T.
   default aSetField := {}
 
-  oSql:newAlias(cQuery)
+  if (ValType(xSql) == "C")
+    oSql := SysLibSql():new()
+    oSql:newAlias(xSql)
+    lClose := .T.
+  elseIf (ValType(xSql) == "O")
+    oSql := xSql
+  endIf  
 
   for nI := 1 to Len(aSetField)
     oSql:setField(aSetField[nI, 1], aSetField[nI, 2])
@@ -729,7 +736,9 @@ method addSqlColumns(cQuery, lFill, aSetField) class SysLibGrid
     fillLinesFromSql(@self, oSql)
   endIf
 
-  oSql:close()
+  if lClose
+    oSql:close()
+  endIf
 
 return
 
