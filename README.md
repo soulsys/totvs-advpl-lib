@@ -8,7 +8,7 @@ limpos, expressivos e coesos através do encapsulamento de funcionalidades usada
 
 Para realizar uma query simples normalmente você faria algo [assim](https://tdn.totvs.com/display/framework/Desenvolvendo+queries+no+Protheus):
 
-```clipper
+```xbase
 user function SqlSample()
 
   local cQuery       := ""
@@ -29,7 +29,7 @@ user function SqlSample()
 return
 ```
 
-Utilizando a classe **_SysLibSql_** podemos escrever a mesma funcionalidade dessa forma:
+Utilizando a classe `SysLibSql` podemos escrever a mesma funcionalidade dessa forma:
 
 ```xbase
 user function SqlSample()
@@ -97,7 +97,7 @@ Recomendamos que a compilação dos fontes seja realizada da seguinte forma:
 
 2. Abra o diretório criado através do VS Code. Certifique-se de ter a última versão do plugin oficial da TOTVS.
 
-3. Compile a pasta **_src_**
+3. Compile a pasta `src`
 
 <br/>
 Caso encontre algum bug ou sinta necessidade de alguma melhoria, nos envie um pull request.
