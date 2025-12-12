@@ -366,9 +366,6 @@ static function loadEnvironment(oEnv)
 
   endIf
 
-  cEmpAnt := cCompany
-  cFilAnt := cBranch
-
 return lOk
 
 /**
