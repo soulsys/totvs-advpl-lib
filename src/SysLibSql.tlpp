@@ -1379,10 +1379,16 @@ method json(cQuery, oParams) class SysLibSql
   local nI := 0
   local cAlias := ""
   local cField := ""
+  local cJsonField := ""
   local aStruct := {}
+  local aMeta := {}
   local aData := {}
   local lClose := .F.
+  local lSqlServer := ::isSqlServer()
   local oRecord := nil
+  local xValue := nil
+  local lTrimL := .F.
+  local lTrimR := .F.
 
   if !::aliasExists()
     ::newAlias(cQuery, oParams)
@@ -1392,14 +1398,43 @@ method json(cQuery, oParams) class SysLibSql
   cAlias := ::getAlias()
   aStruct := ::getStruct()
 
+  if lSqlServer
+    aMeta := getSelectMeta(cQuery)
+  endIf
+
   ::goTop()
+  
   while ::notIsEof()
 
     oRecord := JsonObject():new()
 
     for nI := 1 to Len(aStruct)
+
       cField := aStruct[nI,1]
-      oRecord[Lower(cField)] := (cAlias)->&cField
+      xValue := (cAlias)->&cField
+      cJsonField := Lower(cField)
+      lTrimL := .F.
+      lTrimR := .F.
+
+      if lSqlServer .and. nI <= Len(aMeta)
+        if !Empty(aMeta[nI,1])
+          cJsonField := aMeta[nI,1]
+        endIf
+        lTrimL := aMeta[nI,2]
+        lTrimR := aMeta[nI,3]
+      endIf
+
+      if ((ValType(xValue) $ "CM") .and. (lTrimL .or. lTrimR))
+        if lTrimL
+          xValue := LTrim(xValue)
+        endIf
+        if lTrimR
+          xValue := RTrim(xValue)
+        endIf
+      endIf
+
+      oRecord[cJsonField] := xValue
+
     next nI
 
     aAdd(aData, oRecord)
@@ -1415,3 +1450,391 @@ method json(cQuery, oParams) class SysLibSql
   endIf
 
 return aData
+
+static function getSelectMeta(cQuery)
+
+  local aMeta := {}
+  local aItems := {}
+  local cSelect := ""
+  local cItem := ""
+  local cAlias := ""
+  local cUpper := ""
+  local nI := 0
+  local lTrimL := .F.
+  local lTrimR := .F.
+
+  cSelect := getSelectList(cQuery)
+
+  if Empty(cSelect)
+    return aMeta
+  endIf
+
+  aItems := splitSelectItems(cSelect)
+
+  for nI := 1 to Len(aItems)
+
+    cItem := AllTrim(aItems[nI])
+    cAlias := extractSelectAlias(cItem)
+
+    cUpper := Upper(cItem)
+    lTrimL := ("LTRIM(" $ cUpper)
+    lTrimR := ("RTRIM(" $ cUpper)
+
+    aAdd(aMeta, { cAlias, lTrimL, lTrimR })
+
+  next nI
+
+return aMeta
+
+static function getSelectList(cQuery)
+
+  local nPosSel := 0
+  local nFrom := 0
+  local nI := 0
+  local nDepth := 0
+  local lInStr := .F.
+  local lInDQuote := .F.
+  local lInBracket := .F.
+  local cChar := ""
+  local cUpper := ""
+
+  if Empty(cQuery)
+    return ""
+  endIf
+
+  cUpper := Upper(cQuery)
+  nPosSel := At("SELECT", cUpper)
+
+  if nPosSel == 0
+    return ""
+  endIf
+
+  for nI := nPosSel + 6 to Len(cQuery)
+
+    cChar := SubStr(cQuery, nI, 1)
+
+    if lInBracket
+      if cChar == "]"
+        lInBracket := .F.
+      endIf
+      loop
+    endIf
+
+    if lInStr
+      if cChar == "'"
+        if SubStr(cQuery, nI + 1, 1) == "'"
+          nI++
+        else
+          lInStr := .F.
+        endIf
+      endIf
+      loop
+    endIf
+
+    if lInDQuote
+      if cChar == Chr(34)
+        lInDQuote := .F.
+      endIf
+      loop
+    endIf
+
+    do case
+      case cChar == "["
+        lInBracket := .T.
+        loop
+      case cChar == "'"
+        lInStr := .T.
+        loop
+      case cChar == Chr(34)
+        lInDQuote := .T.
+        loop
+      case cChar == "("
+        nDepth++
+      case cChar == ")"
+        if nDepth > 0
+          nDepth--
+        endIf
+    endCase
+
+    if (nDepth == 0) .and. isKeywordAt(cQuery, nI, "FROM")
+      nFrom := nI
+      exit
+    endIf
+
+  next nI
+
+  if nFrom == 0
+    return ""
+  endIf
+
+return SubStr(cQuery, nPosSel + 6, nFrom - (nPosSel + 6))
+
+static function splitSelectItems(cSelect)
+
+  local aItems := {}
+  local cItem := ""
+  local nI := 0
+  local nDepth := 0
+  local lInStr := .F.
+  local lInDQuote := .F.
+  local lInBracket := .F.
+  local cChar := ""
+
+  for nI := 1 to Len(cSelect)
+
+    cChar := SubStr(cSelect, nI, 1)
+
+    if lInBracket
+      cItem += cChar
+      if cChar == "]"
+        lInBracket := .F.
+      endIf
+      loop
+    endIf
+
+    if lInStr
+      cItem += cChar
+      if cChar == "'"
+        if SubStr(cSelect, nI + 1, 1) == "'"
+          cItem += "'"
+          nI++
+        else
+          lInStr := .F.
+        endIf
+      endIf
+      loop
+    endIf
+
+    if lInDQuote
+      cItem += cChar
+      if cChar == Chr(34)
+        lInDQuote := .F.
+      endIf
+      loop
+    endIf
+
+    do case
+      case cChar == "["
+        lInBracket := .T.
+        cItem += cChar
+        loop
+      case cChar == "'"
+        lInStr := .T.
+        cItem += cChar
+        loop
+      case cChar == Chr(34)
+        lInDQuote := .T.
+        cItem += cChar
+        loop
+      case cChar == "("
+        nDepth++
+        cItem += cChar
+        loop
+      case cChar == ")"
+        if nDepth > 0
+          nDepth--
+        endIf
+        cItem += cChar
+        loop
+      case (cChar == ",") .and. (nDepth == 0)
+        if !Empty(AllTrim(cItem))
+          aAdd(aItems, AllTrim(cItem))
+        endIf
+        cItem := ""
+        loop
+    endCase
+
+    cItem += cChar
+
+  next nI
+
+  if !Empty(AllTrim(cItem))
+    aAdd(aItems, AllTrim(cItem))
+  endIf
+
+return aItems
+
+static function extractSelectAlias(cItem)
+
+  local cAlias := ""
+  local cWork := AllTrim(cItem)
+  local nLen := Len(cWork)
+  local nOpen := 0
+  local aTokens := {}
+  local nI := 0
+
+  if nLen == 0
+    return ""
+  endIf
+
+  if SubStr(cWork, nLen, 1) == "]"
+    nOpen := Rat("[", cWork)
+    if nOpen > 0
+      return SubStr(cWork, nOpen + 1, nLen - nOpen - 1)
+    endIf
+  endIf
+
+  if SubStr(cWork, nLen, 1) == Chr(34)
+    nOpen := Rat(Chr(34), SubStr(cWork, 1, nLen - 1))
+    if nOpen > 0
+      return SubStr(cWork, nOpen + 1, (nLen - 1) - nOpen)
+    endIf
+  endIf
+
+  aTokens := splitTokensTopLevel(cWork)
+
+  if Len(aTokens) >= 2
+    for nI := Len(aTokens) - 1 to 1 step -1
+      if Upper(aTokens[nI]) == "AS"
+        cAlias := normalizeAliasToken(aTokens[nI + 1])
+        return cAlias
+      endIf
+    next nI
+    if !isOperatorToken(aTokens[Len(aTokens) - 1])
+      cAlias := normalizeAliasToken(aTokens[Len(aTokens)])
+      return cAlias
+    endIf
+  endIf
+
+return ""
+
+static function splitTokensTopLevel(cText)
+
+  local aTokens := {}
+  local cTok := ""
+  local nI := 0
+  local nDepth := 0
+  local lInStr := .F.
+  local lInDQuote := .F.
+  local lInBracket := .F.
+  local cChar := ""
+
+  for nI := 1 to Len(cText)
+
+    cChar := SubStr(cText, nI, 1)
+
+    if lInBracket
+      cTok += cChar
+      if cChar == "]"
+        lInBracket := .F.
+      endIf
+      loop
+    endIf
+
+    if lInStr
+      cTok += cChar
+      if cChar == "'"
+        if SubStr(cText, nI + 1, 1) == "'"
+          cTok += "'"
+          nI++
+        else
+          lInStr := .F.
+        endIf
+      endIf
+      loop
+    endIf
+
+    if lInDQuote
+      cTok += cChar
+      if cChar == Chr(34)
+        lInDQuote := .F.
+      endIf
+      loop
+    endIf
+
+    do case
+      case cChar == "["
+        lInBracket := .T.
+        cTok += cChar
+        loop
+      case cChar == "'"
+        lInStr := .T.
+        cTok += cChar
+        loop
+      case cChar == Chr(34)
+        lInDQuote := .T.
+        cTok += cChar
+        loop
+      case cChar == "("
+        nDepth++
+      case cChar == ")"
+        if nDepth > 0
+          nDepth--
+        endIf
+    endCase
+
+    if (nDepth == 0) .and. (cChar == " " .or. cChar == Chr(9) .or. cChar == Chr(13) .or. cChar == Chr(10))
+      if !Empty(AllTrim(cTok))
+        aAdd(aTokens, AllTrim(cTok))
+      endIf
+      cTok := ""
+      loop
+    endIf
+
+    cTok += cChar
+
+  next nI
+
+  if !Empty(AllTrim(cTok))
+    aAdd(aTokens, AllTrim(cTok))
+  endIf
+
+return aTokens
+
+static function normalizeAliasToken(cToken)
+
+  local cAlias := AllTrim(cToken)
+  local nLen := Len(cAlias)
+
+  if nLen == 0
+    return ""
+  endIf
+
+  if (Left(cAlias, 1) == "[") .and. (Right(cAlias, 1) == "]")
+    return SubStr(cAlias, 2, nLen - 2)
+  endIf
+
+  if (Left(cAlias, 1) == Chr(34)) .and. (Right(cAlias, 1) == Chr(34))
+    return SubStr(cAlias, 2, nLen - 2)
+  endIf
+
+return cAlias
+
+static function isOperatorToken(cToken)
+
+  local cUpper := Upper(AllTrim(cToken))
+  local cOps := "+,-,*,/,%,=,<,>,<=,>=,<>,!=,||,AND,OR,IN,LIKE,IS"
+
+return (("," + cUpper + ",") $ ("," + cOps + ","))
+
+static function isKeywordAt(cText, nPos, cKeyword)
+
+  local cSlice := Upper(SubStr(cText, nPos, Len(cKeyword)))
+  local cPrev := ""
+  local cNext := ""
+
+  if cSlice != cKeyword
+    return .F.
+  endIf
+
+  if nPos > 1
+    cPrev := SubStr(cText, nPos - 1, 1)
+  endIf
+
+  if (nPos + Len(cKeyword)) <= Len(cText)
+    cNext := SubStr(cText, nPos + Len(cKeyword), 1)
+  endIf
+
+  if isIdentChar(cPrev) .or. isIdentChar(cNext)
+    return .F.
+  endIf
+
+return .T.
+
+static function isIdentChar(cChar)
+
+  if Empty(cChar)
+    return .F.
+  endIf
+
+return (At(cChar, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_@$") > 0)
