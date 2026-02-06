@@ -1379,6 +1379,7 @@ method json(cQuery, oParams) class SysLibSql
   local nI := 0
   local cAlias := ""
   local cField := ""
+  local cType := ""
   local cJsonField := ""
   local aStruct := {}
   local aMeta := {}
@@ -1389,6 +1390,7 @@ method json(cQuery, oParams) class SysLibSql
   local xValue := nil
   local lTrimL := .F.
   local lTrimR := .F.
+  local lBit := .F.
 
   if !::aliasExists()
     ::newAlias(cQuery, oParams)
@@ -1411,10 +1413,12 @@ method json(cQuery, oParams) class SysLibSql
     for nI := 1 to Len(aStruct)
 
       cField := aStruct[nI,1]
+      cType := aStruct[nI,2]
       xValue := (cAlias)->&cField
       cJsonField := Lower(cField)
       lTrimL := .F.
       lTrimR := .F.
+      lBit := .F.
 
       if lSqlServer .and. nI <= Len(aMeta)
         if !Empty(aMeta[nI,1])
@@ -1422,6 +1426,7 @@ method json(cQuery, oParams) class SysLibSql
         endIf
         lTrimL := aMeta[nI,2]
         lTrimR := aMeta[nI,3]
+        lBit := aMeta[nI,4]
       endIf
 
       if ((ValType(xValue) $ "CM") .and. (lTrimL .or. lTrimR))
@@ -1431,6 +1436,10 @@ method json(cQuery, oParams) class SysLibSql
         if lTrimR
           xValue := RTrim(xValue)
         endIf
+      endIf
+
+      if lSqlServer .and. (lBit .or. cType == "L")
+        xValue := bitToBool(xValue)
       endIf
 
       oRecord[cJsonField] := xValue
@@ -1462,6 +1471,7 @@ static function getSelectMeta(cQuery)
   local nI := 0
   local lTrimL := .F.
   local lTrimR := .F.
+  local lBit := .F.
 
   cSelect := getSelectList(cQuery)
 
@@ -1479,8 +1489,9 @@ static function getSelectMeta(cQuery)
     cUpper := Upper(cItem)
     lTrimL := ("LTRIM(" $ cUpper)
     lTrimR := ("RTRIM(" $ cUpper)
+    lBit := isBitSelectExpr(cUpper)
 
-    aAdd(aMeta, { cAlias, lTrimL, lTrimR })
+    aAdd(aMeta, { cAlias, lTrimL, lTrimR, lBit })
 
   next nI
 
@@ -1838,3 +1849,47 @@ static function isIdentChar(cChar)
   endIf
 
 return (At(cChar, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_@$") > 0)
+
+static function isBitSelectExpr(cUpperItem)
+
+  local cExpr := cUpperItem
+
+  if Empty(cExpr)
+    return .F.
+  endIf
+
+  if ("CAST(" $ cExpr) .and. (" AS BIT" $ cExpr)
+    return .T.
+  endIf
+
+  if ("TRY_CAST(" $ cExpr) .and. (" AS BIT" $ cExpr)
+    return .T.
+  endIf
+
+  if ("CONVERT(BIT" $ cExpr) .or. ("TRY_CONVERT(BIT" $ cExpr)
+    return .T.
+  endIf
+
+return .F.
+
+static function bitToBool(xValue)
+
+  local cVal := ""
+
+  if ValType(xValue) == "L"
+    return xValue
+  endIf
+
+  if ValType(xValue) == "N"
+    return (xValue != 0)
+  endIf
+
+  if ValType(xValue) == "C"
+    cVal := Upper(AllTrim(xValue))
+    if (cVal == "1") .or. (cVal == "T") .or. (cVal == "TRUE") .or. (cVal == "Y") .or. (cVal == "YES")
+      return .T.
+    endIf
+    return .F.
+  endIf
+
+return .F.
