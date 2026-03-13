@@ -64,6 +64,7 @@ class SysLibMail from SysLibAdvpl
   public method setConfirmRead()
   public method setHtmlValue()
   public method addHtmlTableValue()
+  public method escapeHtml()
   public method showProperties()
 
 endClass
@@ -605,6 +606,24 @@ Define valores para tabelas do Html
 method addHtmlTableValue(cVar, xValue) class SysLibMail
   aAdd((::oWfHtml:valByName(cVar)), xValue)
 return
+
+
+/*/{Protheus.doc} escapeHtml
+
+Escapa caracteres especiais para uso em HTML
+
+@author soulsys:victorhugo
+@since 13/03/2026
+/*/
+method escapeHtml(cValue) class SysLibMail
+
+  cValue := cValToChar(cValue)
+  cValue := StrTran(cValue, "&", "&amp;")
+  cValue := StrTran(cValue, "<", "&lt;")
+  cValue := StrTran(cValue, ">", "&gt;")
+  cValue := StrTran(cValue, '"', "&quot;")
+
+return cValue
 
 
 /*/{Protheus.doc} showProperties
