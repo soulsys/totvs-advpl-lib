@@ -56,6 +56,7 @@ class SysLibMail from SysLibAdvpl
   public method setTimeOut()
   public method getHtmlLayout()
   public method setHtmlLayout()
+  public method setTemplate()
 
   public method connect()
   public method send()
@@ -433,6 +434,24 @@ method setHtmlLayout(cHtml) class SysLibMail
 return lOk
 
 
+/*/{Protheus.doc} setTemplate
+
+Define o arquivo Template HTML do Layout
+
+@author soulsys:victorhugo
+@since 15/07/2026
+/*/
+method setTemplate(oTemplate) class SysLibMail  
+
+  local lOk := ::setHtmlLayout(oTemplate:getFile())
+
+  if lOk
+    ::setHtmlValue("content", oTemplate:getHtml())
+  endIf
+
+return lOk
+
+
 /*/{Protheus.doc} connect
 
 Conecta ao Servidor de Email
@@ -476,6 +495,7 @@ method send(cTo, cSubject, cBody, cAttachment, cCC, cBCC) class SysLibMail
   local lAuthOk := .T.
   local cHtml := ::getHtmlLayout()
   local lHtml := (!Empty(cHtml) .and. File(cHtml))
+
   default cBody := ""
   default cAttachment := ""
   default cCC := ""

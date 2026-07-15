@@ -1,0 +1,112 @@
+#include "tlpp-core.th"
+#include "totvs.ch"
+#include "tbiconn.ch"
+
+#define TEMPLATE_ROOT_PATH "/soulsys/email/"
+
+
+/*/{Protheus.doc} SysLibMailTemplate
+
+Objeto para envio de emails a partir de templates HTML
+
+@author soulsys:victorhugo
+@since 15/07/2026
+/*/
+class SysLibMailTemplate from SysLibAdvpl
+
+  private data cFile
+  private data cHtml  
+
+  public method new() constructor
+
+  public method createElement()
+  public method addElement()
+  public method addSpacer()
+  public method addLinkButton()
+  
+  public method getFile()
+  public method getHtml()  
+
+endClass
+
+method new(cFileName) class SysLibMailTemplate
+
+  local cExtension := ".html"
+  local oUtils := SysLibUtils():new()
+
+  default cFileName := "default"
+  
+  _Super:new()
+
+  ::cHtml := ""  
+
+  cFileName := AllTrim(Lower(cFileName))
+
+  if oUtils:endsWith(cFileName, cExtension)
+    cFileName := StrTran(cFileName, cExtension, "")
+  endIf
+
+  ::cFile := TEMPLATE_ROOT_PATH + cFileName + cExtension
+
+  if !File(::cFile)
+    ConOut("[SysLibMailTemplate] Layout HTML nao encontrado: " + ::cFile)
+  endIf
+
+return
+
+method createElement(cTag, cChild, cClassName, aProps) class SysLibMailTemplate
+
+  local nI := 0
+  local cHtml := ""
+  local cAttributes := ""
+  local oMail := SysLibMail():new()
+
+  default cChild := ""  
+  default cClassName := ""
+  default aProps := {}
+
+  if !Empty(cClassName)
+    cAttributes := ' class="' + oMail:escapeHtml(cClassName) + '"'
+  endIf
+
+  for nI := 1 to Len(aProps)
+    if !Empty(cAttributes)
+      cAttributes += " "
+    endIf
+    cAttributes += aProps[nI,1] + '="' + oMail:escapeHtml(aProps[nI,2]) + '"'
+  next nI
+
+  cHtml += "<" + cTag + cAttributes + ">"
+  cHtml += cChild
+  cHtml += "</" + cTag + ">"
+
+return cHtml
+
+method addElement(cEl, cChild, cClassName) class SysLibMailTemplate
+  ::cHtml += ::createElement(cEl, cChild, cClassName)
+return
+
+method addSpacer() class SysLibMailTemplate
+return ::addElement("br")
+
+method addLinkButton(cLabel, cUrl) class SysLibMailTemplate
+
+  local aProps := {}
+  local cLink := ""
+  local oMail := SysLibMail():new()
+
+  aAdd(aProps, {"href", cUrl})
+  aAdd(aProps, {"target", "_blank"})
+  aAdd(aProps, {"rel", "noopener noreferrer"})
+
+  cLink := ::createElement("a", oMail:escapeHtml(cLabel), "button", aProps)
+
+  ::addElement("div", cLink, "button-wrapper")
+
+return
+
+method getFile() class SysLibMailTemplate
+return ::cFile
+
+method getHtml() class SysLibMailTemplate
+return ::cHtml

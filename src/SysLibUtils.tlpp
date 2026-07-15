@@ -278,7 +278,7 @@ method endsWith(cStr, cChr, lStrTrim) class SysLibUtils
     cChr := AllTrim(cChr)
   endIf
 
-return (Right(cStr, 1) == cChr)
+return (Right(cStr, Len(cChr)) == cChr)
 
 
 /*/{Protheus.doc} ensureDir
