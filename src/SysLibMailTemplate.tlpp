@@ -87,7 +87,8 @@ method addElement(cEl, cChild, cClassName) class SysLibMailTemplate
 return
 
 method addSpacer() class SysLibMailTemplate
-return ::addElement("br")
+  ::cHtml += "<br/>"
+return
 
 method addLinkButton(cLabel, cUrl) class SysLibMailTemplate
 
