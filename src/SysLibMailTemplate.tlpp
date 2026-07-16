@@ -2,8 +2,6 @@
 #include "totvs.ch"
 #include "tbiconn.ch"
 
-#define TEMPLATE_ROOT_PATH "/soulsys/email/"
-
 
 /*/{Protheus.doc} SysLibMailTemplate
 
@@ -29,28 +27,14 @@ class SysLibMailTemplate from SysLibAdvpl
 
 endClass
 
-method new(cFileName) class SysLibMailTemplate
+method new(cFile) class SysLibMailTemplate
 
-  local cExtension := ".html"
-  local oUtils := SysLibUtils():new()
-
-  default cFileName := "default"
+  default cFile := "/soulsys/email/default.html"
   
   _Super:new()
 
   ::cHtml := ""  
-
-  cFileName := AllTrim(Lower(cFileName))
-
-  if oUtils:endsWith(cFileName, cExtension)
-    cFileName := StrTran(cFileName, cExtension, "")
-  endIf
-
-  ::cFile := TEMPLATE_ROOT_PATH + cFileName + cExtension
-
-  if !File(::cFile)
-    ConOut("[SysLibMailTemplate] Layout HTML nao encontrado: " + ::cFile)
-  endIf
+  ::cFile := cFile
 
 return
 
