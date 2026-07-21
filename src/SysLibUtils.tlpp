@@ -67,6 +67,7 @@ class SysLibUtils from SysLibAdvpl
   public method startsWith()
   public method strAnyType()
   public method strToArray()
+  public method timestamp()
   public method vetorToString()
   public method weekOfMonth()
   public method whenIsNotNumber()
@@ -1393,6 +1394,18 @@ method strToArray(cString, nMaxCol, lBlankLines) class SysLibUtils
   Next nI
 
 return aVetor
+
+
+/*/{Protheus.doc} timestamp
+
+Retorna o timestamp Unix de uma data
+
+@author soulsys:victorhugo
+@since 21/07/2026
+/*/
+method timestamp(dDate) class SysLibUtils
+  default dDate := Date()
+return Val(FwTimeStamp(4, dDate, Time()))
 
 
 /*/{Protheus.doc} vetorToString
