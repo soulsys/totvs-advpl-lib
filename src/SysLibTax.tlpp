@@ -250,7 +250,7 @@ method calculate(lRestore) class SysLibTax
   oResult["invoiceValue"] := MaFisRet(nil, "NF_TOTAL")
   oResult["receivable"] := MaFisRet(nil, "NF_BASEDUP")
 
-  oResult["tribGen"] := MaFisRet(nil, "NF_TRIBGEN")
+  setTribGenData(MaFisRet(nil, "NF_TRIBGEN"), @oResult, .T.)
 
   for nI := 1 to Len(::aItems)
     oItem := ::aItems[nI]
@@ -284,7 +284,7 @@ method calculate(lRestore) class SysLibTax
     oItem["cfop"] := MaFisRet(nI, "IT_CF") // CFOP
     oItem["receivable"] := MaFisRet(nI, "IT_BASEDUP") // Valor Titulo Receber
 
-    oItem["tribGen"] := MaFisRet(nI, "IT_TRIBGEN")
+    setTribGenData(MaFisRet(nI, "IT_TRIBGEN"), @oItem, .F.)
 
   next nI
 
@@ -361,6 +361,8 @@ method getItemTaxesAsArray(oTaxItem) class SysLibTax
     addTaxData("ISS", "ISS", oTaxItem["issBase"], oTaxItem["issAliquot"], oTaxItem["issValue"], @aTaxes)
   endIf
 
+  addTribGenData(oTaxItem, @aTaxes)
+
 return aTaxes
 
 static function addTaxData(cId, cDescription, nBasis, nAliquot, nValue, aTaxes)
@@ -374,6 +376,87 @@ static function addTaxData(cId, cDescription, nBasis, nAliquot, nValue, aTaxes)
   oTax["value"] := nValue
 
   aAdd(aTaxes, oTax)
+
+return
+
+/**
+ * Preenche os dados dos tributos genericos no resultado do calculo.
+ */
+static function setTribGenData(aTribGen, oData, lHeader)
+
+  local nI := 0
+  local cTributeCode := ""
+  local cPrefix := ""
+  local nCodePosition := 12
+  local nBasePosition := 3
+  local nAliquotPosition := 4
+  local nValuePosition := 5
+
+  default lHeader := .F.
+
+  if ValType(aTribGen) <> "A"
+    return
+  endIf
+
+  oData["ibsEstBase"] := 0
+  oData["ibsEstAliquot"] := 0
+  oData["ibsEstValue"] := 0
+  oData["ibsMunBase"] := 0
+  oData["ibsMunAliquot"] := 0
+  oData["ibsMunValue"] := 0
+  oData["cbsFedBase"] := 0
+  oData["cbsFedAliquot"] := 0
+  oData["cbsFedValue"] := 0
+
+  if lHeader
+    nCodePosition := 11
+    nBasePosition := 2
+    nAliquotPosition := 0
+    nValuePosition := 3
+  endIf
+
+  for nI := 1 to Len(aTribGen)
+    if ValType(aTribGen[nI]) <> "A" .or. Len(aTribGen[nI]) < nCodePosition
+      loop
+    endIf
+
+    cTributeCode := AllTrim(cValToChar(aTribGen[nI][nCodePosition]))
+
+    if cTributeCode == "000060"
+      cPrefix := "ibsEst"
+    elseif cTributeCode == "000061"
+      cPrefix := "ibsMun"
+    elseif cTributeCode == "000062"
+      cPrefix := "cbsFed"
+    else
+      loop
+    endIf
+
+    oData[cPrefix+"Base"] := aTribGen[nI][nBasePosition]
+    if nAliquotPosition > 0
+      oData[cPrefix+"Aliquot"] := aTribGen[nI][nAliquotPosition]
+    endIf
+    oData[cPrefix+"Value"] := aTribGen[nI][nValuePosition]
+  next nI
+
+return
+
+/**
+ * Adiciona os tributos genericos do item no array de impostos.
+ */
+static function addTribGenData(oTaxItem, aTaxes)
+
+  if oTaxItem["ibsEstValue"] > 0
+    addTaxData("IBSEST", "IBS Estadual", oTaxItem["ibsEstBase"], oTaxItem["ibsEstAliquot"], oTaxItem["ibsEstValue"], @aTaxes)
+  endIf
+
+  if oTaxItem["ibsMunValue"] > 0
+    addTaxData("IBSMUN", "IBS Municipal", oTaxItem["ibsMunBase"], oTaxItem["ibsMunAliquot"], oTaxItem["ibsMunValue"], @aTaxes)
+  endIf
+
+  if oTaxItem["cbsFedValue"] > 0
+    addTaxData("CBSFED", "CBS Federal", oTaxItem["cbsFedBase"], oTaxItem["cbsFedAliquot"], oTaxItem["cbsFedValue"], @aTaxes)
+  endIf
 
 return
 
