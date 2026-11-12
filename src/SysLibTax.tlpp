@@ -74,8 +74,8 @@ Define o cliente
 /*/
 method setCustomer(cCode, cUnit) class SysLibTax
 
-  ::cCode := cCode
-  ::cUnit := cUnit
+  ::cCode := PadR(cCode, Len(SA1->A1_COD))
+  ::cUnit := PadR(cUnit, Len(SA1->A1_LOJA))
   ::lIsCustomer := .T.
 
 return
@@ -90,8 +90,8 @@ Define o fornecedor
 /*/
 method setSupplier(cCode, cUnit) class SysLibTax
 
-  ::cCode := cCode
-  ::cUnit := cUnit
+  ::cCode := PadR(cCode, Len(SA2->A2_COD))
+  ::cUnit := PadR(cUnit, Len(SA2->A2_LOJA))
   ::lIsSupplier := .T.
 
 return
@@ -250,6 +250,8 @@ method calculate(lRestore) class SysLibTax
   oResult["invoiceValue"] := MaFisRet(nil, "NF_TOTAL")
   oResult["receivable"] := MaFisRet(nil, "NF_BASEDUP")
 
+  oResult["tribGen"] := MaFisRet(nil, "NF_TRIBGEN")
+
   for nI := 1 to Len(::aItems)
     oItem := ::aItems[nI]
     oItem["icmsBase"] := MaFisRet(nI, "IT_BASEICM") // Base ICMS
@@ -281,6 +283,9 @@ method calculate(lRestore) class SysLibTax
     oItem["invoiceValue"] := MaFisRet(nI, "IT_TOTAL") // Valor NF
     oItem["cfop"] := MaFisRet(nI, "IT_CF") // CFOP
     oItem["receivable"] := MaFisRet(nI, "IT_BASEDUP") // Valor Titulo Receber
+
+    oItem["tribGen"] := MaFisRet(nI, "IT_TRIBGEN")
+
   next nI
 
   oResult["items"] := ::aItems
@@ -386,7 +391,7 @@ static function initMaFis(oSelf)
   local cTpComp := nil
   local lInsere := nil
   local cAliasP := nil
-  local cRotina := "MATA461"
+  local cRotina := ""
   local cTipoDoc := nil
   local cEspecie := nil
   local cCodProsp := nil
@@ -409,6 +414,7 @@ static function initMaFis(oSelf)
   local cTpCompl := nil
   local cCltdest := nil
   local cLjtdest := nil
+  local lCalcTG := .T.
   local oSql := SysLibSql():new()
 
   if Empty(cTpCliFor)
@@ -453,7 +459,8 @@ return MaFisIni(cCodCliFor,; // 1-Cod. Cli/For
         lCalcIRRF,; // 29- Indica se Calcula (IRRF), independete da TES estar configurada para Gerar Duplicata (F4_DUPLIC)
         cTpCompl,; // 30- Tipo de Complemento
         cCltdest,; // 31-Cliente de destino de transporte (Notas de entrada de transporte )
-        cLjtdest ) // 32-Loja de destino de transporte (Notas de entrada de transporte )
+        cLjtdest,; // 32-Loja de destino de transporte (Notas de entrada de transporte )
+        lCalcTG ) // 33-Flag para indicar se os tributos genéricos devem ou não ser calculados - deve ser passado como .T. somente após a preparação da rotina para gravação, visualização e exclusão dos tributos genéricos.
 
 
 /**
