@@ -399,14 +399,17 @@ static function setTribGenData(aTribGen, oData, lHeader)
   endIf
 
   oData["ibsEstBase"] := 0
-  oData["ibsEstAliquot"] := 0
   oData["ibsEstValue"] := 0
   oData["ibsMunBase"] := 0
-  oData["ibsMunAliquot"] := 0
   oData["ibsMunValue"] := 0
   oData["cbsFedBase"] := 0
-  oData["cbsFedAliquot"] := 0
   oData["cbsFedValue"] := 0
+
+  if !lHeader
+    oData["ibsEstAliquot"] := 0
+    oData["ibsMunAliquot"] := 0
+    oData["cbsFedAliquot"] := 0
+  endIf
 
   if lHeader
     nCodePosition := 11
@@ -433,9 +436,11 @@ static function setTribGenData(aTribGen, oData, lHeader)
     endIf
 
     oData[cPrefix+"Base"] := aTribGen[nI][nBasePosition]
+
     if nAliquotPosition > 0
       oData[cPrefix+"Aliquot"] := aTribGen[nI][nAliquotPosition]
     endIf
+
     oData[cPrefix+"Value"] := aTribGen[nI][nValuePosition]
   next nI
 
